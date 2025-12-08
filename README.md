@@ -5,17 +5,9 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-todos:
-- implement stvk or neo hookean. these have volume preservation
-
 
 updates:
-- concerns about using chang yues paper:
-  - how would i make this work for FEM? need to modify the loss function (how?)
-  - need to find a way to sample and interpolate the discrete
-  - what happens if i start with points on grids instead of random points?
-  - interpolation step
-  
+
 - moved stuff to warp
 - make face selector for obj files for displaying instances
 - finite differences for velocity then acceleration
@@ -23,10 +15,18 @@ updates:
 - eigenvalues smaller than 0, just removed them and changed eigenvalue solver to look around 3 instead of 0
   
 
-  - make a 3D grid
-  - 
+to cite:
+- dyrt
+- simkit
+- tetwild
+- https://arxiv.org/abs/2403.06321
+- https://viterbi-web.usc.edu/~jbarbic/cuda-uUq/WangBarbic-CUDA-MIG-2020.pdf
+- https://arxiv.org/pdf/2408.10099
+- https://github.com/dilevin/usdmultimeshwriter
+- https://github.com/tytrusty/pba-assignment-cd
+- https://github.com/dilevin/CSC417-physics-based-animation/blob/master/lectures 07-fast-solvers.pdf
+- https://github.com/dilevin/CSC417-physics-based-animation?tab=readme-ov-file
 
-source:
 
 notes:
 
@@ -35,10 +35,4 @@ tetwild terminal command:
 
 
 - when tetwilding, make sure the obj file is triangulated
-- 
-to cite:
-- dyrt
-- simkit
-- tetwild
-- https://viterbi-web.usc.edu/~jbarbic/cuda-uUq/WangBarbic-CUDA-MIG-2020.pdf
-- https://arxiv.org/pdf/2408.10099
+  
