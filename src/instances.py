@@ -1,0 +1,91 @@
+import numpy as np
+from dyrt_utils import *
+import warp as wp
+from base_instance import *
+from base_mesh import *
+
+class Instances:
+
+    def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, n_vertices):
+        # instances = Instances()
+
+        self.n_modes = n_modes
+        self.num_vertices = n_vertices
+        self.num_instances = len(face_indices)
+
+        self.face_indices = np.array(face_indices).astype(np.int32)
+        self.barycentric = np.array(barycentric).astype(np.float32)
+        
+        # instance_vertices has shape(num_instances, num_vertices, 3)
+        vertices_by_instance = np.array(vertices_by_instance)
+        self.v_cur = vertices_by_instance.copy().astype(np.float32)
+        self.v_prev = vertices_by_instance.copy().astype(np.float32)
+        self.v_prev2 = vertices_by_instance.copy().astype(np.float32)
+        
+        # instance_vertices has shape(num_instances, n_modes)
+        self.q_cur = np.zeros((self.num_instances, n_modes)).astype(np.float32)
+        self.q_prev = np.zeros((self.num_instances, n_modes)).astype(np.float32)
+        self.q_prev2 = np.zeros((self.num_instances, n_modes)).astype(np.float32)
+
+        return 
+
+    def instances_update_v(self, new_vs):
+        @wp.kernel
+        def wp_update_v(
+            v_cur: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
+            v_prev: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
+            v_prev2: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
+            new_v: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float))):
+            
+            tid = wp.tid()
+            v_prev2[tid] = v_prev[tid]
+            v_prev[tid] = v_cur[tid]
+            v_cur[tid] = new_v[tid]
+
+        wp.launch(wp_update_v, dim=new_vs.shape[0], inputs=[new_vs], outputs=[self.v_cur, self.v_prev, self.v_prev2])
+
+    def instances_update_q(self, new_qs):
+
+        @wp.kernel
+        def wp_update_q(
+            q_cur: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
+            q_prev: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
+            q_prev2: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
+            new_q: wp.array(dtype=wp.vec(self.n_modes, dtype=float))):
+            
+            tid = wp.tid()
+            q_prev2[tid] = q_prev[tid]
+            q_prev[tid] = q_cur[tid]
+            q_cur[tid] = new_q[tid]
+            
+        wp.launch(wp_update_q, dim=new_qs.shape[0], inputs=[new_qs], outputs=[self.q_cur, self.q_prev, self.q_prev2])
+
+
+def create_instances_object(
+        bm: BaseMesh,
+        bi: InstanceBase
+        ):
+    
+    face_indices = []
+    barycentrics = []
+    new_instances_v = []
+    for i in range(bm.faces_display):
+        
+        normal = bm.n[i] 
+        # normal = wp.vec3f(normal[0], normal[1], normal[2])
+        # rot_matrix = rodrigues_rotation_matrix(normal) 
+        rot_matrix = rotate_to_align_with_z(normal)
+        # get face vertices
+        for j in range(bm.num_instance_per_face):
+            face_indices.append(i)
+            b1, b2, b3 = get_barycentric()
+            barycentrics.append(np.array([b1, b2, b3]))
+
+            face_point = bm_get_face_point(bm, i, (b1, b2, b3))
+            new_instance_v = bi.v @ rot_matrix.T + face_point
+            new_instances_v.append(new_instance_v)
+    
+    num_instances = bi.v.shape[0]
+
+    instances = Instances(new_instances_v, face_indices, barycentrics, bi.n_modes, num_instances)
+    return instances

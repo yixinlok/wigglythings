@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "flamegraph",
+			"args": [
+				"-m",
+				"pytest"
+			],
+			"pythonPath": "/Users/yixinlok/Desktop/empty2/wigglythings/venv/bin/python",
+			"profilerPath": "/opt/anaconda3/bin/py-spy",
+			"sudo": true,
+			"problemMatcher": [],
+			"label": "Flamegraph: Profile all pytests"
+		}
+	]
+}
