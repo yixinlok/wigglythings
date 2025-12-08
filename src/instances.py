@@ -5,7 +5,7 @@ from base_instance import *
 from base_mesh import *
 
 class Instances:
-
+    # storing all data related to placing instances on the base mesh
     def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, n_vertices):
         # instances = Instances()
 

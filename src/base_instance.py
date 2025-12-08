@@ -44,7 +44,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     
     print(f"reading instance mesh from {file_path} ...")
     v, f, tets, *rest = igl.readMSH(file_path)
-    # f = igl.boundary_facets(tets)
+    f, *rest = igl.boundary_facets(tets)
     v = gp.normalize_points(v)
     v = scale*v + np.array([0,0.5*scale,0])
     # now the vertices are all normalized, and centred sitting on top of the xy plane

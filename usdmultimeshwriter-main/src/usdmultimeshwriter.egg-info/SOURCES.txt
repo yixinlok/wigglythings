@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/usdmultimeshwriter/__init__.py
+src/usdmultimeshwriter/usdmultimeshwriter.py
+src/usdmultimeshwriter.egg-info/PKG-INFO
+src/usdmultimeshwriter.egg-info/SOURCES.txt
+src/usdmultimeshwriter.egg-info/dependency_links.txt
+src/usdmultimeshwriter.egg-info/requires.txt
+src/usdmultimeshwriter.egg-info/top_level.txt

@@ -60,9 +60,9 @@ def create_basemesh(
     # bm.v_prev = wp.from_numpy(bm.v["prev"])
     # bm.v_prev2 = wp.from_numpy(bm.v["prev2"])
     
-    bm.faces_display = 5
-    # bm.faces_display = bm.f.shape[0]
-    bm.num_instance_per_face = 3
+    # bm.faces_display = 5
+    bm.faces_display = bm.f.shape[0]
+    bm.num_instance_per_face = 1
 
     return bm
 

@@ -26,7 +26,7 @@ def wp_update_all_instances(
         normal = bm_normal[face] 
         rot_matrix = rodrigues_rotation_matrix(normal)
         rot_matrices[i] = transpose33(rot_matrix)
-    wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[ix.face_indices, bm_normals], outputs=[rot_matrices_T], device="cpu")
+    wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[ix.face_indices, bm_normals], outputs=[rot_matrices_T])
      
     displaces = []
     for i in range(ix.num_instances):
