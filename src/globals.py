@@ -1,8 +1,9 @@
 
 TIME_STEP_SIZE = 0.05
 N_MODES = 6
-
 DEVICE = "cpu" 
+POLYSCOPE_OR_USD = "polyscope"
+
 MSH_PATHS = {
     "elephant": "assets/elephant.msh",
     # "grass": "assets/grasslike.msh",

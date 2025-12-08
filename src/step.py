@@ -5,6 +5,7 @@ from instance import *
 import warp as wp
 from rodrigues_rotation import *
 from instances import *
+from globals import *
 
 def wp_update_all_instances(
         bm: BaseMesh,
@@ -26,7 +27,7 @@ def wp_update_all_instances(
         normal = bm_normal[face] 
         rot_matrix = rodrigues_rotation_matrix(normal)
         rot_matrices[i] = transpose33(rot_matrix)
-    wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[ix.face_indices, bm_normals], outputs=[rot_matrices_T])
+    wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[ix.face_indices, bm_normals], outputs=[rot_matrices_T], device=DEVICE)
      
     displaces = []
     for i in range(ix.num_instances):
@@ -58,7 +59,7 @@ def wp_update_all_instances(
             new_v[j] = new_v[j] + get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         vs[i] = new_v
     vs = np.zeros((ix.num_instances, bi.v.shape[0],3)).astype(np.float32)
-    wp.launch(wp_get_displacement, dim=ix.num_instances, inputs=[displaces, np.array([bi.v]), bi.v.shape[0], rot_matrices_T, ix.face_indices, ix.barycentric, bm.v["cur"], faces_wp], outputs=[vs], device="cpu")
+    wp.launch(wp_get_displacement, dim=ix.num_instances, inputs=[displaces, np.array([bi.v]), bi.v.shape[0], rot_matrices_T, ix.face_indices, ix.barycentric, bm.v["cur"], faces_wp], outputs=[vs], device=DEVICE)
     ix.instances_update_v(vs)
 
     # call dyrt AFTER, compute next q based on current force
@@ -107,7 +108,7 @@ def wp_dyrt(bm, bi, instances_object):
         b3 = barycentric[i][2]
         estimate_accelerations[i] = b1*fd_acceleration[v1] + b2*fd_acceleration[v2] + b3*fd_acceleration[v3]
 
-    wp.launch(wp_estimate_accelerations, dim=num_instances, inputs=[face_indices, barycentric, faces, fd_acceleration], outputs=[estimate_accelerations])
+    wp.launch(wp_estimate_accelerations, dim=num_instances, inputs=[face_indices, barycentric, faces, fd_acceleration], outputs=[estimate_accelerations], device=DEVICE)
 
     third_terms = []
     for i in range(instances_object.num_instances):
@@ -152,6 +153,6 @@ def wp_dyrt(bm, bi, instances_object):
         q[i] = result
 
     q = np.zeros((num_instances, num_modes), dtype=np.float32)
-    wp.launch(get_q, dim=num_instances,inputs=[c1,c2,c3, instances_object.q_cur, instances_object.q_prev, third_terms], outputs=[q])
+    wp.launch(get_q, dim=num_instances,inputs=[c1,c2,c3, instances_object.q_cur, instances_object.q_prev, third_terms], outputs=[q], device=DEVICE)
     instances_object.instances_update_q(q)
     return 

@@ -60,8 +60,8 @@ def create_basemesh(
     # bm.v_prev = wp.from_numpy(bm.v["prev"])
     # bm.v_prev2 = wp.from_numpy(bm.v["prev2"])
     
-    # bm.faces_display = 5
-    bm.faces_display = bm.f.shape[0]
+    bm.faces_display = 5
+    # bm.faces_display = bm.f.shape[0]
     bm.num_instance_per_face = 1
 
     return bm
@@ -106,30 +106,7 @@ def get_face_point(
     face_point = b1*v1 + b2*v2 + b3*v3
     return face_point
 
-def create_instances_array(
-        bm: BaseMesh,
-        bi: InstanceBase
-        ):
-    ret = [None] * (bm.faces_display * bm.num_instance_per_face)
-    # ret = wp.empty(bm.faces_display * bm.num_instance_per_face, dtype=Instance)
-    for i in range(bm.faces_display):
-        normal = bm.n[i] 
-        # normal = wp.vec3f(normal[0], normal[1], normal[2])
-        # rot_matrix = rodrigues_rotation_matrix(normal) 
-        rot_matrix = rotate_to_align_with_z(normal)
-        # get face vertices
-        for j in range(bm.num_instance_per_face):
-            b1, b2, b3 = get_barycentric()
-            face_point = bm_get_face_point(bm, i, (b1, b2, b3))
-            # print("transpose", transpose33(rot_matrix))
-            # print("bi.v shape", bi.v.shape)
-            # new_instance_v = bi.v @ transpose33(rot_matrix)[0] + face_point
-            new_instance_v = bi.v @ rot_matrix.T + face_point
-            index = i * bm.num_instance_per_face + j
-            ret[index] = create_instance(new_instance_v, i, (b1, b2, b3))
-    return ret
 
-    
 
 def bm_fd_acceleration(bm):
     acceleration = (bm.v["cur"] - 2*bm.v["prev"] + bm.v["prev2"])/(globals.TIME_STEP_SIZE**2)

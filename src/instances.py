@@ -3,6 +3,7 @@ from dyrt_utils import *
 import warp as wp
 from base_instance import *
 from base_mesh import *
+from globals import *
 
 class Instances:
     # storing all data related to placing instances on the base mesh
@@ -42,7 +43,7 @@ class Instances:
             v_prev[tid] = v_cur[tid]
             v_cur[tid] = new_v[tid]
 
-        wp.launch(wp_update_v, dim=new_vs.shape[0], inputs=[new_vs], outputs=[self.v_cur, self.v_prev, self.v_prev2])
+        wp.launch(wp_update_v, dim=new_vs.shape[0], inputs=[new_vs], outputs=[self.v_cur, self.v_prev, self.v_prev2], device=DEVICE)
 
     def instances_update_q(self, new_qs):
 
@@ -58,7 +59,7 @@ class Instances:
             q_prev[tid] = q_cur[tid]
             q_cur[tid] = new_q[tid]
             
-        wp.launch(wp_update_q, dim=new_qs.shape[0], inputs=[new_qs], outputs=[self.q_cur, self.q_prev, self.q_prev2])
+        wp.launch(wp_update_q, dim=new_qs.shape[0], inputs=[new_qs], outputs=[self.q_cur, self.q_prev, self.q_prev2], device=DEVICE)
 
 
 def create_instances_object(

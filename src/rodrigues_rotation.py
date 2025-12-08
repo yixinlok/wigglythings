@@ -72,5 +72,5 @@ if __name__ == "__main__":
     # Launch on GPU (or CPU)
     R = wp.zeros(1, dtype=wp.mat33)
     print(R)
-    wp.launch(kernel=test_rodrigues, outputs=[R], dim=3)
+    wp.launch(kernel=test_rodrigues, outputs=[R], dim=3, device=DEVICE)
     print(R)
