@@ -1,5 +1,7 @@
 # wigglythings
 
+![Demo](assets/cover.gif)
+
 running:
 python -m venv venv
 source venv/bin/activate
