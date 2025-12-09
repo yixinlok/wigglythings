@@ -52,7 +52,6 @@ def compute_IIR_params(w_vec, xi_vec=None):
     """
     # if xi_vec is None:
     #     xi_vec = np.array([0.05,0.05,0.05,0.05,0.05,0.05])
-
     w_vec = np.where(w_vec == 0, 1e-6, w_vec)
     alpha = 0.1
     beta = 0.9

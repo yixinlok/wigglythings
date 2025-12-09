@@ -25,7 +25,7 @@ class InstanceBase:
     f: np.array
     tets: np.array
 
-    eigenvalues: wp.array(dtype=float)
+    eigenvalues: np.array
     eigenvectors: np.array
     phi_inv: np.array
     big_gamma: np.array
@@ -61,10 +61,10 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     bi.pinned_vertices = pinned_vertices
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
 
-    bi.eigenvalues = wp.from_numpy(eigenvalues.astype(np.float32))
-    bi.eigenvectors = wp.from_numpy(eigenvectors.astype(np.float32))
-    bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32))
-    bi.phi_inv = wp.from_numpy(phi_inv.astype(np.float32))
+    bi.eigenvalues = eigenvalues.astype(np.float32)
+    bi.eigenvectors = wp.from_numpy(eigenvectors.astype(np.float32), device=DEVICE)
+    bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
+    bi.phi_inv = wp.from_numpy(phi_inv.astype(np.float32), device=DEVICE)
     bi.M = M
 
     c1, c2, c3 = compute_IIR_params(bi.eigenvalues**0.5)

@@ -32,14 +32,13 @@ def create_instance(
     
     v = v.astype(np.float32)
     # length 3*num_vertices
-    instance.v_cur = wp.from_numpy(v, dtype=wp.vec3)
-    instance.v_prev = wp.from_numpy(v, dtype=wp.vec3)
-    instance.v_prev2 = wp.from_numpy(v, dtype=wp.vec3)
+    instance.v_cur = wp.from_numpy(v, dtype=wp.vec3, device=DEVICE)
+    instance.v_prev = wp.from_numpy(v, dtype=wp.vec3, device=DEVICE)
+    instance.v_prev2 = wp.from_numpy(v, dtype=wp.vec3, device=DEVICE)
 
-    instance.q_cur = wp.zeros(n_modes, dtype=float)
-    instance.q_prev = wp.zeros(n_modes, dtype=float)
-    instance.q_prev2 = wp.zeros(n_modes, dtype=float)
-
+    instance.q_cur = wp.zeros(n_modes, dtype=float, device=DEVICE)
+    instance.q_prev = wp.zeros(n_modes, dtype=float, device=DEVICE)
+    instance.q_prev2 = wp.zeros(n_modes, dtype=float, device=DEVICE)
 
     return instance
 
@@ -78,17 +77,17 @@ def wp_update_q(
     q_prev[tid] = q_cur[tid]
     q_cur[tid] = new_q[tid]
 
-def update_v(instance, new_v):
-    instance.v_prev2 = instance.v_prev
-    instance.v_prev = instance.v_cur
-    instance.v_cur = wp.from_numpy(new_v, dtype=wp.vec3)
-    return
+# def update_v(instance, new_v):
+#     instance.v_prev2 = instance.v_prev
+#     instance.v_prev = instance.v_cur
+#     instance.v_cur = wp.from_numpy(new_v, dtype=wp.vec3, device=DEVICE)
+#     return
     
-def update_q(instance, new_q):
-    instance.q_prev2 = instance.q_prev
-    instance.q_prev = instance.q_cur
-    instance.q_cur = wp.from_numpy(new_q, dtype=float)
-    return
+# def update_q(instance, new_q):
+#     instance.q_prev2 = instance.q_prev
+#     instance.q_prev = instance.q_cur
+#     instance.q_cur = wp.from_numpy(new_q, dtype=float, device=DEVICE)
+#     return
 
 
 if __name__ == "__main__":

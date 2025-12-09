@@ -19,25 +19,25 @@ class Instances:
         
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = np.array(vertices_by_instance)
-        self.v_cur = vertices_by_instance.copy().astype(np.float32)
-        self.v_prev = vertices_by_instance.copy().astype(np.float32)
-        self.v_prev2 = vertices_by_instance.copy().astype(np.float32)
-        
+        self.v_cur = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
+        self.v_prev = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
+        self.v_prev2 = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
+
         # instance_vertices has shape(num_instances, n_modes)
-        self.q_cur = np.zeros((self.num_instances, n_modes)).astype(np.float32)
-        self.q_prev = np.zeros((self.num_instances, n_modes)).astype(np.float32)
-        self.q_prev2 = np.zeros((self.num_instances, n_modes)).astype(np.float32)
+        self.q_cur = wp.from_numpy(np.zeros((self.num_instances, n_modes)).astype(np.float32), device=DEVICE)
+        self.q_prev = wp.from_numpy(np.zeros((self.num_instances, n_modes)).astype(np.float32), device=DEVICE)
+        self.q_prev2 = wp.from_numpy(np.zeros((self.num_instances, n_modes)).astype(np.float32), device=DEVICE)
 
         return 
 
     def instances_update_v(self, new_vs):
         @wp.kernel
         def wp_update_v(
+            new_v: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)),
             v_cur: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
             v_prev: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
-            v_prev2: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
-            new_v: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float))):
-            
+            v_prev2: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float))):
+
             tid = wp.tid()
             v_prev2[tid] = v_prev[tid]
             v_prev[tid] = v_cur[tid]
@@ -49,18 +49,17 @@ class Instances:
 
         @wp.kernel
         def wp_update_q(
+            new_q: wp.array(dtype=wp.vec(self.n_modes, dtype=float)),
             q_cur: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
             q_prev: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
-            q_prev2: wp.array(dtype=wp.vec(self.n_modes, dtype=float)), 
-            new_q: wp.array(dtype=wp.vec(self.n_modes, dtype=float))):
+            q_prev2: wp.array(dtype=wp.vec(self.n_modes, dtype=float))):
             
             tid = wp.tid()
             q_prev2[tid] = q_prev[tid]
             q_prev[tid] = q_cur[tid]
             q_cur[tid] = new_q[tid]
-            
-        wp.launch(wp_update_q, dim=new_qs.shape[0], inputs=[new_qs], outputs=[self.q_cur, self.q_prev, self.q_prev2], device=DEVICE)
 
+        wp.launch(wp_update_q, dim=new_qs.shape[0], inputs=[new_qs], outputs=[self.q_cur, self.q_prev, self.q_prev2], device=DEVICE)
 
 def create_instances_object(
         bm: BaseMesh,

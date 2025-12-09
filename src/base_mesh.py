@@ -56,12 +56,9 @@ def create_basemesh(
     bm.resting_v = v.copy()
     bm.n = gp.per_face_normals(bm.v["cur"],bm.f,unit_norm=True)
     
-    # bm.v_cur = wp.from_numpy(v.copy(), dtype=wp.vec3)
-    # bm.v_prev = wp.from_numpy(bm.v["prev"])
-    # bm.v_prev2 = wp.from_numpy(bm.v["prev2"])
     
-    bm.faces_display = 5
-    # bm.faces_display = bm.f.shape[0]
+    # bm.faces_display = 5
+    bm.faces_display = bm.f.shape[0]
     bm.num_instance_per_face = 1
 
     return bm
@@ -146,7 +143,7 @@ def face_picker(
             print(pick_result)
             if(pick_result.is_hit and pick_result.structure_name == "mesh"):
                 i = pick_result.structure_data["index"]
-                print(f"picked face {pick_result.structure_data["index"]}")
+                # print(f"picked face {pick_result.structure_data["index"]}")
                 # add to pinned vertices
                 if i not in picked:
                     picked.append(i)

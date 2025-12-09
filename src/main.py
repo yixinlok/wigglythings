@@ -116,9 +116,9 @@ def callback():
         #         ps_meshes[instances_object.num_instances + i].update_vertex_positions(vertices)
 
     step = False
+with cProfile.Profile() as pr:
 
-if POLYSCOPE_OR_USD == "polyscope":
-    with cProfile.Profile() as pr:
+    if POLYSCOPE_OR_USD == "polyscope":
         # === polyscope and UI === #
         ps.init()
         ps.set_user_callback(callback)
@@ -127,52 +127,54 @@ if POLYSCOPE_OR_USD == "polyscope":
         ps.reset_camera_to_home_view()
         ps.show()
 
-    stats = pstats.Stats(pr)
-    stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
-
-else:
-    w = USDMultiMeshWriter("out/out.usdc", fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
-    w.open()
-
-    counts = np.full(base_mesh.all_f.shape[0], 3)
-    indices = base_mesh.all_f.flatten()
-    w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v["cur"].shape[0])
-
-    for i in range(instances_object.num_instances):
-        counts = np.full(base_instance.f.shape[0], 3)
-        indices = base_instance.f.flatten()
-        w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.v.shape[0])
-
-    for time_step in range(50):
-        ''' update the base first'''
-        if time_step > 10:
-        #    displace_base = np.array([0.5*np.sin(5*10*time_step_size), 0, 0])
-            t = 10*time_step_size
-            displace_base = np.array([0,0,0.5*np.sin(5*10*time_step_size)])
-
-        else: 
-            # displace_base = np.array([0.5*np.sin(5*time_step*time_step_size), 0, 0])
-            t = time_step*time_step_size
-
-        c = np.cos(5*t)
-        s = np.sin(5*t)
-
-        R_y = np.array([
-            [ c, 0.0,  s],
-            [0.0, 1.0, 0.0],
-            [-s, 0.0,  c]
-        ], dtype=np.float32)
-
-        displace_base = np.array([0,0,0.5*np.sin(5*t)])
-        new = base_mesh.resting_v @ R_y.T
-        bm_update_v(base_mesh, new)
-
-        w.write_points("basemesh", base_mesh.v["cur"],  timecode=time_step)
-
-        wp_update_all_instances(base_mesh,base_instance,instances_object)
         
-        for i in range(instances_object.num_instances):
-            vertices = instances_object.v_cur[i]
-            w.write_points("instance_" + str(i), vertices, timecode=time_step)
+    else:
+        w = USDMultiMeshWriter("out/out.usdc", fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
+        w.open()
 
-    w.close()
+        counts = np.full(base_mesh.all_f.shape[0], 3)
+        indices = base_mesh.all_f.flatten()
+        w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v["cur"].shape[0])
+
+        for i in range(instances_object.num_instances):
+            counts = np.full(base_instance.f.shape[0], 3)
+            indices = base_instance.f.flatten()
+            w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.v.shape[0])
+
+        for time_step in range(50):
+            ''' update the base first'''
+            if time_step > 10:
+            #    displace_base = np.array([0.5*np.sin(5*10*time_step_size), 0, 0])
+                t = 10*time_step_size
+                displace_base = np.array([0,0,0.5*np.sin(5*10*time_step_size)])
+
+            else: 
+                # displace_base = np.array([0.5*np.sin(5*time_step*time_step_size), 0, 0])
+                t = time_step*time_step_size
+
+            c = np.cos(5*t)
+            s = np.sin(5*t)
+
+            R_y = np.array([
+                [ c, 0.0,  s],
+                [0.0, 1.0, 0.0],
+                [-s, 0.0,  c]
+            ], dtype=np.float32)
+
+            displace_base = np.array([0,0,0.5*np.sin(5*t)])
+            new = base_mesh.resting_v @ R_y.T
+            bm_update_v(base_mesh, new)
+
+            w.write_points("basemesh", base_mesh.v["cur"],  timecode=time_step)
+
+            wp_update_all_instances(base_mesh,base_instance,instances_object)
+            
+            v_cur = instances_object.v_cur.numpy()
+            for i in range(instances_object.num_instances):
+                vertices = v_cur[i]
+                w.write_points("instance_" + str(i), vertices, timecode=time_step)
+
+        w.close()
+
+stats = pstats.Stats(pr)
+stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
