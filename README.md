@@ -38,6 +38,9 @@ notes:
 tetwild terminal command:
 ./FloatTetwild_bin --input /Users/yixinlok/Desktop/empty2/loosecoil.obj --coarsen --manifold-surface
 
+slurm commands:
+srun --gres=gpu:1 -c 2 --mem=4G -t 60 --pty bash --login
+sbatch run.sh
 
-- when tetwilding, make sure the obj file is triangulated
+- when tetwilding, make sure the obj file from blender is triangulated
   

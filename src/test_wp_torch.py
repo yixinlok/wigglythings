@@ -1,35 +1,49 @@
 import warp as wp
-import torch
+import numpy as np
 
-num = 2
+num_instances = 10
+num_instances_v = 3
+num_modes = 2
+
+# for i in range(ix.num_instances):
+#     displace = bi.eigenvectors @ cpu_q_cur[i]
+#     displace = np.reshape(displace, (3, -1)).T
+#     displaces.append(displace)
+
+# [a, b, c, d, e ,f]
+
+# [a, b], [c, d], [e, f]
+
+# [a, c, e], [b, d, f]
 
 @wp.kernel()
-def loss(xs: wp.array(dtype=float, ndim=num), l: wp.array(dtype=float)):
+def reshape3(displace_in: wp.array(dtype=wp.vec(length=num_instances_v*3, dtype=float)),
+            # displace_out: wp.array(dtype=wp.vec3(dtype=float)),
+            out: wp.array(dtype=wp.float32)):
     tid = wp.tid()
-    wp.atomic_add(l, 0, xs[tid, 0] ** 2.0 + xs[tid, 1] ** 2.0)
 
-# indicate requires_grad so that Warp can accumulate gradients in the grad buffers
-xs = torch.randn(100, num)
-l = torch.zeros(1)
-opt = torch.optim.Adam([xs], lr=0.1)
+    out[tid] = displace_in[tid][0]
+    # for i in range(num_instances_v):
+    #     displace_out[tid* num_instances_v + i] = wp.vec3(displace_in[tid][i*3 + 0],
+    #                                                       displace_in[tid][i*3 + 1],
+    #                                                       displace_in[tid][i*3 + 2])
+    
+@wp.kernel()
+def loss(eigenvectors: wp.array(dtype=wp.mat((num_instances_v*3,num_modes), dtype=float)),
+        q_cur: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
+        displace: wp.array(dtype=wp.vec(length=num_instances_v*3, dtype=float))):
+    tid = wp.tid()
+    displace[tid] = eigenvectors[0]@q_cur[tid]
+    
+ev = np.zeros((num_instances, num_instances_v*3, num_modes), dtype=np.float32)
+ev[0] = np.random.rand(num_instances_v*3, num_modes).astype(np.float32)
+ev = wp.from_numpy(ev, device="cuda:0")
+print("ev shape:", ev.shape)
+q_cur = wp.from_numpy(np.random.rand(num_instances, num_modes).astype(np.float32), device="cuda:0")
+displace = wp.from_numpy(np.zeros((num_instances), dtype=np.float32), device="cuda:0")
 
-# wp_xs = wp.from_torch(xs)
-# wp_l = wp.from_torch(l)
-
-# tape = wp.Tape()
-# with tape:
-    # record the loss function kernel launch on the tape
-wp.launch(loss, dim=len(xs), inputs=[xs], outputs=[l], device="cpu")
-
-print(f"loss: {l.item()}")
-# for i in range(1):
-#     tape.zero()
-#     tape.backward(loss=wp_l)  # compute gradients
-#     # now xs.grad will be populated with the gradients computed by Warp
-#     opt.step()  # update xs (and thereby wp_xs)
-
-#     # these lines are only needed for evaluating the loss
-#     # (the optimization just needs the gradient, not the loss value)
-#     wp_l.zero_()
-#     wp.launch(loss, dim=len(xs), inputs=[wp_xs], outputs=[wp_l], device="cpu")
-#     print(f"{i}\tloss: {l.item()}")
+wp.launch(loss, dim=num_instances, inputs=[ev, q_cur], outputs=[displace], device="cuda:0")
+print("displace:", displace)
+displace_out = wp.array((num_instances, num_instances_v*3), dtype=wp.float32, device="cuda:0")
+wp.launch(reshape3, dim=num_instances, inputs=[displace], outputs=[displace_out], device="cuda:0")
+print("displace_out:", displace_out)

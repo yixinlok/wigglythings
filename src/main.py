@@ -7,10 +7,21 @@ from globals import *
 from base_mesh import *
 from instances import *
 from step import *
+import time
 
 import cProfile, pstats
 import warp as wp
 from usdmultimeshwriter import USDMultiMeshWriter
+
+# parser = argparse.ArgumentParser(description='Run simulation')
+# parser.add_argument('--base-mesh', type=str, default='hedgehog', 
+#                     choices=list(OBJ_PATHS.keys()),
+#                     help='Base mesh to use (default: hedgehog)')
+# parser.add_argument('--tet-mesh', type=str, default='spike',
+#                     choices=list(MSH_PATHS.keys()),
+#                     help='Tetrahedral mesh for instances (default: spike)')
+
+# args = parser.parse_args()
 
 wp.config.quiet = False
 wp.init()
@@ -32,21 +43,13 @@ pinned_vertices = PINNED_VERTICES[tet_name]
 base_instance = create_base_instance(file_path=tet_path, n_modes=20, pinned_vertices=pinned_vertices, scale=0.1)
 instances_object = create_instances_object(base_mesh, base_instance)
 
-tear_tet_path = MSH_PATHS["teardrop"]
-tear_pinned_vertices = PINNED_VERTICES["teardrop"]
-tear_base_instance = create_base_instance(file_path=tear_tet_path, n_modes=20, pinned_vertices=tear_pinned_vertices, scale=0.1)
-tear_instances_object = create_instances_object(base_mesh, tear_base_instance)
-
-print("number of instances:", instances_object.num_instances)
-print("number of vertices per instance:", base_instance.v.shape[0])
-print("total number of vertices:", base_instance.v.shape[0]*instances_object.num_instances)
-
 time_step = 0
 time_step_size = 0.1
 run = False
 step = False
 mode = 0
-ps_meshes = [None] * (instances_object.num_instances + tear_instances_object.num_instances)
+# ps_meshes = [None] * (instances_object.num_instances + tear_instances_object.num_instances)
+ps_meshes = [None] * (instances_object.num_instances)
 
 def callback():
     global time_step, run, mode, step
@@ -106,19 +109,10 @@ def callback():
             else:
                 ps_meshes[i].update_vertex_positions(vertices)
 
-        # for i in range(tear_instances_object.num_instances):
-        #     vertices = tear_instances_object.v_cur[i]
-            
-        #     if time_step == 1:
-        #         m = ps.register_volume_mesh("tear tet mesh" + str(i), vertices, tets=tear_base_instance.tets)
-        #         ps_meshes[instances_object.num_instances + i] = m
-        #     else:
-        #         ps_meshes[instances_object.num_instances + i].update_vertex_positions(vertices)
-
     step = False
-with cProfile.Profile() as pr:
 
-    if POLYSCOPE_OR_USD == "polyscope":
+if POLYSCOPE_OR_USD == "polyscope":
+    with cProfile.Profile() as pr:
         # === polyscope and UI === #
         ps.init()
         ps.set_user_callback(callback)
@@ -127,9 +121,13 @@ with cProfile.Profile() as pr:
         ps.reset_camera_to_home_view()
         ps.show()
 
-        
-    else:
-        w = USDMultiMeshWriter("out/out.usdc", fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
+    stats = pstats.Stats(pr)
+    stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
+    
+else:
+    if POLYSCOPE_OR_USD == "usd":
+        filetime = time.strftime("%Y%m%d-%H%M%S")
+        w = USDMultiMeshWriter("out/"+filetime+".usdc", fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
         w.open()
 
         counts = np.full(base_mesh.all_f.shape[0], 3)
@@ -141,7 +139,11 @@ with cProfile.Profile() as pr:
             indices = base_instance.f.flatten()
             w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.v.shape[0])
 
-        for time_step in range(50):
+    start = time.time()
+    # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)
+    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL):
+
+        for time_step in range(NUM_FRAMES):
             ''' update the base first'''
             if time_step > 10:
             #    displace_base = np.array([0.5*np.sin(5*10*time_step_size), 0, 0])
@@ -164,17 +166,31 @@ with cProfile.Profile() as pr:
             displace_base = np.array([0,0,0.5*np.sin(5*t)])
             new = base_mesh.resting_v @ R_y.T
             bm_update_v(base_mesh, new)
-
-            w.write_points("basemesh", base_mesh.v["cur"],  timecode=time_step)
-
             wp_update_all_instances(base_mesh,base_instance,instances_object)
             
-            v_cur = instances_object.v_cur.numpy()
-            for i in range(instances_object.num_instances):
-                vertices = v_cur[i]
-                w.write_points("instance_" + str(i), vertices, timecode=time_step)
+        
+            if POLYSCOPE_OR_USD == "usd":
+                print(f"writing frame {time_step}...")
+                w.write_points("basemesh", base_mesh.v["cur"],  timecode=time_step)
+                v_curs = instances_object.v_cur.numpy()
+                for i in range(instances_object.num_instances):
+                    vertices = v_curs[i]
+                    w.write_points("instance_" + str(i), vertices, timecode=time_step)
+    end = time.time()
+    elapsed = end - start
 
+    print("---------------------------------------------------------")
+    print("->" + base_mesh_name + " with " + tet_name + " instances")
+    print("Number of instances:", instances_object.num_instances)
+    print("Number of vertices per instance:", base_instance.v.shape[0])
+    print("Total number of vertices:", base_instance.v.shape[0]*instances_object.num_instances)
+    print("Number of frames:", NUM_FRAMES)
+    print(f"Elapsed time: {elapsed:.3f} seconds")
+    print("---------------------------------------------------------")
+    if POLYSCOPE_OR_USD == "usd":
         w.close()
+    # results = wp.timing_end()
+    # wp.timing_print(results)
 
-stats = pstats.Stats(pr)
-stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
+    
+

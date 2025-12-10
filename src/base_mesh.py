@@ -59,7 +59,7 @@ def create_basemesh(
     
     # bm.faces_display = 5
     bm.faces_display = bm.f.shape[0]
-    bm.num_instance_per_face = 1
+    bm.num_instance_per_face = 5
 
     return bm
 

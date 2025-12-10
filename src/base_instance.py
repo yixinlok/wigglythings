@@ -62,9 +62,9 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
 
     bi.eigenvalues = eigenvalues.astype(np.float32)
-    bi.eigenvectors = wp.from_numpy(eigenvectors.astype(np.float32), device=DEVICE)
-    bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
-    bi.phi_inv = wp.from_numpy(phi_inv.astype(np.float32), device=DEVICE)
+    bi.eigenvectors = eigenvectors.astype(np.float32)
+    # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
+    bi.phi_inv = phi_inv.astype(np.float32)
     bi.M = M
 
     c1, c2, c3 = compute_IIR_params(bi.eigenvalues**0.5)
@@ -161,7 +161,7 @@ def visualise_single_instance(
         t = time_step*time_step_size
         
         if run == True:
-            eigenvector = bi.eigenvectors.numpy()[:, mode]
+            eigenvector = bi.eigenvectors[:, mode]
             displace = np.cos(time_step*time_step_size)*eigenvector
             displace = np.reshape(displace, (3, -1)).T
             
@@ -201,7 +201,7 @@ def debug_modes(n_modes, eigenvectors, run=True):
     fig, axs = plt.subplots(n_modes, 1, figsize=(8, 6))
     showHistogram = False
     for mode in range(n_modes):
-        axs[mode].hist(eigenvectors.numpy()[:, mode], bins=100, log=False)
+        axs[mode].hist(eigenvectors[:, mode], bins=100, log=False)
         axs[mode].set_title(f"Histogram of eigenvector values, mode {mode}")
         axs[mode].set_xlabel("Value")
         axs[mode].set_ylabel("Frequency")      

@@ -1,0 +1,2455 @@
+Warp 1.10.1 initialized:
+   CUDA Toolkit 12.8, Driver 12.4
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA RTX A6000" (48 GiB, sm_86, mempool enabled)
+   Kernel cache:
+     /u8/d/yixinlok/.cache/warp/1.10.1
+reading obj from assets/hedgehog.obj ...
+reading instance mesh from assets/spike.msh ...
+solving eigenvalue problem ...
+applying pinned vertices ...
+done solving eigenvalue problem.
+reading instance mesh from assets/teardrop.msh ...
+solving eigenvalue problem ...
+applying pinned vertices ...
+done solving eigenvalue problem.
+    Module step c29572f load on device 'cuda:0' took 9.03 ms  (cached)
+    Module step 577fbef load on device 'cuda:0' took 8.94 ms  (cached)
+    Module instances fa4505b load on device 'cuda:0' took 7.68 ms  (cached)
+    Module step b14bf16 load on device 'cuda:0' took 9.62 ms  (cached)
+    Module step 6614ded load on device 'cuda:0' took 23615.21 ms  (compiled)
+    Module instances b1ac449 load on device 'cuda:0' took 4.36 ms  (cached)
+CUDA timeline:
+----------------+---------+------------------------------------------------------------------------------
+Time            | Device  | Activity
+----------------+---------+------------------------------------------------------------------------------
+    0.013376 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.014208 ms | cuda:0  | memcpy HtoD
+    0.034016 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.574080 ms | cuda:0  | memcpy HtoD
+    0.720704 ms | cuda:0  | memcpy HtoD
+    0.010016 ms | cuda:0  | memcpy HtoD
+    0.014336 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    3.088384 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.865280 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.016384 ms | cuda:0  | memcpy DtoH
+    0.032384 ms | cuda:0  | memcpy HtoD
+    0.039584 ms | cuda:0  | memcpy HtoD
+    0.029920 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.027648 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.012288 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.018528 ms | cuda:0  | memcpy HtoD
+    0.012192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.465824 ms | cuda:0  | memcpy HtoD
+    0.623520 ms | cuda:0  | memcpy HtoD
+    0.009056 ms | cuda:0  | memcpy HtoD
+    0.017408 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.864256 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014624 ms | cuda:0  | memcpy DtoH
+    0.029792 ms | cuda:0  | memcpy HtoD
+    0.030688 ms | cuda:0  | memcpy HtoD
+    0.016992 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007200 ms | cuda:0  | memcpy HtoD
+    0.013248 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444768 ms | cuda:0  | memcpy HtoD
+    0.546688 ms | cuda:0  | memcpy HtoD
+    0.008704 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862144 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014688 ms | cuda:0  | memcpy DtoH
+    0.027136 ms | cuda:0  | memcpy HtoD
+    0.027296 ms | cuda:0  | memcpy HtoD
+    0.016896 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013760 ms | cuda:0  | memcpy HtoD
+    0.012896 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.440192 ms | cuda:0  | memcpy HtoD
+    0.550528 ms | cuda:0  | memcpy HtoD
+    0.009536 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.646144 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014528 ms | cuda:0  | memcpy DtoH
+    0.026816 ms | cuda:0  | memcpy HtoD
+    0.026848 ms | cuda:0  | memcpy HtoD
+    0.017280 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.013536 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004064 ms | cuda:0  | memcpy HtoD
+    0.443456 ms | cuda:0  | memcpy HtoD
+    0.523616 ms | cuda:0  | memcpy HtoD
+    0.008320 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.641024 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014368 ms | cuda:0  | memcpy DtoH
+    0.027456 ms | cuda:0  | memcpy HtoD
+    0.027104 ms | cuda:0  | memcpy HtoD
+    0.016896 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.012288 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013664 ms | cuda:0  | memcpy HtoD
+    0.012832 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444704 ms | cuda:0  | memcpy HtoD
+    0.534016 ms | cuda:0  | memcpy HtoD
+    0.009728 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.017184 ms | cuda:0  | memcpy DtoH
+    0.028704 ms | cuda:0  | memcpy HtoD
+    0.048192 ms | cuda:0  | memcpy HtoD
+    0.025504 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.012288 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.017920 ms | cuda:0  | memcpy HtoD
+    0.013024 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.467712 ms | cuda:0  | memcpy HtoD
+    0.607104 ms | cuda:0  | memcpy HtoD
+    0.009120 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.648128 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.011232 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014592 ms | cuda:0  | memcpy DtoH
+    0.027712 ms | cuda:0  | memcpy HtoD
+    0.029696 ms | cuda:0  | memcpy HtoD
+    0.016512 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.025600 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.013408 ms | cuda:0  | memcpy HtoD
+    0.012800 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441248 ms | cuda:0  | memcpy HtoD
+    0.539776 ms | cuda:0  | memcpy HtoD
+    0.007936 ms | cuda:0  | memcpy HtoD
+    0.012288 ms | cuda:0  | memcpy HtoD
+    0.007104 ms | cuda:0  | memcpy HtoD
+    0.647136 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.027968 ms | cuda:0  | memcpy HtoD
+    0.027904 ms | cuda:0  | memcpy HtoD
+    0.017088 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013728 ms | cuda:0  | memcpy HtoD
+    0.012800 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004032 ms | cuda:0  | memcpy HtoD
+    0.441664 ms | cuda:0  | memcpy HtoD
+    0.517536 ms | cuda:0  | memcpy HtoD
+    0.008256 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014784 ms | cuda:0  | memcpy DtoH
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.028160 ms | cuda:0  | memcpy HtoD
+    0.015872 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.013408 ms | cuda:0  | memcpy HtoD
+    0.012128 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.441888 ms | cuda:0  | memcpy HtoD
+    0.507136 ms | cuda:0  | memcpy HtoD
+    0.008256 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014656 ms | cuda:0  | memcpy DtoH
+    0.026816 ms | cuda:0  | memcpy HtoD
+    0.028512 ms | cuda:0  | memcpy HtoD
+    0.016608 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.013280 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.450688 ms | cuda:0  | memcpy HtoD
+    0.494688 ms | cuda:0  | memcpy HtoD
+    0.009440 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014976 ms | cuda:0  | memcpy DtoH
+    0.028640 ms | cuda:0  | memcpy HtoD
+    0.027136 ms | cuda:0  | memcpy HtoD
+    0.016224 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.013792 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.441952 ms | cuda:0  | memcpy HtoD
+    0.490848 ms | cuda:0  | memcpy HtoD
+    0.008704 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014368 ms | cuda:0  | memcpy DtoH
+    0.031488 ms | cuda:0  | memcpy HtoD
+    0.027488 ms | cuda:0  | memcpy HtoD
+    0.016960 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013056 ms | cuda:0  | memcpy HtoD
+    0.012512 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442688 ms | cuda:0  | memcpy HtoD
+    0.495008 ms | cuda:0  | memcpy HtoD
+    0.009280 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.026976 ms | cuda:0  | memcpy HtoD
+    0.017152 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.007104 ms | cuda:0  | memcpy HtoD
+    0.013504 ms | cuda:0  | memcpy HtoD
+    0.013568 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442144 ms | cuda:0  | memcpy HtoD
+    0.478656 ms | cuda:0  | memcpy HtoD
+    0.008352 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007072 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014848 ms | cuda:0  | memcpy DtoH
+    0.026784 ms | cuda:0  | memcpy HtoD
+    0.027680 ms | cuda:0  | memcpy HtoD
+    0.016128 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.013248 ms | cuda:0  | memcpy HtoD
+    0.012768 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444928 ms | cuda:0  | memcpy HtoD
+    0.481312 ms | cuda:0  | memcpy HtoD
+    0.008448 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014560 ms | cuda:0  | memcpy DtoH
+    0.026560 ms | cuda:0  | memcpy HtoD
+    0.027840 ms | cuda:0  | memcpy HtoD
+    0.015648 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.035840 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.012000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.450144 ms | cuda:0  | memcpy HtoD
+    0.478208 ms | cuda:0  | memcpy HtoD
+    0.007936 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012288 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014944 ms | cuda:0  | memcpy DtoH
+    0.026656 ms | cuda:0  | memcpy HtoD
+    0.026848 ms | cuda:0  | memcpy HtoD
+    0.016160 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014336 ms | cuda:0  | memcpy HtoD
+    0.012000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443808 ms | cuda:0  | memcpy HtoD
+    0.474432 ms | cuda:0  | memcpy HtoD
+    0.008672 ms | cuda:0  | memcpy HtoD
+    0.011200 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014656 ms | cuda:0  | memcpy DtoH
+    0.026336 ms | cuda:0  | memcpy HtoD
+    0.026464 ms | cuda:0  | memcpy HtoD
+    0.016320 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013792 ms | cuda:0  | memcpy HtoD
+    0.012416 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.449472 ms | cuda:0  | memcpy HtoD
+    0.471488 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014752 ms | cuda:0  | memcpy DtoH
+    0.026624 ms | cuda:0  | memcpy HtoD
+    0.027296 ms | cuda:0  | memcpy HtoD
+    0.016768 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.014368 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.448288 ms | cuda:0  | memcpy HtoD
+    0.474304 ms | cuda:0  | memcpy HtoD
+    0.008512 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.646144 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014848 ms | cuda:0  | memcpy DtoH
+    0.026784 ms | cuda:0  | memcpy HtoD
+    0.027136 ms | cuda:0  | memcpy HtoD
+    0.020256 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013760 ms | cuda:0  | memcpy HtoD
+    0.012512 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441536 ms | cuda:0  | memcpy HtoD
+    0.467520 ms | cuda:0  | memcpy HtoD
+    0.009280 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014720 ms | cuda:0  | memcpy DtoH
+    0.026880 ms | cuda:0  | memcpy HtoD
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.016832 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442816 ms | cuda:0  | memcpy HtoD
+    0.472928 ms | cuda:0  | memcpy HtoD
+    0.007488 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863168 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014592 ms | cuda:0  | memcpy DtoH
+    0.026816 ms | cuda:0  | memcpy HtoD
+    0.026976 ms | cuda:0  | memcpy HtoD
+    0.016704 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013440 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442688 ms | cuda:0  | memcpy HtoD
+    0.479360 ms | cuda:0  | memcpy HtoD
+    0.009536 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014752 ms | cuda:0  | memcpy DtoH
+    0.026816 ms | cuda:0  | memcpy HtoD
+    0.027712 ms | cuda:0  | memcpy HtoD
+    0.016320 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.014496 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442560 ms | cuda:0  | memcpy HtoD
+    0.465440 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014976 ms | cuda:0  | memcpy DtoH
+    0.025536 ms | cuda:0  | memcpy HtoD
+    0.027040 ms | cuda:0  | memcpy HtoD
+    0.016416 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013216 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443264 ms | cuda:0  | memcpy HtoD
+    0.462048 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014336 ms | cuda:0  | memcpy DtoH
+    0.026048 ms | cuda:0  | memcpy HtoD
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.016640 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013568 ms | cuda:0  | memcpy HtoD
+    0.012416 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.043008 ms | cuda:0  | memcpy HtoD
+    0.445024 ms | cuda:0  | memcpy HtoD
+    0.460160 ms | cuda:0  | memcpy HtoD
+    0.007936 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014720 ms | cuda:0  | memcpy DtoH
+    0.026112 ms | cuda:0  | memcpy HtoD
+    0.027488 ms | cuda:0  | memcpy HtoD
+    0.016576 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013088 ms | cuda:0  | memcpy HtoD
+    0.012544 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444928 ms | cuda:0  | memcpy HtoD
+    0.464224 ms | cuda:0  | memcpy HtoD
+    0.007616 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014720 ms | cuda:0  | memcpy DtoH
+    0.026784 ms | cuda:0  | memcpy HtoD
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.016672 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024544 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013888 ms | cuda:0  | memcpy HtoD
+    0.013216 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444832 ms | cuda:0  | memcpy HtoD
+    0.463360 ms | cuda:0  | memcpy HtoD
+    0.007744 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014592 ms | cuda:0  | memcpy DtoH
+    0.025792 ms | cuda:0  | memcpy HtoD
+    0.026336 ms | cuda:0  | memcpy HtoD
+    0.016288 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013920 ms | cuda:0  | memcpy HtoD
+    0.012544 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443264 ms | cuda:0  | memcpy HtoD
+    0.459616 ms | cuda:0  | memcpy HtoD
+    0.008224 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.646144 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014208 ms | cuda:0  | memcpy DtoH
+    0.026144 ms | cuda:0  | memcpy HtoD
+    0.027424 ms | cuda:0  | memcpy HtoD
+    0.016704 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014112 ms | cuda:0  | memcpy HtoD
+    0.012512 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.450848 ms | cuda:0  | memcpy HtoD
+    0.459104 ms | cuda:0  | memcpy HtoD
+    0.008448 ms | cuda:0  | memcpy HtoD
+    0.009184 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014432 ms | cuda:0  | memcpy DtoH
+    0.026272 ms | cuda:0  | memcpy HtoD
+    0.028064 ms | cuda:0  | memcpy HtoD
+    0.016736 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013696 ms | cuda:0  | memcpy HtoD
+    0.012416 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.441120 ms | cuda:0  | memcpy HtoD
+    0.457984 ms | cuda:0  | memcpy HtoD
+    0.007744 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.649216 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014560 ms | cuda:0  | memcpy DtoH
+    0.026464 ms | cuda:0  | memcpy HtoD
+    0.027648 ms | cuda:0  | memcpy HtoD
+    0.016608 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013760 ms | cuda:0  | memcpy HtoD
+    0.013216 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441248 ms | cuda:0  | memcpy HtoD
+    0.463392 ms | cuda:0  | memcpy HtoD
+    0.007520 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.869376 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014688 ms | cuda:0  | memcpy DtoH
+    0.025920 ms | cuda:0  | memcpy HtoD
+    0.027296 ms | cuda:0  | memcpy HtoD
+    0.017248 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013664 ms | cuda:0  | memcpy HtoD
+    0.011968 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.445920 ms | cuda:0  | memcpy HtoD
+    0.455712 ms | cuda:0  | memcpy HtoD
+    0.007776 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.649216 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014464 ms | cuda:0  | memcpy DtoH
+    0.026880 ms | cuda:0  | memcpy HtoD
+    0.027904 ms | cuda:0  | memcpy HtoD
+    0.016448 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013088 ms | cuda:0  | memcpy HtoD
+    0.012704 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444352 ms | cuda:0  | memcpy HtoD
+    0.453920 ms | cuda:0  | memcpy HtoD
+    0.007200 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.009248 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014592 ms | cuda:0  | memcpy DtoH
+    0.026112 ms | cuda:0  | memcpy HtoD
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.017120 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013376 ms | cuda:0  | memcpy HtoD
+    0.012960 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441824 ms | cuda:0  | memcpy HtoD
+    0.456640 ms | cuda:0  | memcpy HtoD
+    0.007840 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014176 ms | cuda:0  | memcpy DtoH
+    0.026752 ms | cuda:0  | memcpy HtoD
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.016608 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013504 ms | cuda:0  | memcpy HtoD
+    0.012224 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442208 ms | cuda:0  | memcpy HtoD
+    0.465888 ms | cuda:0  | memcpy HtoD
+    0.007424 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647136 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014336 ms | cuda:0  | memcpy DtoH
+    0.026720 ms | cuda:0  | memcpy HtoD
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.015872 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013600 ms | cuda:0  | memcpy HtoD
+    0.011904 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442304 ms | cuda:0  | memcpy HtoD
+    0.455808 ms | cuda:0  | memcpy HtoD
+    0.008320 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014496 ms | cuda:0  | memcpy DtoH
+    0.026048 ms | cuda:0  | memcpy HtoD
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.016672 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024544 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013120 ms | cuda:0  | memcpy HtoD
+    0.012480 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442624 ms | cuda:0  | memcpy HtoD
+    0.452864 ms | cuda:0  | memcpy HtoD
+    0.008000 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.640000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014528 ms | cuda:0  | memcpy DtoH
+    0.026144 ms | cuda:0  | memcpy HtoD
+    0.026624 ms | cuda:0  | memcpy HtoD
+    0.016800 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014112 ms | cuda:0  | memcpy HtoD
+    0.012768 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.443264 ms | cuda:0  | memcpy HtoD
+    0.452384 ms | cuda:0  | memcpy HtoD
+    0.008064 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.648128 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014368 ms | cuda:0  | memcpy DtoH
+    0.025760 ms | cuda:0  | memcpy HtoD
+    0.027328 ms | cuda:0  | memcpy HtoD
+    0.017152 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006112 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442880 ms | cuda:0  | memcpy HtoD
+    0.451456 ms | cuda:0  | memcpy HtoD
+    0.008224 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014784 ms | cuda:0  | memcpy DtoH
+    0.032576 ms | cuda:0  | memcpy HtoD
+    0.027040 ms | cuda:0  | memcpy HtoD
+    0.016096 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013440 ms | cuda:0  | memcpy HtoD
+    0.012512 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.450816 ms | cuda:0  | memcpy HtoD
+    0.451040 ms | cuda:0  | memcpy HtoD
+    0.007776 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013408 ms | cuda:0  | memcpy DtoH
+    0.025760 ms | cuda:0  | memcpy HtoD
+    0.026496 ms | cuda:0  | memcpy HtoD
+    0.016032 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013568 ms | cuda:0  | memcpy HtoD
+    0.012000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443072 ms | cuda:0  | memcpy HtoD
+    0.452576 ms | cuda:0  | memcpy HtoD
+    0.008992 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014432 ms | cuda:0  | memcpy DtoH
+    0.027392 ms | cuda:0  | memcpy HtoD
+    0.026976 ms | cuda:0  | memcpy HtoD
+    0.017088 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.012576 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005088 ms | cuda:0  | memcpy HtoD
+    0.444896 ms | cuda:0  | memcpy HtoD
+    0.454784 ms | cuda:0  | memcpy HtoD
+    0.007520 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.013312 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014912 ms | cuda:0  | memcpy DtoH
+    0.026400 ms | cuda:0  | memcpy HtoD
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.016832 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013504 ms | cuda:0  | memcpy HtoD
+    0.013408 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.445088 ms | cuda:0  | memcpy HtoD
+    0.452320 ms | cuda:0  | memcpy HtoD
+    0.008704 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.650240 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013792 ms | cuda:0  | memcpy DtoH
+    0.027648 ms | cuda:0  | memcpy HtoD
+    0.026784 ms | cuda:0  | memcpy HtoD
+    0.017056 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.025536 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.012768 ms | cuda:0  | memcpy HtoD
+    0.012480 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.449952 ms | cuda:0  | memcpy HtoD
+    0.451360 ms | cuda:0  | memcpy HtoD
+    0.008608 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014336 ms | cuda:0  | memcpy DtoH
+    0.026624 ms | cuda:0  | memcpy HtoD
+    0.027968 ms | cuda:0  | memcpy HtoD
+    0.016416 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024512 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.013088 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441536 ms | cuda:0  | memcpy HtoD
+    0.458592 ms | cuda:0  | memcpy HtoD
+    0.007264 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.026112 ms | cuda:0  | memcpy HtoD
+    0.027456 ms | cuda:0  | memcpy HtoD
+    0.016864 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013664 ms | cuda:0  | memcpy HtoD
+    0.012544 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.443232 ms | cuda:0  | memcpy HtoD
+    0.468512 ms | cuda:0  | memcpy HtoD
+    0.008352 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014560 ms | cuda:0  | memcpy DtoH
+    0.026400 ms | cuda:0  | memcpy HtoD
+    0.027232 ms | cuda:0  | memcpy HtoD
+    0.016480 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013952 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.445984 ms | cuda:0  | memcpy HtoD
+    0.456576 ms | cuda:0  | memcpy HtoD
+    0.008704 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014656 ms | cuda:0  | memcpy DtoH
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.027520 ms | cuda:0  | memcpy HtoD
+    0.017056 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.009152 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | memcpy HtoD
+    0.012320 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441696 ms | cuda:0  | memcpy HtoD
+    0.452192 ms | cuda:0  | memcpy HtoD
+    0.008256 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.650240 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013952 ms | cuda:0  | memcpy DtoH
+    0.026816 ms | cuda:0  | memcpy HtoD
+    0.027136 ms | cuda:0  | memcpy HtoD
+    0.016064 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013280 ms | cuda:0  | memcpy HtoD
+    0.012832 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444512 ms | cuda:0  | memcpy HtoD
+    0.455808 ms | cuda:0  | memcpy HtoD
+    0.008288 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014176 ms | cuda:0  | memcpy DtoH
+    0.025664 ms | cuda:0  | memcpy HtoD
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.016256 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013952 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442208 ms | cuda:0  | memcpy HtoD
+    0.451136 ms | cuda:0  | memcpy HtoD
+    0.007264 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014720 ms | cuda:0  | memcpy DtoH
+    0.033216 ms | cuda:0  | memcpy HtoD
+    0.027360 ms | cuda:0  | memcpy HtoD
+    0.016704 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013568 ms | cuda:0  | memcpy HtoD
+    0.012224 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.448608 ms | cuda:0  | memcpy HtoD
+    0.453952 ms | cuda:0  | memcpy HtoD
+    0.007712 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010176 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.027616 ms | cuda:0  | memcpy HtoD
+    0.016864 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013696 ms | cuda:0  | memcpy HtoD
+    0.012096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.445248 ms | cuda:0  | memcpy HtoD
+    0.459392 ms | cuda:0  | memcpy HtoD
+    0.007744 ms | cuda:0  | memcpy HtoD
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014624 ms | cuda:0  | memcpy DtoH
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.016800 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.012832 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.445888 ms | cuda:0  | memcpy HtoD
+    0.453408 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.007136 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014848 ms | cuda:0  | memcpy DtoH
+    0.026528 ms | cuda:0  | memcpy HtoD
+    0.026464 ms | cuda:0  | memcpy HtoD
+    0.016224 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.012352 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443488 ms | cuda:0  | memcpy HtoD
+    0.452928 ms | cuda:0  | memcpy HtoD
+    0.008480 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010144 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014848 ms | cuda:0  | memcpy DtoH
+    0.026048 ms | cuda:0  | memcpy HtoD
+    0.026656 ms | cuda:0  | memcpy HtoD
+    0.016480 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013568 ms | cuda:0  | memcpy HtoD
+    0.012864 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.440896 ms | cuda:0  | memcpy HtoD
+    0.453120 ms | cuda:0  | memcpy HtoD
+    0.008448 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.641984 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.019200 ms | cuda:0  | memcpy DtoH
+    0.026016 ms | cuda:0  | memcpy HtoD
+    0.027488 ms | cuda:0  | memcpy HtoD
+    0.017248 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012608 ms | cuda:0  | memcpy HtoD
+    0.012032 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441440 ms | cuda:0  | memcpy HtoD
+    0.458880 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014080 ms | cuda:0  | memcpy DtoH
+    0.026560 ms | cuda:0  | memcpy HtoD
+    0.026752 ms | cuda:0  | memcpy HtoD
+    0.016576 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006112 ms | cuda:0  | memcpy HtoD
+    0.014080 ms | cuda:0  | memcpy HtoD
+    0.012512 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442176 ms | cuda:0  | memcpy HtoD
+    0.448832 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014144 ms | cuda:0  | memcpy DtoH
+    0.025376 ms | cuda:0  | memcpy HtoD
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.016608 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | memcpy HtoD
+    0.012160 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.450432 ms | cuda:0  | memcpy HtoD
+    0.453952 ms | cuda:0  | memcpy HtoD
+    0.007296 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014144 ms | cuda:0  | memcpy DtoH
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.028064 ms | cuda:0  | memcpy HtoD
+    0.017152 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013216 ms | cuda:0  | memcpy HtoD
+    0.012704 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443456 ms | cuda:0  | memcpy HtoD
+    0.453344 ms | cuda:0  | memcpy HtoD
+    0.008416 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.026624 ms | cuda:0  | memcpy HtoD
+    0.026368 ms | cuda:0  | memcpy HtoD
+    0.016448 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013472 ms | cuda:0  | memcpy HtoD
+    0.011648 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444512 ms | cuda:0  | memcpy HtoD
+    0.457344 ms | cuda:0  | memcpy HtoD
+    0.007296 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.646144 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.026848 ms | cuda:0  | memcpy HtoD
+    0.027232 ms | cuda:0  | memcpy HtoD
+    0.016640 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024544 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014336 ms | cuda:0  | memcpy HtoD
+    0.012352 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.440704 ms | cuda:0  | memcpy HtoD
+    0.451904 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014144 ms | cuda:0  | memcpy DtoH
+    0.026112 ms | cuda:0  | memcpy HtoD
+    0.026528 ms | cuda:0  | memcpy HtoD
+    0.016800 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444832 ms | cuda:0  | memcpy HtoD
+    0.453856 ms | cuda:0  | memcpy HtoD
+    0.007648 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.640000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014464 ms | cuda:0  | memcpy DtoH
+    0.025728 ms | cuda:0  | memcpy HtoD
+    0.027616 ms | cuda:0  | memcpy HtoD
+    0.016448 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013280 ms | cuda:0  | memcpy HtoD
+    0.025472 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.016384 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.484192 ms | cuda:0  | memcpy HtoD
+    0.643168 ms | cuda:0  | memcpy HtoD
+    0.010976 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.656384 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014624 ms | cuda:0  | memcpy DtoH
+    0.028736 ms | cuda:0  | memcpy HtoD
+    0.030912 ms | cuda:0  | memcpy HtoD
+    0.016928 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.025600 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013600 ms | cuda:0  | memcpy HtoD
+    0.012096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009184 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.444800 ms | cuda:0  | memcpy HtoD
+    0.570080 ms | cuda:0  | memcpy HtoD
+    0.009920 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014336 ms | cuda:0  | memcpy DtoH
+    0.028096 ms | cuda:0  | memcpy HtoD
+    0.028896 ms | cuda:0  | memcpy HtoD
+    0.017248 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | memcpy HtoD
+    0.012096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004064 ms | cuda:0  | memcpy HtoD
+    0.442208 ms | cuda:0  | memcpy HtoD
+    0.538656 ms | cuda:0  | memcpy HtoD
+    0.006912 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014080 ms | cuda:0  | memcpy DtoH
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.028032 ms | cuda:0  | memcpy HtoD
+    0.016448 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013696 ms | cuda:0  | memcpy HtoD
+    0.011712 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.443808 ms | cuda:0  | memcpy HtoD
+    0.522912 ms | cuda:0  | memcpy HtoD
+    0.007744 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.026272 ms | cuda:0  | memcpy HtoD
+    0.026688 ms | cuda:0  | memcpy HtoD
+    0.016416 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.012608 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.452480 ms | cuda:0  | memcpy HtoD
+    0.510496 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.018240 ms | cuda:0  | memcpy DtoH
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.026176 ms | cuda:0  | memcpy HtoD
+    0.016064 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.011872 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.443008 ms | cuda:0  | memcpy HtoD
+    0.504864 ms | cuda:0  | memcpy HtoD
+    0.008576 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009280 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014496 ms | cuda:0  | memcpy DtoH
+    0.026432 ms | cuda:0  | memcpy HtoD
+    0.026752 ms | cuda:0  | memcpy HtoD
+    0.016128 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.014240 ms | cuda:0  | memcpy HtoD
+    0.012736 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442784 ms | cuda:0  | memcpy HtoD
+    0.495136 ms | cuda:0  | memcpy HtoD
+    0.007232 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014816 ms | cuda:0  | memcpy DtoH
+    0.027104 ms | cuda:0  | memcpy HtoD
+    0.027328 ms | cuda:0  | memcpy HtoD
+    0.017088 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012768 ms | cuda:0  | memcpy HtoD
+    0.012608 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444320 ms | cuda:0  | memcpy HtoD
+    0.488288 ms | cuda:0  | memcpy HtoD
+    0.008064 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014304 ms | cuda:0  | memcpy DtoH
+    0.026400 ms | cuda:0  | memcpy HtoD
+    0.027232 ms | cuda:0  | memcpy HtoD
+    0.017088 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024544 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012960 ms | cuda:0  | memcpy HtoD
+    0.013280 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441152 ms | cuda:0  | memcpy HtoD
+    0.486816 ms | cuda:0  | memcpy HtoD
+    0.008032 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.638912 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.025408 ms | cuda:0  | memcpy HtoD
+    0.027328 ms | cuda:0  | memcpy HtoD
+    0.016224 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.012672 ms | cuda:0  | memcpy HtoD
+    0.012416 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441632 ms | cuda:0  | memcpy HtoD
+    0.486944 ms | cuda:0  | memcpy HtoD
+    0.007872 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.025920 ms | cuda:0  | memcpy HtoD
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.016128 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.012800 ms | cuda:0  | memcpy HtoD
+    0.012256 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.446528 ms | cuda:0  | memcpy HtoD
+    0.476224 ms | cuda:0  | memcpy HtoD
+    0.008096 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014304 ms | cuda:0  | memcpy DtoH
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.016544 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.013152 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.444512 ms | cuda:0  | memcpy HtoD
+    0.475008 ms | cuda:0  | memcpy HtoD
+    0.006848 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643040 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014176 ms | cuda:0  | memcpy DtoH
+    0.026048 ms | cuda:0  | memcpy HtoD
+    0.027648 ms | cuda:0  | memcpy HtoD
+    0.016832 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013600 ms | cuda:0  | memcpy HtoD
+    0.012480 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442336 ms | cuda:0  | memcpy HtoD
+    0.469792 ms | cuda:0  | memcpy HtoD
+    0.008416 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.026496 ms | cuda:0  | memcpy HtoD
+    0.026336 ms | cuda:0  | memcpy HtoD
+    0.016768 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013632 ms | cuda:0  | memcpy HtoD
+    0.012576 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442784 ms | cuda:0  | memcpy HtoD
+    0.472000 ms | cuda:0  | memcpy HtoD
+    0.007616 ms | cuda:0  | memcpy HtoD
+    0.011264 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014208 ms | cuda:0  | memcpy DtoH
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.016704 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008128 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.012288 ms | cuda:0  | memcpy HtoD
+    0.012416 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441984 ms | cuda:0  | memcpy HtoD
+    0.463808 ms | cuda:0  | memcpy HtoD
+    0.007840 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.642048 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013984 ms | cuda:0  | memcpy DtoH
+    0.026784 ms | cuda:0  | memcpy HtoD
+    0.027552 ms | cuda:0  | memcpy HtoD
+    0.016736 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014176 ms | cuda:0  | memcpy HtoD
+    0.013056 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.443200 ms | cuda:0  | memcpy HtoD
+    0.462784 ms | cuda:0  | memcpy HtoD
+    0.007712 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014208 ms | cuda:0  | memcpy DtoH
+    0.027168 ms | cuda:0  | memcpy HtoD
+    0.027840 ms | cuda:0  | memcpy HtoD
+    0.016320 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013696 ms | cuda:0  | memcpy HtoD
+    0.013120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442432 ms | cuda:0  | memcpy HtoD
+    0.464544 ms | cuda:0  | memcpy HtoD
+    0.008064 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.648128 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014496 ms | cuda:0  | memcpy DtoH
+    0.027264 ms | cuda:0  | memcpy HtoD
+    0.026752 ms | cuda:0  | memcpy HtoD
+    0.016256 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.013408 ms | cuda:0  | memcpy HtoD
+    0.012384 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.445792 ms | cuda:0  | memcpy HtoD
+    0.463072 ms | cuda:0  | memcpy HtoD
+    0.007072 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.640992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014368 ms | cuda:0  | memcpy DtoH
+    0.025792 ms | cuda:0  | memcpy HtoD
+    0.026976 ms | cuda:0  | memcpy HtoD
+    0.016928 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005088 ms | cuda:0  | memcpy HtoD
+    0.013120 ms | cuda:0  | memcpy HtoD
+    0.012352 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.453152 ms | cuda:0  | memcpy HtoD
+    0.458336 ms | cuda:0  | memcpy HtoD
+    0.007712 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014144 ms | cuda:0  | memcpy DtoH
+    0.026368 ms | cuda:0  | memcpy HtoD
+    0.026272 ms | cuda:0  | memcpy HtoD
+    0.016672 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013728 ms | cuda:0  | memcpy HtoD
+    0.012352 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441888 ms | cuda:0  | memcpy HtoD
+    0.456832 ms | cuda:0  | memcpy HtoD
+    0.007072 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.861184 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014304 ms | cuda:0  | memcpy DtoH
+    0.027104 ms | cuda:0  | memcpy HtoD
+    0.026656 ms | cuda:0  | memcpy HtoD
+    0.016544 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.012480 ms | cuda:0  | memcpy HtoD
+    0.012672 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009184 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442624 ms | cuda:0  | memcpy HtoD
+    0.463456 ms | cuda:0  | memcpy HtoD
+    0.007392 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014656 ms | cuda:0  | memcpy DtoH
+    0.025440 ms | cuda:0  | memcpy HtoD
+    0.028192 ms | cuda:0  | memcpy HtoD
+    0.016320 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004064 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | memcpy HtoD
+    0.012128 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442816 ms | cuda:0  | memcpy HtoD
+    0.460032 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013952 ms | cuda:0  | memcpy DtoH
+    0.025920 ms | cuda:0  | memcpy HtoD
+    0.026944 ms | cuda:0  | memcpy HtoD
+    0.016224 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.012800 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442400 ms | cuda:0  | memcpy HtoD
+    0.456448 ms | cuda:0  | memcpy HtoD
+    0.007008 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.649216 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014016 ms | cuda:0  | memcpy DtoH
+    0.026368 ms | cuda:0  | memcpy HtoD
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.017184 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.013952 ms | cuda:0  | memcpy HtoD
+    0.013184 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442656 ms | cuda:0  | memcpy HtoD
+    0.457216 ms | cuda:0  | memcpy HtoD
+    0.007616 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014432 ms | cuda:0  | memcpy DtoH
+    0.029760 ms | cuda:0  | memcpy HtoD
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.016576 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013312 ms | cuda:0  | memcpy HtoD
+    0.012288 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.443584 ms | cuda:0  | memcpy HtoD
+    0.457152 ms | cuda:0  | memcpy HtoD
+    0.007616 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.641024 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863200 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014528 ms | cuda:0  | memcpy DtoH
+    0.028640 ms | cuda:0  | memcpy HtoD
+    0.028768 ms | cuda:0  | memcpy HtoD
+    0.016736 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013184 ms | cuda:0  | memcpy HtoD
+    0.012480 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004064 ms | cuda:0  | memcpy HtoD
+    0.445728 ms | cuda:0  | memcpy HtoD
+    0.456128 ms | cuda:0  | memcpy HtoD
+    0.007744 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014176 ms | cuda:0  | memcpy DtoH
+    0.029472 ms | cuda:0  | memcpy HtoD
+    0.027648 ms | cuda:0  | memcpy HtoD
+    0.016000 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.014368 ms | cuda:0  | memcpy HtoD
+    0.014112 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.441568 ms | cuda:0  | memcpy HtoD
+    0.455776 ms | cuda:0  | memcpy HtoD
+    0.007776 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644096 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.866304 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014176 ms | cuda:0  | memcpy DtoH
+    0.028416 ms | cuda:0  | memcpy HtoD
+    0.027232 ms | cuda:0  | memcpy HtoD
+    0.017952 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.025600 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013888 ms | cuda:0  | memcpy HtoD
+    0.012864 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.004032 ms | cuda:0  | memcpy HtoD
+    0.443584 ms | cuda:0  | memcpy HtoD
+    0.455328 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.010208 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014336 ms | cuda:0  | memcpy DtoH
+    0.028512 ms | cuda:0  | memcpy HtoD
+    0.028416 ms | cuda:0  | memcpy HtoD
+    0.016864 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013888 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.442944 ms | cuda:0  | memcpy HtoD
+    0.456160 ms | cuda:0  | memcpy HtoD
+    0.007552 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.643072 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014080 ms | cuda:0  | memcpy DtoH
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.026720 ms | cuda:0  | memcpy HtoD
+    0.016768 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013440 ms | cuda:0  | memcpy HtoD
+    0.011808 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.452608 ms | cuda:0  | memcpy HtoD
+    0.455680 ms | cuda:0  | memcpy HtoD
+    0.007872 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.645120 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014080 ms | cuda:0  | memcpy DtoH
+    0.028416 ms | cuda:0  | memcpy HtoD
+    0.027776 ms | cuda:0  | memcpy HtoD
+    0.016288 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013440 ms | cuda:0  | memcpy HtoD
+    0.012352 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444096 ms | cuda:0  | memcpy HtoD
+    0.457504 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.646144 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.865280 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014400 ms | cuda:0  | memcpy DtoH
+    0.027936 ms | cuda:0  | memcpy HtoD
+    0.028288 ms | cuda:0  | memcpy HtoD
+    0.017248 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.013536 ms | cuda:0  | memcpy HtoD
+    0.012192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.448320 ms | cuda:0  | memcpy HtoD
+    0.452736 ms | cuda:0  | memcpy HtoD
+    0.007680 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.641024 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014432 ms | cuda:0  | memcpy DtoH
+    0.027264 ms | cuda:0  | memcpy HtoD
+    0.027200 ms | cuda:0  | memcpy HtoD
+    0.017408 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014368 ms | cuda:0  | memcpy HtoD
+    0.012992 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.444416 ms | cuda:0  | memcpy HtoD
+    0.454432 ms | cuda:0  | memcpy HtoD
+    0.008800 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.644032 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014848 ms | cuda:0  | memcpy DtoH
+    0.028384 ms | cuda:0  | memcpy HtoD
+    0.027296 ms | cuda:0  | memcpy HtoD
+    0.016768 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013376 ms | cuda:0  | memcpy HtoD
+    0.012448 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.442368 ms | cuda:0  | memcpy HtoD
+    0.454912 ms | cuda:0  | memcpy HtoD
+    0.007808 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.650240 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.013888 ms | cuda:0  | memcpy DtoH
+    0.028288 ms | cuda:0  | memcpy HtoD
+    0.027680 ms | cuda:0  | memcpy HtoD
+    0.016928 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013920 ms | cuda:0  | memcpy HtoD
+    0.012928 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.445824 ms | cuda:0  | memcpy HtoD
+    0.455936 ms | cuda:0  | memcpy HtoD
+    0.008096 ms | cuda:0  | memcpy HtoD
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.647168 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.028448 ms | cuda:0  | memcpy HtoD
+    0.026880 ms | cuda:0  | memcpy HtoD
+    0.016128 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.013856 ms | cuda:0  | memcpy HtoD
+    0.013056 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.004064 ms | cuda:0  | memcpy HtoD
+    0.442272 ms | cuda:0  | memcpy HtoD
+    0.455744 ms | cuda:0  | memcpy HtoD
+    0.007872 ms | cuda:0  | memcpy HtoD
+    0.008160 ms | cuda:0  | memcpy HtoD
+    0.006144 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014528 ms | cuda:0  | memcpy DtoH
+    0.027488 ms | cuda:0  | memcpy HtoD
+    0.027616 ms | cuda:0  | memcpy HtoD
+    0.016352 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.014304 ms | cuda:0  | memcpy HtoD
+    0.013248 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444416 ms | cuda:0  | memcpy HtoD
+    0.451360 ms | cuda:0  | memcpy HtoD
+    0.007232 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.640000 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.862208 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.009216 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014240 ms | cuda:0  | memcpy DtoH
+    0.027104 ms | cuda:0  | memcpy HtoD
+    0.026624 ms | cuda:0  | memcpy HtoD
+    0.015968 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.023552 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.013696 ms | cuda:0  | memcpy HtoD
+    0.012960 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+    0.007168 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.444192 ms | cuda:0  | memcpy HtoD
+    0.454144 ms | cuda:0  | memcpy HtoD
+    0.007904 ms | cuda:0  | memcpy HtoD
+    0.008192 ms | cuda:0  | memcpy HtoD
+    0.006080 ms | cuda:0  | memcpy HtoD
+    0.648192 ms | cuda:0  | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+    0.863232 ms | cuda:0  | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.003072 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.004096 ms | cuda:0  | memcpy HtoD
+    0.005120 ms | cuda:0  | memcpy HtoD
+    0.010240 ms | cuda:0  | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    0.014304 ms | cuda:0  | memcpy DtoH
+    0.026912 ms | cuda:0  | memcpy HtoD
+    0.027072 ms | cuda:0  | memcpy HtoD
+    0.016640 ms | cuda:0  | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    0.024576 ms | cuda:0  | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+
+CUDA activity summary:
+----------------+---------+------------------------------------------------------------------------------
+Total time      | Count   | Activity
+----------------+---------+------------------------------------------------------------------------------
+  106.221120 ms |    1700 | memcpy HtoD
+    1.296064 ms |     100 | forward kernel wp_update_all_instances__locals__wp_get_rot_transpose_cbfd8902
+   66.957824 ms |     100 | forward kernel wp_update_all_instances__locals__wp_get_displacement_278c6a63
+   86.232929 ms |     100 | forward kernel Instances__instances_update_v__locals__wp_update_v_d175e598
+    0.991840 ms |     100 | forward kernel wp_dyrt__locals__wp_estimate_accelerations_6a28b6bb
+    1.456000 ms |     100 | memcpy DtoH
+    1.689248 ms |     100 | forward kernel wp_dyrt__locals__get_q_35ee1e75
+    2.454272 ms |     100 | forward kernel Instances__instances_update_q__locals__wp_update_q_68e7d4b1
+
+CUDA device summary:
+----------------+---------+------------------------------------------------------------------------------
+Total time      | Count   | Device
+----------------+---------+------------------------------------------------------------------------------
+  267.299297 ms |    2400 | cuda:0
+
+update all took 29277.72 ms
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 29.288 seconds
+---------------------------------------------------------

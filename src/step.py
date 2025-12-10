@@ -13,6 +13,20 @@ def wp_update_all_instances(
         ix: Instances
     ):
 
+    displaces = []
+    # cpu_q_cur = np.zeros((ix.num_instances, bi.n_modes), dtype=np.float32)
+    cpu_q_cur = ix.q_cur.numpy()
+    for i in range(ix.num_instances):
+        displace = bi.eigenvectors @ cpu_q_cur[i]
+        displace = np.reshape(displace, (3, -1)).T
+        displaces.append(displace)
+
+    displaces = np.array(displaces, dtype=np.float32)
+
+    @wp.kernel
+    def wp_get_modal_displacement():
+        i = wp.tid()
+
     bm_normals = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
     face_indices = wp.from_numpy(ix.face_indices.astype(np.int32), dtype=wp.int32, device=DEVICE)
     rot_matrices_T= wp.from_numpy(np.ones((ix.num_instances,3,3), dtype=np.float32), device=DEVICE)
@@ -31,15 +45,6 @@ def wp_update_all_instances(
         rot_matrices[i] = transpose33(rot_matrix)
     wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[face_indices, bm_normals], outputs=[rot_matrices_T], device=DEVICE)
      
-    displaces = []
-    cpu_q_cur = ix.q_cur.numpy()
-    for i in range(ix.num_instances):
-        displace = bi.eigenvectors.numpy() @ cpu_q_cur[i]
-        displace = np.reshape(displace, (3, -1)).T
-        displaces.append(displace)
-
-    displaces = np.array(displaces, dtype=np.float32)
-
     
     faces_wp = wp.from_numpy(bm.f.astype(np.int32), dtype=wp.vec3l, device=DEVICE)
     # base_v is passed in as a 1-element array to workaround warp limitation
@@ -69,7 +74,6 @@ def wp_update_all_instances(
             # apply the face point offset
             new_v[j] = new_v[j] + get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         vs[i] = new_v
-
     wp.launch(wp_get_displacement, dim=ix.num_instances, inputs=[wp.from_numpy(displaces, device=DEVICE), base_v, bi.v.shape[0], rot_matrices_T, wp.from_numpy(ix.face_indices, device=DEVICE), wp.from_numpy(ix.barycentric, device=DEVICE), wp.from_numpy(bm.v["cur"], device=DEVICE), faces_wp], outputs=[vs], device=DEVICE)
     ix.instances_update_v(vs)
 
@@ -118,7 +122,6 @@ def wp_dyrt(bm, bi, instances_object):
         b2 = barycentric[i][1]
         b3 = barycentric[i][2]
         estimate_accelerations[i] = b1*fd_acceleration[v1] + b2*fd_acceleration[v2] + b3*fd_acceleration[v3]
-
     wp.launch(wp_estimate_accelerations, dim=num_instances, inputs=[face_indices, barycentric, faces, fd_acceleration], outputs=[estimate_accelerations], device=DEVICE)
 
     estimate_accelerations = estimate_accelerations.numpy()
@@ -136,14 +139,7 @@ def wp_dyrt(bm, bi, instances_object):
         forcing_term[mask] = estimate_acceleration
         forcing_term = forcing_term.ravel().T
 
-        # print("forcing_term", forcing_term)
-        '''
-        this line of code applies the forces to all vertices in the instance
-        '''
-        # forcing_term = np.tile(estimate_acceleration, bi.v.shape[0]).T
-
-        # print("forcing_term", forcing_term.shape)
-        third_term = scaling_constant*(bi.phi_inv.numpy() @ forcing_term)
+        third_term = scaling_constant*(bi.phi_inv @ forcing_term)
         third_terms.append(third_term)
     third_terms = np.array(third_terms, dtype=np.float32)
 
@@ -157,10 +153,9 @@ def wp_dyrt(bm, bi, instances_object):
         q_cur: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
         q_prev: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
         third_term: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
-        q: wp.array(dtype=wp.vec(length=num_modes , dtype=float))):
+        q: wp.array(dtype=wp.vec(length=num_modes, dtype=float))):
         
         i = wp.tid()
-        # q[i] = c1*q_cur[i] + c2*q_prev[i] + c3*third_term[i]
         result = wp.vec(length=num_modes, dtype=float)
         for j in range(num_modes):
             result[j] = c1[j]*q_cur[i][j] + c2[j]*q_prev[i][j] + c3[j]*third_term[i][j]
