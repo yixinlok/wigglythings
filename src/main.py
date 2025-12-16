@@ -100,9 +100,9 @@ def callback():
         # wp_update_all_instances(base_mesh,tear_base_instance,tear_instances_object)
 
         tets = base_instance.tets
+        v_curs = instances_object.v_cur.numpy()
         for i in range(instances_object.num_instances):
-            vertices = instances_object.v_cur[i]
-            
+            vertices = v_curs[i]
             if time_step == 1:
                 m = ps.register_volume_mesh("tet mesh" + str(i), vertices, tets=tets)
                 ps_meshes[i] = m
