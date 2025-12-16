@@ -3,14 +3,12 @@
 ![Demo](assets/cover.gif)
 
 running:
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+bash run.sh
 
 todo:
-- dynamically update normals 
 - get rid of hashmap for base mesh vertices
-  
+- move numpy reshaping snippets to warp
+
 updates:
 
 - moved stuff to warp

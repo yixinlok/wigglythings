@@ -1,11 +1,12 @@
 import numpy as np
+import warp as wp
 
-matrix = np.random.rand(12,1).astype(np.float32)
+@wp.kernel
+def compute():
 
-reshaped = matrix.reshape((3,4))
+    t = wp.tile_arrange(0.0, 1.0, 0.1, dtype=float)
+    s = wp.tile_map(wp.sin, t)
 
-reshaped2 = matrix.reshape((4,3)).T 
+    print(s)
 
-# compare reshaped and reshaped2
-print("reshaped:\n", reshaped)
-print("reshaped2:\n", reshaped2)
+wp.launch_tiled(compute, dim=[1], inputs=[], block_dim=16, device="cuda:0")

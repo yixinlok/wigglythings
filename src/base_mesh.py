@@ -12,15 +12,12 @@ import warp as wp
 from rodrigues_rotation import *
 
 class BaseMesh:
-    resting_v: np.ndarray
-    v: dict
+    resting_v: np.ndarray # original rest vertex positions
+    v: dict # current and previous vertex positions
     f: np.ndarray #faces to render instances on
     all_f: np.ndarray # all faces
-    n: np.ndarray
-    instance_scale: float
-    # instances: list[Instance]
-
-    # consider moving out
+    n: np.ndarray # per-face normals
+    instance_scale: float 
     faces_display: int
     num_instance_per_face: int
 
