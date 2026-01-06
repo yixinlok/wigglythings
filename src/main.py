@@ -93,7 +93,7 @@ def callback():
         # displace_base = np.array([0, 0, 0])
 
         bm_update_v(base_mesh, new)
-        ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v["cur"], base_mesh.all_f)
+        ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v_cur, base_mesh.all_f)
 
         '''then update the instances'''
         wp_update_all_instances(base_mesh,base_instance,instances_object)
@@ -132,7 +132,7 @@ else:
 
         counts = np.full(base_mesh.all_f.shape[0], 3)
         indices = base_mesh.all_f.flatten()
-        w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v["cur"].shape[0])
+        w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v_cur.shape[0])
 
         for i in range(instances_object.num_instances):
             counts = np.full(base_instance.f.shape[0], 3)
@@ -171,7 +171,7 @@ else:
         
             if POLYSCOPE_OR_USD == "usd":
                 print(f"writing frame {time_step}...")
-                w.write_points("basemesh", base_mesh.v["cur"],  timecode=time_step)
+                w.write_points("basemesh", base_mesh.v_cur,  timecode=time_step)
                 v_curs = instances_object.v_cur.numpy()
                 for i in range(instances_object.num_instances):
                     vertices = v_curs[i]

@@ -97,7 +97,7 @@ def wp_update_all_instances(
             # apply the face point offset
             new_v[j] = new_v[j] + get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         vs[i] = new_v
-    wp.launch(wp_get_total_displacement, dim=ix.num_instances, inputs=[displaces, base_v, bi.v.shape[0], rot_matrices_T, wp.from_numpy(ix.face_indices, device=DEVICE), wp.from_numpy(ix.barycentric, device=DEVICE), wp.from_numpy(bm.v["cur"], device=DEVICE), faces_wp], outputs=[vs], device=DEVICE)
+    wp.launch(wp_get_total_displacement, dim=ix.num_instances, inputs=[displaces, base_v, bi.v.shape[0], rot_matrices_T, wp.from_numpy(ix.face_indices, device=DEVICE), wp.from_numpy(ix.barycentric, device=DEVICE), wp.from_numpy(bm.v_cur, device=DEVICE), faces_wp], outputs=[vs], device=DEVICE)
     
     ix.instances_update_v(vs)
 

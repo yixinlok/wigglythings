@@ -36,9 +36,10 @@ def create_basemesh(
         v = vertices
         f = faces
     
-    bm.v = {"cur": v.copy().astype(np.float32),
-            "prev": v.copy().astype(np.float32),
-            "prev2": v.copy().astype(np.float32)}
+    bm.v_cur = v.copy().astype(np.float32)
+    bm.v_prev = v.copy().astype(np.float32)
+    bm.v_prev2 = v.copy().astype(np.float32)
+
     
     '''
     bm.f is the faces we render instances on
@@ -51,7 +52,7 @@ def create_basemesh(
         bm.f = bm.all_f
 
     bm.resting_v = v.copy()
-    bm.n = gp.per_face_normals(bm.v["cur"],bm.f,unit_norm=True)
+    bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
     
     
     bm.faces_display = 5
@@ -64,21 +65,22 @@ def bm_update_v(
         bm: BaseMesh, 
         new_v: np.ndarray
     ) ->None:
-    bm.v["prev2"] = bm.v["prev"]
-    bm.v["prev"] = bm.v["cur"]
-    bm.v["cur"] = new_v.astype(np.float32)
-    bm.n = gp.per_face_normals(bm.v["cur"],bm.f,unit_norm=True)
+
+    bm.v_prev2 = bm.v_prev
+    bm.v_prev = bm.v_cur
+    bm.v_cur = new_v.astype(np.float32)
+    bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
 
     # update the rest of the mesh too
     return
 
 def bm_get_face_center(bm, face_idx):
-    center = np.mean(bm.v["cur"][bm.f[face_idx]], axis=0)
+    center = np.mean(bm.v_cur[bm.f[face_idx]], axis=0)
     assert center.shape == (3,)
     return center
 
 def bm_get_face_point(bm, face_idx, barycentric):
-    v1, v2, v3 = bm.v["cur"][bm.f[face_idx]]
+    v1, v2, v3 = bm.v_cur[bm.f[face_idx]]
     b1, b2, b3 = barycentric
     face_point = b1*v1 + b2*v2 + b3*v3
     return face_point
@@ -103,7 +105,7 @@ def get_face_point(
 
 
 def bm_fd_acceleration(bm):
-    acceleration = (bm.v["cur"] - 2*bm.v["prev"] + bm.v["prev2"])/(globals.TIME_STEP_SIZE**2)
+    acceleration = (bm.v_cur - 2*bm.v_prev + bm.v_prev2)/(globals.TIME_STEP_SIZE**2)
     return acceleration.astype(np.float32)
 
 
@@ -128,9 +130,9 @@ def face_picker(
     def callback():
         nonlocal colours, picked
 
-        
-        mesh = ps.register_surface_mesh("mesh", bm.v["cur"], bm.all_f)
-        
+
+        mesh = ps.register_surface_mesh("mesh", bm.v_cur, bm.all_f)
+
         mesh.set_selection_mode('faces_only')
 
         io = psim.GetIO()
