@@ -3,7 +3,6 @@ import gpytoolbox as gp
 import polyscope as ps
 import scipy as sp
 from base_instance import *
-from instance import *
 import globals 
 from dyrt_utils import *
 from matrix_utils import *
@@ -103,11 +102,9 @@ def get_face_point(
     return face_point
 
 
-
 def bm_fd_acceleration(bm):
     acceleration = (bm.v_cur - 2*bm.v_prev + bm.v_prev2)/(globals.TIME_STEP_SIZE**2)
     return acceleration.astype(np.float32)
-
 
 
 '''

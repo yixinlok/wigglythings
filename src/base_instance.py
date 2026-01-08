@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 import polyscope as ps
 import polyscope.imgui as psim
 import gpytoolbox as gp
@@ -47,6 +48,10 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     f, *rest = igl.boundary_facets(tets)
     v = gp.normalize_points(v)
     v = scale*v + np.array([0,0.5*scale,0])
+    
+    # Get torch device
+    torch_device =  "cpu"
+    
     # now the vertices are all normalized, and centred sitting on top of the xy plane
     bi.v = v.astype(np.float32)
     bi.f = f.astype(np.int32)
@@ -62,7 +67,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
 
     bi.eigenvalues = eigenvalues.astype(np.float32)
-    bi.eigenvectors = eigenvectors.astype(np.float32)
+    bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(torch_device)
     # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
     bi.phi_inv = phi_inv.astype(np.float32)
     bi.M = M

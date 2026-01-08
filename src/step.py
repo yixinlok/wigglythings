@@ -1,7 +1,6 @@
 import numpy as np
 from dyrt_utils import *
 from base_mesh import *
-from instance import *
 import warp as wp
 from rodrigues_rotation import *
 from instances import *
@@ -14,10 +13,12 @@ def wp_update_all_instances(
     ):
 
     displaces = []
-    cpu_q_cur = ix.q_cur.numpy()
+    print("shape of q_cur:", ix.q_cur[0].shape)
+    cpu_q_cur = ix.q_cur
     for i in range(ix.num_instances):
         displace = bi.eigenvectors @ cpu_q_cur[i]
-        displace = np.reshape(displace, (3, -1)).T
+        displace = displace.reshape(3, -1).T
+        displace = displace.cpu()
         displaces.append(displace)
 
     displaces = np.array(displaces, dtype=np.float32)
@@ -70,24 +71,26 @@ def wp_update_all_instances(
      
     
     faces_wp = wp.from_numpy(bm.f.astype(np.int32), dtype=wp.vec3l, device=DEVICE)
+    barycentric = wp.from_numpy(ix.barycentric, device=DEVICE)
     # base_v is passed in as a 1-element array to workaround warp limitation
     base_v = wp.from_numpy(np.array([bi.v]), device=DEVICE)
     vs = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0],3)).astype(np.float32), device=DEVICE)
     
     @wp.kernel
     def wp_get_total_displacement(
+        num_v: int,
         displace: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
         base_v: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
-        num_v: int,
         rot_matrices_T: wp.array(dtype=wp.mat33),
         face_indices: wp.array(dtype=wp.int32),
         barycentrics: wp.array(dtype=wp.vec3),
         bm_v_cur: wp.array(dtype=wp.vec3),
         bm_f: wp.array(dtype=wp.vec3l),
         vs: wp.array(dtype=wp.mat((bi.v.shape[0],3), dtype=float))
+        # vs: wp.array2d(dtype=wp.vec3)
         ):
 
-        i = wp.tid()
+        i,k = wp.tid()
         # imagine it wiggles in place
         new_v = base_v[0] + displace[i]
         # rotate it to the right orientation
@@ -97,7 +100,11 @@ def wp_update_all_instances(
             # apply the face point offset
             new_v[j] = new_v[j] + get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         vs[i] = new_v
-    wp.launch(wp_get_total_displacement, dim=ix.num_instances, inputs=[displaces, base_v, bi.v.shape[0], rot_matrices_T, wp.from_numpy(ix.face_indices, device=DEVICE), wp.from_numpy(ix.barycentric, device=DEVICE), wp.from_numpy(bm.v_cur, device=DEVICE), faces_wp], outputs=[vs], device=DEVICE)
+
+    wp.launch(wp_get_total_displacement, dim=(ix.num_instances, bi.v.shape[0]), 
+              inputs=[bi.v.shape[0], displaces, base_v, rot_matrices_T, face_indices, barycentric, wp.from_numpy(bm.v_cur, device=DEVICE), faces_wp], 
+              outputs=[vs], 
+              device=DEVICE)
     
     ix.instances_update_v(vs)
 
@@ -164,27 +171,28 @@ def wp_dyrt(bm, bi, instances_object):
         forcing_term = forcing_term.ravel().T
 
         third_term = scaling_constant*(bi.phi_inv @ forcing_term)
+
         third_terms.append(third_term)
     third_terms = np.array(third_terms, dtype=np.float32)
-
-    q = wp.from_numpy(np.zeros((num_instances, num_modes), dtype=np.float32), device=DEVICE)
+    third_terms = wp.from_numpy(third_terms, device=DEVICE)
+    # q = wp.from_numpy(np.zeros((num_instances, num_modes), dtype=np.float32), device=DEVICE)
+    q = torch.zeros((num_instances, num_modes), dtype=torch.float32)
 
     @wp.kernel
-    def get_q(
+    def get_q_new(
         c1: wp.vec(length=num_modes, dtype=float),
         c2: wp.vec(length=num_modes, dtype=float),
         c3: wp.vec(length=num_modes, dtype=float),
-        q_cur: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
-        q_prev: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
+        q_cur: wp.array2d(dtype=float),
+        q_prev: wp.array2d(dtype=float),
         third_term: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
-        q: wp.array(dtype=wp.vec(length=num_modes, dtype=float))):
+        q: wp.array2d(dtype=float)
+        ):
         
-        i = wp.tid()
-        result = wp.vec(length=num_modes, dtype=float)
-        for j in range(num_modes):
-            result[j] = c1[j]*q_cur[i][j] + c2[j]*q_prev[i][j] + c3[j]*third_term[i][j]
-        q[i] = result
+        i,j = wp.tid()
+        q[i][j] = c1[j]*q_cur[i][j] + c2[j]*q_prev[i][j] + c3[j]*third_term[i][j]
 
-    wp.launch(get_q, dim=num_instances,inputs=[c1,c2,c3, instances_object.q_cur, instances_object.q_prev, wp.from_numpy(third_terms, device=DEVICE)], outputs=[q], device=DEVICE)
+    wp.launch(get_q_new, dim=(num_instances, num_modes),inputs=[c1,c2,c3, instances_object.q_cur, instances_object.q_prev, third_terms], outputs=[q], device=DEVICE)
+    
     instances_object.instances_update_q(q)
     return 
