@@ -13,7 +13,6 @@ def wp_update_all_instances(
     ):
 
     displaces = []
-    print("shape of q_cur:", ix.q_cur[0].shape)
     cpu_q_cur = ix.q_cur
     for i in range(ix.num_instances):
         displace = bi.eigenvectors @ cpu_q_cur[i]
@@ -23,31 +22,24 @@ def wp_update_all_instances(
 
     displaces = np.array(displaces, dtype=np.float32)
 
-    # eigenvectors = wp.from_numpy(np.array([bi.eigenvectors.astype(np.float32)]), device=DEVICE)
-    # d = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0]*3), dtype=np.float32), device=DEVICE)
-    # displaces = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0], 3), dtype=np.float32), device=DEVICE)
+    EV_LENGTH = wp.constant(bi.v.shape[0]*3)
+    NUM_MODES = wp.constant(bi.n_modes)
+    # displaces = torch.zeros((ix.num_instances, bi.v.shape[0],3), dtype=torch.float32)
+    @wp.kernel
+    def wp_get_modal_displacement(
+        eigenvectors: wp.array2d(dtype=wp.float32),  # bi.v.shape[0]*3,bi.n_modes
+        q_cur: wp.array2d(dtype=wp.float32), # ix.num_instances, bi.n_modes
+        displaces: wp.array3d(dtype=wp.float32), # ix.num_instances,bi.v.shape[0],3
+        ):
+        i = wp.tid()
+        evs = wp.tile_load(eigenvectors, shape=(EV_LENGTH, NUM_MODES))
+        qs = wp.tile_load(q_cur,shape=(NUM_MODES, 1), offset=(i,0))
 
-    # @wp.kernel
-    # def wp_get_modal_displacement(
-    #     eigenvectors: wp.array(dtype=wp.mat((bi.v.shape[0]*3,bi.n_modes), dtype=float)),
-    #     q_cur: wp.array(dtype=wp.vec(length=bi.n_modes, dtype=float)),
-    #     num_v_per_instance: int,
-    #     displaces: wp.array(dtype=wp.mat(shape=(bi.v.shape[0],3), dtype=float)),
-    #     d: wp.array(dtype=wp.vec(length=bi.v.shape[0]*3, dtype=float))):
-        
-    #     tid = wp.tid()
-    #     d[tid] = eigenvectors[0]@q_cur[tid]
-
-    #     displaces[tid] = wp.matrix(d[tid], shape=(num_v_per_instance,3))
-
-    #     # equivalent to reshape by vertex, then transpose
-    #     for i in range(num_v_per_instance*3):
-    #         displaces[tid][i//num_v_per_instance][i%3] = d[tid][i]
-
-
-    # wp.launch(wp_get_modal_displacement, dim=ix.num_instances, inputs=[eigenvectors, ix.q_cur, bi.v.shape[0]], outputs=[displaces,d], device="cuda:0")
-    # print("displaces shape:", d.shape)
-
+        d = wp.tile_zeros(shape=(EV_LENGTH, 1), dtype=wp.float32)
+        wp.tile_matmul(evs, qs, d)
+        d = wp.tile_reshape(d, (3, -1))
+        d = wp.tile_transpose(d)
+        wp.tile_store(displaces[i], d)
 
     bm_normals = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
     # todo: make this wp in ix
@@ -76,6 +68,42 @@ def wp_update_all_instances(
     base_v = wp.from_numpy(np.array([bi.v]), device=DEVICE)
     vs = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0],3)).astype(np.float32), device=DEVICE)
     
+    BI_NUM_V = wp.constant(bi.v.shape[0])
+    @wp.kernel
+    def wp_better_get_total_displacement(
+        num_v: int,
+        displaces: wp.array3d(dtype=float), # ix.num_instances,bi.v.shape[0],3
+        base_v: wp.array2d(dtype=float), # bi.v.shape[0],3
+        rot_matrices_T: wp.array3d(dtype=float),# ix.num_instances,3,3
+        face_points: wp.array2d(dtype=float), # ix.num_instances,3
+        vs: wp.array3d(dtype=float) # ix.num_instances,bi.v.shape[0],3
+        ):
+        i,j = wp.tid()
+        displace = wp.tile_load(displaces[i], shape=(1, 3), offset=(j,0))
+        base = wp.tile_load(base_v, shape=(1, 3), offset=(j,0))
+        displaced_base_v = base + displace
+
+        new_v = wp.tile_zeros(shape=(1, 3), dtype=float)
+        rot_mat = wp.tile_load(rot_matrices_T[i], shape=(3, 3), offset=(0, 0))
+        wp.tile_matmul(displaced_base_v, rot_mat, new_v)
+
+        face_point = wp.tile_load(face_points, shape=(1,3), offset=(i,0))
+        # face_point = wp.tile_broadcast(face_point, shape=(BI_NUM_V, 3))
+        new_v = new_v + face_point
+        wp.tile_store(vs[i], new_v)
+
+    @wp.kernel
+    def wp_get_face_points(
+        face_indices: wp.array(dtype=wp.int32),
+        barycentrics: wp.array(dtype=wp.vec3),
+        bm_v_cur: wp.array(dtype=wp.vec3),
+        bm_f: wp.array(dtype=wp.vec3l),
+        face_points: wp.array(dtype=wp.vec3)
+        ):
+        i = wp.tid()
+        face_point = get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
+        face_points[i] = face_point
+
     @wp.kernel
     def wp_get_total_displacement(
         num_v: int,
@@ -86,8 +114,8 @@ def wp_update_all_instances(
         barycentrics: wp.array(dtype=wp.vec3),
         bm_v_cur: wp.array(dtype=wp.vec3),
         bm_f: wp.array(dtype=wp.vec3l),
-        vs: wp.array(dtype=wp.mat((bi.v.shape[0],3), dtype=float))
-        # vs: wp.array2d(dtype=wp.vec3)
+        vs: wp.array(dtype=wp.mat(bi.v.shape, dtype=float))
+        # vs: wp.array3d(dtype=float)
         ):
 
         i,k = wp.tid()
@@ -96,9 +124,10 @@ def wp_update_all_instances(
         # rotate it to the right orientation
         new_v = new_v @ rot_matrices_T[i]
 
+        face_point = get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         for j in range(num_v):
             # apply the face point offset
-            new_v[j] = new_v[j] + get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
+            new_v[j] = new_v[j] + face_point
         vs[i] = new_v
 
     wp.launch(wp_get_total_displacement, dim=(ix.num_instances, bi.v.shape[0]), 
@@ -163,8 +192,7 @@ def wp_dyrt(bm, bi, instances_object):
         '''
         this block of code only applies the forces to the pinned vertices
         '''
-        zeros = np.zeros_like(estimate_acceleration)
-        forcing_term = np.tile(zeros, (bi.v.shape[0], 1))
+        forcing_term = np.zeros(bi.v.shape, dtype=np.float32)
         mask = np.zeros(bi.v.shape[0], dtype=bool)
         mask[bi.pinned_vertices] = True
         forcing_term[mask] = estimate_acceleration
@@ -175,8 +203,9 @@ def wp_dyrt(bm, bi, instances_object):
         third_terms.append(third_term)
     third_terms = np.array(third_terms, dtype=np.float32)
     third_terms = wp.from_numpy(third_terms, device=DEVICE)
-    # q = wp.from_numpy(np.zeros((num_instances, num_modes), dtype=np.float32), device=DEVICE)
+
     q = torch.zeros((num_instances, num_modes), dtype=torch.float32)
+    q = wp.from_torch(q)
 
     @wp.kernel
     def get_q_new(

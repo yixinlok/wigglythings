@@ -3,15 +3,13 @@ TIME_STEP_SIZE = 0.05
 NUM_FRAMES = 100
 N_MODES = 6
 DEVICE = "cpu" #"cuda:0" 
-POLYSCOPE_OR_USD = "polyscope" # "polyscope" or "usd" or "none"
+POLYSCOPE_OR_USD = "none" # "polyscope" or "usd" or "none"
 
 MSH_PATHS = {
     "elephant": "assets/elephant.msh",
-    # "grass": "assets/grasslike.msh",
     "spike": "assets/spike.msh",
     "tightcoil": "assets/tightcoil.msh",
     "loosecoil": "assets/loosecoil.msh",
-    # "less_leaves": "assets/less_leaves.msh",
     "feather": "assets/feather.msh",
     "teardrop": "assets/teardrop.msh",
 }

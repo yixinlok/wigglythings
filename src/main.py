@@ -178,7 +178,8 @@ else:
                     w.write_points("instance_" + str(i), vertices, timecode=time_step)
     end = time.time()
     elapsed = end - start
-
+    # results = wp.timing_end()
+    # wp.timing_print(results)
     print("---------------------------------------------------------")
     print("->" + base_mesh_name + " with " + tet_name + " instances")
     print("Number of instances:", instances_object.num_instances)
@@ -189,8 +190,7 @@ else:
     print("---------------------------------------------------------")
     if POLYSCOPE_OR_USD == "usd":
         w.close()
-    # results = wp.timing_end()
-    # wp.timing_print(results)
+    
 
     
 
