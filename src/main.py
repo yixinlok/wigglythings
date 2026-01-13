@@ -141,7 +141,7 @@ else:
 
     start = time.time()
     # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)
-    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL):
+    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_MEMCPY):
 
         for time_step in range(NUM_FRAMES):
             ''' update the base first'''

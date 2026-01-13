@@ -110,33 +110,7 @@ def rotate_to_align_with_z(b):
     rot, _ = R.align_vectors([b], [[0, 1, 0]])
     Rmat = rot.as_matrix()
     return Rmat
-
-def fast_rotate_to_align_with_z(b):
-    assert b.shape == (3,)
-    b = b / np.linalg.norm(b)
-    target = np.array([0, 1, 0])
-    v = np.cross(b, target)
-    c = np.dot(b, target)
-    if np.allclose(v, 0):
-        # Already aligned or anti-aligned
-        if c > 0:
-            return np.eye(3)
-        else:
-            # 180 degree rotation around any perpendicular axis
-            perp = np.array([1, 0, 0]) if abs(b[0]) < 0.9 else np.array([0, 1, 0])
-            v = np.cross(b, perp)
-            v = v / np.linalg.norm(v)
-            K = np.array([[0, -v[2], v[1]],
-                          [v[2], 0, -v[0]],
-                          [-v[1], v[0], 0]])
-            return np.eye(3) + 2*K@K
-    s = np.linalg.norm(v)
-    K = np.array([[0, -v[2], v[1]],
-                  [v[2], 0, -v[0]],
-                  [-v[1], v[0], 0]])
-    Rmat = np.eye(3) + K + K @ K * ((1 - c) / (s ** 2))
-    return Rmat
-
+ 
 def test_rotate_to_align_with_z():
     b1 = np.array([0, 0, 1])  # already aligned
     R1 = rotate_to_align_with_z(b1)

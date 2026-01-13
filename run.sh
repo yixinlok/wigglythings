@@ -7,10 +7,11 @@
 #SBATCH --mem=8G
 #SBATCH --time=04:00:00
 
+source ~/miniconda/etc/profile.d/conda.sh
+
 export LC_ALL=C
 export LANG=C
 export PYTHONUNBUFFERED=1
 
-source ~/miniconda/etc/profile.d/conda.sh
 conda activate gpuenv
 python src/main.py

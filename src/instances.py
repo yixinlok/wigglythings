@@ -15,12 +15,11 @@ class Instances:
         self.num_vertices = n_vertices
         self.num_instances = len(face_indices)
 
-        self.face_indices = np.array(face_indices).astype(np.int32)
-        self.barycentric = np.array(barycentric).astype(np.float32)
+        self.face_indices = wp.from_numpy(np.array(face_indices).astype(np.int32), device=DEVICE)
+        self.barycentric = wp.from_numpy(np.array(barycentric).astype(np.float32), device=DEVICE)
         
         # Get torch device
-        torch_device = "mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu"
-        torch_device = "cpu"
+        self.torch_device = "cuda" if torch.cuda.is_available() else "cpu"
 
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = np.array(vertices_by_instance)
@@ -29,9 +28,9 @@ class Instances:
         self.v_prev2 = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
 
         # instance_vertices has shape(num_instances, n_modes)
-        self.q_cur = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=torch_device)
-        self.q_prev = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=torch_device)
-        self.q_prev2 = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=torch_device)
+        self.q_cur = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
+        self.q_prev = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
+        self.q_prev2 = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
 
         return 
 

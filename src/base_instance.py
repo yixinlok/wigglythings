@@ -50,8 +50,8 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     v = scale*v + np.array([0,0.5*scale,0])
     
     # Get torch device
-    torch_device =  "cpu"
-    
+    torch_device = "cuda" if torch.cuda.is_available() else "cpu"
+
     # now the vertices are all normalized, and centred sitting on top of the xy plane
     bi.v = v.astype(np.float32)
     bi.f = f.astype(np.int32)

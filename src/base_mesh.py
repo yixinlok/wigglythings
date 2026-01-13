@@ -54,8 +54,8 @@ def create_basemesh(
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
     
     
-    bm.faces_display = 5
-    # bm.faces_display = bm.f.shape[0]
+    # bm.faces_display = 5
+    bm.faces_display = bm.f.shape[0]
     bm.num_instance_per_face = 1
 
     return bm
@@ -70,13 +70,8 @@ def bm_update_v(
     bm.v_cur = new_v.astype(np.float32)
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
 
-    # update the rest of the mesh too
     return
 
-def bm_get_face_center(bm, face_idx):
-    center = np.mean(bm.v_cur[bm.f[face_idx]], axis=0)
-    assert center.shape == (3,)
-    return center
 
 def bm_get_face_point(bm, face_idx, barycentric):
     v1, v2, v3 = bm.v_cur[bm.f[face_idx]]
