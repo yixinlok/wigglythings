@@ -32,6 +32,10 @@ class Instances:
         self.q_cur = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         self.q_prev = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         self.q_prev2 = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
+        # convert to warp
+        self.q_cur = wp.from_torch(self.q_cur)
+        self.q_prev = wp.from_torch(self.q_prev)
+        self.q_prev2 = wp.from_torch(self.q_prev2)
 
         return 
 

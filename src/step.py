@@ -43,7 +43,7 @@ def wp_update_all_instances(
                     device=DEVICE)
     
     T2 = time.time()
-    # print("displaces time", T2-T1)
+    print("displaces time", T2-T1)
     
     face_indices = ix.face_indices
     bm_normals = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
@@ -79,7 +79,7 @@ def wp_update_all_instances(
               device=DEVICE)
      
     T3 = time.time()
-    # print("rot transpose time", T3-T2)
+    print("rot transpose time", T3-T2)
 
     barycentric = ix.barycentric
     v_cur = wp.from_numpy(bm.v_cur, device=DEVICE)
@@ -122,34 +122,36 @@ def wp_update_all_instances(
         vs: wp.array3d(dtype=float) # ix.num_instances,bi.v.shape[0],3
         ):
         i,j = wp.tid()
-        displace = wp.tile_load(displaces[i], shape=(1, 3), offset=(j,0))
-        base = wp.tile_load(base_v, shape=(1, 3), offset=(j,0))
-        # displace = wp.tile_load(displaces[i], shape=(BI_NUM_V, 3), offset=(0,0))
-        # base = wp.tile_load(base_v, shape=(BI_NUM_V, 3), offset=(0,0))
+        # displace = wp.tile_load(displaces[i], shape=(1, 3), offset=(j,0))
+        # base = wp.tile_load(base_v, shape=(1, 3), offset=(j,0))
+        displace = wp.tile_load(displaces[i], shape=(BI_NUM_V, 3), offset=(0,0))
+        base = wp.tile_load(base_v, shape=(BI_NUM_V, 3), offset=(0,0))
         displaced_base_v = base + displace
 
-        new_v = wp.tile_zeros(shape=(1, 3), dtype=float)
+        # new_v = wp.tile_zeros(shape=(1, 3), dtype=float)
+        new_v = wp.tile_zeros(shape=(BI_NUM_V, 3), dtype=float)
         rot_mat = wp.tile_load(rot_matrices_T[i], shape=(3, 3), offset=(0, 0))
         wp.tile_matmul(displaced_base_v, rot_mat, new_v)
 
         face_point = wp.tile_load(face_points, shape=(1,3), offset=(i,0))
-        # face_point = wp.tile_broadcast(face_point, shape=(BI_NUM_V, 3))
+        face_point = wp.tile_broadcast(face_point, shape=(BI_NUM_V, 3))
         new_v = new_v + face_point
         wp.tile_store(vs[i], new_v, offset=(j,0))
     wp.launch_tiled(wp_better_get_total_displacement, 
-                    dim=(ix.num_instances, bi.v.shape[0]),
+                    # dim=(ix.num_instances, bi.v.shape[0]),
+                    dim=(ix.num_instances),
                     inputs=[bi.v.shape[0], displaces, base_v, rot_matrices_T_array3d, face_points],
                     outputs=[vs],
                     block_dim=128,
                     device=DEVICE)
    
     T4 = time.time()
-    # print("total displacement time", T4-T3)
+    print("total displacement time", T4-T3)
 
     ix.instances_update_v(vs)
 
     T5 = time.time()
-    # print("instances update time", T5-T4)
+    print("instances update time", T5-T4)
 
     # call dyrt AFTER, compute next q based on current force
     wp_dyrt(bm, bi, ix)
@@ -176,7 +178,7 @@ def wp_dyrt(bm, bi, ix):
     faces = wp.from_numpy(bm.f.astype(np.int32), dtype=wp.vec3l, device=DEVICE)
     fd_acceleration = wp.from_numpy(bm_fd_acceleration(bm), device=DEVICE)
     estimate_accelerations = wp.from_numpy(np.zeros((num_instances, 3)).astype(np.float32), device=DEVICE)
-
+    
     @wp.kernel
     def wp_estimate_accelerations(
         face_indices: wp.array(dtype=wp.int32),
@@ -200,6 +202,7 @@ def wp_dyrt(bm, bi, ix):
             inputs=[face_indices, barycentric, faces, fd_acceleration], 
             outputs=[estimate_accelerations], 
             device=DEVICE)
+    T6 = time.time()
 
     estimate_accelerations = estimate_accelerations.numpy()
     third_terms = []
@@ -221,21 +224,33 @@ def wp_dyrt(bm, bi, ix):
     third_terms = np.array(third_terms, dtype=np.float32)
     third_terms = wp.from_numpy(third_terms, device=DEVICE)
 
+    
+
+    BI_NUM_V = wp.constant(bi.v.shape[0])
+    
     # @wp.kernel
     # def wp_get_third_terms(
-    #     forcing_term: wp.array2d(dtype=float),
-
+    #     pinned_vertices: wp.array(dtype=wp.int32), # len(bi.pinned_vertices)
+    #     estimate_accelerations: wp.array(dtype=wp.vec3), # ix.num_instances,3
+    #     phi_inv: wp.array2d(dtype=float), # bi.v.shape[0]*3, bi.n_modes
+    #     third_terms: wp.array2d(dtype=float)  # ix.num_instances, num_modes
     # ):
-    #     forcing_term = wp.tile_zeros()
+    #     i, j = wp.tid()
+    #     forcing_term = wp.tile_zeros(BI_NUM_V, 3)
     #     # for each pinned vertex, add estimate_acceleration as a tile
+    #     wp.tile_reshape(forcing_term, (num_instance_vertices*3, 1))
     #     wp.transpose(forcing_term)
 
 
-    q = torch.zeros((num_instances, num_modes), dtype=torch.float32).to(ix.torch_device)
-    q = wp.from_torch(q)
+    T7 = time.time()
+    print("get third terms time", T7-T6)
 
-    q_cur = wp.from_torch(ix.q_cur)
-    q_prev = wp.from_torch(ix.q_prev)
+    # q = torch.zeros((num_instances, num_modes), dtype=torch.float32).to(ix.torch_device)
+    # q = wp.from_torch(q)
+    q = wp.zeros((num_instances, num_modes), dtype=wp.float32, device=DEVICE)
+
+    q_cur = ix.q_cur
+    q_prev = ix.q_prev
     @wp.kernel
     def get_q_new(
         c1: wp.vec(length=num_modes, dtype=float),
@@ -256,5 +271,7 @@ def wp_dyrt(bm, bi, ix):
                 outputs=[q], 
                 device=DEVICE)
     
+    T8 = time.time()
+    print("get new q time", T8-T7)
     ix.instances_update_q(q)
     return 
