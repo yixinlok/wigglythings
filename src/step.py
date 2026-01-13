@@ -40,14 +40,15 @@ def wp_update_all_instances(
         ):
         i = wp.tid()
         evs = wp.tile_load(eigenvectors, shape=(EV_LENGTH, NUM_MODES))
-        qs = wp.tile_load(q_cur,shape=(NUM_MODES, 1), offset=(i,0))
+        qs = wp.tile_load(q_cur,shape=(1, NUM_MODES), offset=(i,0))
+        qs = wp.tile_transpose(qs)
 
         d = wp.tile_zeros(shape=(EV_LENGTH, 1), dtype=wp.float32)
         wp.tile_matmul(evs, qs, d)
         d = wp.tile_reshape(d, (3, -1))
         d = wp.tile_transpose(d)
         wp.tile_store(displaces[i], d)
-    wp.launch(wp_get_modal_displacement, dim=ix.num_instances, inputs=[bi.eigenvectors, ix.q_cur], outputs=[displaces2], device=DEVICE)
+    wp.launch_tiled(wp_get_modal_displacement, dim=ix.num_instances, inputs=[bi.eigenvectors, ix.q_cur], outputs=[displaces2], block_dim=1, device=DEVICE)
     
     displaces2 = displaces2.numpy()
     displaces = wp.from_numpy(displaces2, device=DEVICE)
