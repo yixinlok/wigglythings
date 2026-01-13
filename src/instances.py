@@ -19,7 +19,7 @@ class Instances:
         self.barycentric = wp.from_numpy(np.array(barycentric).astype(np.float32), device=DEVICE)
         
         # Get torch device
-        self.torch_device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
 
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = torch.from_numpy(np.array(vertices_by_instance).astype(np.float32)).to(device=self.torch_device)        

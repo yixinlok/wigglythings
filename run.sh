@@ -9,6 +9,7 @@
 
 source ~/miniconda/etc/profile.d/conda.sh
 
+# export LIBMATHDX_LOG_LEVEL=5
 export LC_ALL=C
 export LANG=C
 export PYTHONUNBUFFERED=1
