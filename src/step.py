@@ -15,28 +15,15 @@ def wp_update_all_instances(
     ):
     T1 = time.time()
 
-    # displaces = []
-    # cpu_q_cur = ix.q_cur
-    # for i in range(ix.num_instances):
-    #     displace = bi.eigenvectors @ cpu_q_cur[i]
-    #     displace = displace.reshape(3, -1).T
-    #     displace = displace.cpu()
-    #     displaces.append(displace)
-
-    # displaces = np.array(displaces, dtype=np.float32)
-
-    # displaces = wp.from_numpy(displaces, device=DEVICE)
-
-
     EV_LENGTH = wp.constant(bi.v.shape[0]*3)
     NUM_MODES = wp.constant(bi.n_modes)
-    displaces2 = wp.zeros((ix.num_instances, bi.v.shape[0],3), dtype=wp.float32, device=DEVICE)
-    # displaces2 = wp.from_torch(torch.zeros((ix.num_instances, bi.v.shape[0],3), dtype=torch.float32))
+    displaces = wp.zeros((ix.num_instances, bi.v.shape[0],3), dtype=wp.float32, device=DEVICE)
+
     @wp.kernel
     def wp_get_modal_displacement(
         eigenvectors: wp.array2d(dtype=wp.float32),  # bi.v.shape[0]*3,bi.n_modes
         q_cur: wp.array2d(dtype=wp.float32), # ix.num_instances, bi.n_modes
-        displaces: wp.array3d(dtype=wp.float32), # ix.num_instances,bi.v.shape[0],3
+        displaces: wp.array3d(dtype=wp.float32), # ix.num_instances, bi.v.shape[0], 3
         ):
         i = wp.tid()
         evs = wp.tile_load(eigenvectors, shape=(EV_LENGTH, NUM_MODES))
@@ -48,10 +35,12 @@ def wp_update_all_instances(
         d = wp.tile_reshape(d, (3, -1))
         d = wp.tile_transpose(d)
         wp.tile_store(displaces[i], d)
-    wp.launch_tiled(wp_get_modal_displacement, dim=ix.num_instances, inputs=[bi.eigenvectors, ix.q_cur], outputs=[displaces2], block_dim=1, device=DEVICE)
+    wp.launch_tiled(wp_get_modal_displacement, dim=ix.num_instances, inputs=[bi.eigenvectors, ix.q_cur], 
+                    outputs=[displaces], 
+                    block_dim=1, 
+                    device=DEVICE)
     
-    displaces2 = displaces2.numpy()
-    displaces = wp.from_numpy(displaces2, device=DEVICE)
+  
  
     T2 = time.time()
     print("displaces time", T2-T1)
@@ -59,13 +48,14 @@ def wp_update_all_instances(
     bm_normals = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
     face_indices = ix.face_indices
     rot_matrices_T = wp.zeros((ix.num_instances,), dtype=wp.mat33f, device=DEVICE)
-
+    rot_matrices_T_array3d = wp.zeros((ix.num_instances,3,3), dtype=wp.float32, device=DEVICE)
     # this can be faster
     @wp.kernel
     def wp_get_rot_transpose(
             instances_face_index: wp.array(dtype=wp.int32),
             bm_normal: wp.array(dtype=wp.vec3),
-            rot_matrices: wp.array(dtype=wp.mat33)
+            rot_matrices: wp.array(dtype=wp.mat33),
+            rot_matrices_T_array3d: wp.array3d(dtype=float)
         ):
         i = wp.tid()
         # instance_i = instances[i] 
@@ -73,11 +63,26 @@ def wp_update_all_instances(
         normal = bm_normal[face] 
         rot_matrix = rodrigues_rotation_matrix(normal)
         rot_matrices[i] = transpose33(rot_matrix)
-    wp.launch(wp_get_rot_transpose, dim=ix.num_instances, inputs=[face_indices, bm_normals], outputs=[rot_matrices_T], device=DEVICE)
+        
+        rot_matrices_T_array3d[i][0][0] = rot_matrix[0,0]
+        rot_matrices_T_array3d[i][0][1] = rot_matrix[1,0]
+        rot_matrices_T_array3d[i][0][2] = rot_matrix[2,0]
+        rot_matrices_T_array3d[i][1][0] = rot_matrix[0,1]
+        rot_matrices_T_array3d[i][1][1] = rot_matrix[1,1]
+        rot_matrices_T_array3d[i][1][2] = rot_matrix[2,1]
+        rot_matrices_T_array3d[i][2][0] = rot_matrix[0,2]
+        rot_matrices_T_array3d[i][2][1] = rot_matrix[1,2]
+        rot_matrices_T_array3d[i][2][2] = rot_matrix[2,2]  
+
+    wp.launch(wp_get_rot_transpose, 
+              dim=ix.num_instances, 
+              inputs=[face_indices, bm_normals], 
+              outputs=[rot_matrices_T, rot_matrices_T_array3d], 
+              device=DEVICE)
      
     T3 = time.time()
     print("rot transpose time", T3-T2)
-    # faces_wp = bm.f
+
     faces_wp = wp.from_numpy(bm.f.astype(np.int32), dtype=wp.vec3l, device=DEVICE)
     barycentric = ix.barycentric
     # base_v is passed in as a 1-element array to workaround warp limitation
@@ -102,7 +107,15 @@ def wp_update_all_instances(
         face_points[i][0] = face_point[0]
         face_points[i][1] = face_point[1]
         face_points[i][2] = face_point[2]
-    wp.launch(wp_get_face_points, dim=ix.num_instances, inputs=[face_indices, barycentric, v_cur, faces_wp], outputs=[face_points], device=DEVICE)
+    wp.launch(wp_get_face_points, 
+              dim=ix.num_instances, 
+              inputs=[face_indices, barycentric, v_cur, faces_wp], 
+              outputs=[face_points], 
+              device=DEVICE)
+    
+    # change it to wp torch in base instance
+    better_base_v = wp.from_torch(torch.from_numpy(bi.v).to(dtype=torch.float32))
+    better_vs = wp.zeros((ix.num_instances, bi.v.shape[0],3), dtype=wp.float32, device=DEVICE)
     
     @wp.kernel
     def wp_better_get_total_displacement(
@@ -125,46 +138,49 @@ def wp_update_all_instances(
         face_point = wp.tile_load(face_points, shape=(1,3), offset=(i,0))
         # face_point = wp.tile_broadcast(face_point, shape=(BI_NUM_V, 3))
         new_v = new_v + face_point
-        wp.tile_store(vs[i], new_v)
-    
+        wp.tile_store(vs[i], new_v, offset=(j,0))
+    wp.launch_tiled(wp_better_get_total_displacement, 
+                    dim=(ix.num_instances, bi.v.shape[0]),
+                    inputs=[bi.v.shape[0], displaces, better_base_v, rot_matrices_T_array3d, face_points],
+                    outputs=[better_vs],
+                    block_dim=1,
+                    device=DEVICE)
+    displaces = displaces.numpy()
+    displaces = wp.from_numpy(displaces, device=DEVICE)
 
-    @wp.kernel
-    def wp_get_total_displacement(
-        num_v: int,
-        displace: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
-        base_v: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
-        rot_matrices_T: wp.array(dtype=wp.mat33),
-        face_points: wp.array2d(dtype=float),
-        face_indices: wp.array(dtype=wp.int32),
-        barycentrics: wp.array(dtype=wp.vec3),
-        bm_v_cur: wp.array(dtype=wp.vec3),
-        bm_f: wp.array(dtype=wp.vec3l),
-        vs: wp.array(dtype=wp.mat(bi.v.shape, dtype=float))
-        # vs: wp.array3d(dtype=float)
-        ):
+    # @wp.kernel
+    # def wp_get_total_displacement(
+    #     num_v: int,
+    #     displace: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
+    #     base_v: wp.array(dtype=wp.mat(bi.v.shape, dtype=float)),
+    #     rot_matrices_T: wp.array(dtype=wp.mat33),
+    #     face_points: wp.array2d(dtype=float),
+    #     vs: wp.array(dtype=wp.mat(bi.v.shape, dtype=float))
+    #     # vs: wp.array3d(dtype=float)
+    #     ):
 
-        i,k = wp.tid()
-        # imagine it wiggles in place
-        new_v = base_v[0] + displace[i]
-        # rotate it to the right orientation
-        new_v = new_v @ rot_matrices_T[i]
+    #     i,k = wp.tid()
+    #     # imagine it wiggles in place
+    #     new_v = base_v[0] + displace[i]
+    #     # rotate it to the right orientation
+    #     new_v = new_v @ rot_matrices_T[i]
 
-        face_point = wp.vec3(face_points[i][0], face_points[i][1], face_points[i][2])
-        # get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
-        for j in range(num_v):
-            # apply the face point offset
-            new_v[j] = new_v[j] + face_point
-        vs[i] = new_v
+    #     face_point = wp.vec3(face_points[i][0], face_points[i][1], face_points[i][2])
+    #     # get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
+    #     for j in range(num_v):
+    #         # apply the face point offset
+    #         new_v[j] = new_v[j] + face_point
+    #     vs[i] = new_v
 
-    wp.launch(wp_get_total_displacement, dim=(ix.num_instances, bi.v.shape[0]), 
-              inputs=[bi.v.shape[0], displaces, base_v, rot_matrices_T, face_points, face_indices, barycentric, v_cur, faces_wp], 
-              outputs=[vs], 
-              device=DEVICE)
-    
+    # wp.launch(wp_get_total_displacement, dim=(ix.num_instances, bi.v.shape[0]), 
+    #           inputs=[bi.v.shape[0], displaces, base_v, rot_matrices_T, face_points], 
+    #           outputs=[vs], 
+    #           device=DEVICE)
+
     T4 = time.time()
     print("total displacement time", T4-T3)
 
-    ix.instances_update_v(vs)
+    ix.instances_update_v(better_vs)
 
     T5 = time.time()
     print("instances update time", T5-T4)

@@ -22,12 +22,13 @@ class Instances:
         self.torch_device = "cuda" if torch.cuda.is_available() else "cpu"
 
         # instance_vertices has shape(num_instances, num_vertices, 3)
-        vertices_by_instance = np.array(vertices_by_instance)
-        self.v_cur = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
-        self.v_prev = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
-        self.v_prev2 = wp.from_numpy(vertices_by_instance.copy().astype(np.float32), device=DEVICE)
+        vertices_by_instance = torch.from_numpy(np.array(vertices_by_instance).astype(np.float32)).to(device=self.torch_device)        
 
-        # instance_vertices has shape(num_instances, n_modes)
+        self.v_cur = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
+        self.v_prev = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
+        self.v_prev2 = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
+
+         # instance_vertices has shape(num_instances, n_modes)
         self.q_cur = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         self.q_prev = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         self.q_prev2 = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
@@ -37,29 +38,20 @@ class Instances:
     def instances_update_v(self, new_vs):
         @wp.kernel
         def wp_update_v(
-            new_v: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)),
-            v_cur: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
-            v_prev: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float)), 
-            v_prev2: wp.array(dtype=wp.mat((self.num_vertices, 3), dtype=float))):
+            new_v: wp.array3d(dtype=float),
+            v_cur: wp.array3d(dtype=float),
+            v_prev: wp.array3d(dtype=float),
+            v_prev2: wp.array3d(dtype=float)):
 
-            tid = wp.tid()
-            v_prev2[tid] = v_prev[tid]
-            v_prev[tid] = v_cur[tid]
-            v_cur[tid] = new_v[tid]
-        wp.launch(wp_update_v, dim=new_vs.shape[0], inputs=[new_vs], outputs=[self.v_cur, self.v_prev, self.v_prev2], device=DEVICE)
-
-        # @wp.kernel
-        # def wp_update_v(
-        #     new_v: wp.array2d(dtype=wp.vec3),
-        #     v_cur: wp.array2d(dtype=wp.vec3),
-        #     v_prev: wp.array2d(dtype=wp.vec3),
-        #     v_prev2: wp.array2d(dtype=wp.vec3)):
-
-        #     i,j = wp.tid()
-        #     v_prev2[i][j] = v_prev[i][j]
-        #     v_prev[i][j] = v_cur[i][j]
-        #     v_cur[i][j] = new_v[i][j]
-        # wp.launch(wp_update_v, dim=new_vs.shape, inputs=[new_vs], outputs=[self.v_cur, self.v_prev, self.v_prev2], device=DEVICE)
+            i,j,k = wp.tid()
+            v_prev2[i][j][k] = v_prev[i][j][k]
+            v_prev[i][j][k] = v_cur[i][j][k]
+            v_cur[i][j][k] = new_v[i][j][k]
+        wp.launch(wp_update_v, 
+                  dim=new_vs.shape, 
+                  inputs=[new_vs], 
+                  outputs=[self.v_cur, self.v_prev, self.v_prev2], 
+                  device=DEVICE)
 
 
     def instances_update_q(self, new_qs):
