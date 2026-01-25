@@ -1,6 +1,6 @@
 
 TIME_STEP_SIZE = 0.05
-NUM_FRAMES = 100
+NUM_FRAMES = 1
 N_MODES = 6
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
 POLYSCOPE_OR_USD = "none" # "polyscope" or "usd" or "none"

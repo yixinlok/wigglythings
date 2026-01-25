@@ -47,8 +47,4 @@ sbatch run.sh
 
   "Warning: Failed to configure kernel dynamic shared memory for this device, tried to configure wp_update_all_instances__locals__wp_get_modal_displacement_f8ec3375_cuda_kernel_backward kernel for 134240 bytes, but maximum available is 101376"
 
-  sometimes when I increase the number of instances too much, the block dimension can't handle that amount of memory. 
-  tile stuff can't work with overly huge amounts of shared memory
-
-  -> small block dim: really slow
-  -> high block dim: not enough memory 
+this is dependent on the number of vertices in the instance * number of modes

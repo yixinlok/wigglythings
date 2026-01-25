@@ -72,7 +72,6 @@ def bm_update_v(
 
     return
 
-
 def bm_get_face_point(bm, face_idx, barycentric):
     v1, v2, v3 = bm.v_cur[bm.f[face_idx]]
     b1, b2, b3 = barycentric

@@ -14,9 +14,6 @@ from dyrt_utils import *
 from globals import *
 from dyrt_utils import *
 
-# TODO: 
-# make eigenvectors into wp.array
-
 
 class InstanceBase:
     n_modes: int
@@ -32,10 +29,8 @@ class InstanceBase:
     big_gamma: np.array
 
     IIR_params: tuple
-
-    # note: we don't need to store pinned vertices. we already used them to modify the eigenvector array
-    # pinned_vertices: list
-
+    pinned_vertices: list
+    
 def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     bi = InstanceBase()
     bi.n_modes = n_modes
@@ -50,7 +45,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     v = scale*v + np.array([0,0.5*scale,0])
     
     # Get torch device
-    torch_device = "cpu" if DEVICE == "cpu" else "cuda"
+    bi.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
 
     # now the vertices are all normalized, and centred sitting on top of the xy plane
     bi.v = v.astype(np.float32)
@@ -64,12 +59,17 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
         visualise_single_instance(bi, run=False, pinned_vertices=pinned_vertices)
         print("picked pinned vertices:", pinned_vertices)
     bi.pinned_vertices = pinned_vertices
+    bi.pinned_vertices_wp = wp.array(np.array(bi.pinned_vertices, dtype=np.int32), device=DEVICE)
+
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
 
     bi.eigenvalues = eigenvalues.astype(np.float32)
-    bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(torch_device)
+    bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(bi.torch_device)
     # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
-    bi.phi_inv = phi_inv.astype(np.float32)
+    phi_inv = phi_inv.astype(np.float32)
+    phi_inv = torch.from_numpy(phi_inv).to(bi.torch_device)
+    bi.phi_inv = wp.from_torch(phi_inv)
+
     bi.M = M
 
     c1, c2, c3 = compute_IIR_params(bi.eigenvalues**0.5)
@@ -91,7 +91,7 @@ def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
         # construct selection matrix
         print("applying pinned vertices ...")
         P = create_selection_matrix(v.shape[0], pinned_vertices)
-        # modify H and M
+        # modify H and M to select rows
         H = P.T @ H @ P
         M = P.T @ M @ P
 
