@@ -40,7 +40,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     
     print(f"reading instance mesh from {file_path} ...")
     v, f, tets, *rest = igl.readMSH(file_path)
-    f, *rest = igl.boundary_facets(tets)
+    bi.f, *rest = igl.boundary_facets(tets)
     v = gp.normalize_points(v)
     v = scale*v + np.array([0,0.5*scale,0])
     
@@ -49,7 +49,13 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
 
     # now the vertices are all normalized, and centred sitting on top of the xy plane
     bi.v = v.astype(np.float32)
-    bi.f = f.astype(np.int32)
+    bi.boundary_v_indices = np.unique(bi.f)
+    bi.boundary_v = bi.v[bi.boundary_v_indices]
+    bi.boundary_f = adjust_face_matrix_vertex_indices_for_boundary(bi.f, bi.boundary_v_indices).astype(np.int32)
+
+
+    print("num outer vertices: ", bi.boundary_v_indices.shape[0])
+    print("total # vertices: ", bi.v.shape[0])
     bi.tets = tets.astype(int)
 
 
@@ -65,6 +71,10 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
 
     bi.eigenvalues = eigenvalues.astype(np.float32)
     bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(bi.torch_device)
+
+    boundary_eigenvectors_np = remove_nonboundary_vertices_from_eigenvectors(eigenvectors, bi.boundary_v_indices)
+    bi.boundary_eigenvectors = torch.from_numpy(boundary_eigenvectors_np.astype(np.float32)).to(bi.torch_device)
+
     # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
     phi_inv = phi_inv.astype(np.float32)
     phi_inv = torch.from_numpy(phi_inv).to(bi.torch_device)
@@ -95,7 +105,7 @@ def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
         H = P.T @ H @ P
         M = P.T @ M @ P
 
-    eigenvalues, eigenvectors = sp.sparse.linalg.eigsh(H, k=n_modes*2, M=M, which='LM', sigma=1)
+    eigenvalues, eigenvectors = sp.sparse.linalg.eigsh(H, k=n_modes, M=M, which='LM', sigma=0)
 
     # normalize each column of eigenvectors
     for i in range(eigenvectors.shape[1]):
@@ -169,8 +179,7 @@ def visualise_single_instance(
             eigenvector = bi.eigenvectors[:, mode]
             displace = np.cos(time_step*time_step_size)*eigenvector
             displace = np.reshape(displace, (3, -1)).T
-            
-            mesh = ps.register_volume_mesh("tet mesh", bi.v + displace, tets=bi.tets)
+            mesh = ps.register_volume_mesh("tet mesh", bi.v + displace.numpy(), tets=bi.tets)
         else:
             mesh = ps.register_volume_mesh("tet mesh", bi.v, tets=bi.tets)
 
@@ -221,7 +230,7 @@ if __name__ == "__main__":
     # instance = Instance(mesh_path="assets/single_leaf.msh", n_modes=6, pinned_vertices=[151])
     # instance.visualise_single_instance()
 
-    bi = create_base_instance(file_path="assets/feather.msh", n_modes=6, scale=0.3)
+    bi = create_base_instance(file_path="assets/teardrop.msh", n_modes=20, scale=0.3)
     visualise_single_instance(bi)
     # visualise_single_instance(bi, pinned_vertices=PINNED_VERTICES["spring"])
 

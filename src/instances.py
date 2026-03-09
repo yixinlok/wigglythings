@@ -8,11 +8,10 @@ from globals import *
 
 class Instances:
     # storing all data related to placing instances on the base mesh
-    def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, n_vertices):
+    def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes):
         # instances = Instances()
 
         self.n_modes = n_modes
-        self.num_vertices = n_vertices
         self.num_instances = len(face_indices)
 
         self.face_indices = wp.from_numpy(np.array(face_indices).astype(np.int32), device=DEVICE)
@@ -57,7 +56,6 @@ class Instances:
                   outputs=[self.v_cur, self.v_prev, self.v_prev2], 
                   device=DEVICE)
 
-
     def instances_update_q(self, new_qs):
 
         @wp.kernel
@@ -86,8 +84,6 @@ def create_instances_object(
     for i in range(bm.faces_display):
         
         normal = bm.n[i] 
-        # normal = wp.vec3f(normal[0], normal[1], normal[2])
-        # rot_matrix = rodrigues_rotation_matrix(normal) 
         rot_matrix = rotate_to_align_with_z(normal)
         # get face vertices
         for j in range(bm.num_instance_per_face):
@@ -96,10 +92,8 @@ def create_instances_object(
             barycentrics.append(np.array([b1, b2, b3]))
 
             face_point = bm_get_face_point(bm, i, (b1, b2, b3))
-            new_instance_v = bi.v @ rot_matrix.T + face_point
+            new_instance_v = bi.boundary_v @ rot_matrix.T + face_point
             new_instances_v.append(new_instance_v)
     
-    num_instances = bi.v.shape[0]
-
-    instances = Instances(new_instances_v, face_indices, barycentrics, bi.n_modes, num_instances)
+    instances = Instances(new_instances_v, face_indices, barycentrics, bi.n_modes)
     return instances

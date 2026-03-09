@@ -2,8 +2,8 @@
 TIME_STEP_SIZE = 0.05
 NUM_FRAMES = 5
 N_MODES = 6
-DEVICE = "cuda:0" #"cpu", "cuda:0" 
-POLYSCOPE_OR_USD = "none" # "polyscope" or "usd" or "none"
+DEVICE = "cpu" #"cpu", "cuda:0" 
+POLYSCOPE_OR_USD = "polyscope" # "polyscope" or "usd" or "none"
 
 MSH_PATHS = {
     "elephant": "assets/elephant.msh",
@@ -20,11 +20,11 @@ PINNED_VERTICES = {
     "spike": [1, 219, 107, 224, 0, 220, 189, 63, 159, 221, 160, 6, 161, 66, 65, 64, 222, 69, 223, 7, 80],
     "tightcoil": [5247, 5359, 5716, 5466, 9478, 6839, 5617, 5604, 5241, 5037, 7494, 9642],
     "loosecoil": [701, 652, 635, 668, 1363, 2340, 917],
+    "elephant": [],
     # "teardrop": [202],
     "teardrop": [202, 694, 719, 763, 831, 829, 781, 715, 693, 704, 783, 832, 677, 710, 723, 676, 705, 775, 725, 713, 674, 834, 716, 726, 671, 828, 827],
-    # [202, 674, 694, 725, 693, 775, 676, 830, 671, 713, 781, 763, 701, 710]
+    # "teardrop": [202, 694, 719, 763, 831, 829, 781, 715, 693, 704, 783, 832,677, 710, 723, 676, 705, 775, 725],
 }
-
 OBJ_PATHS = {
     "bunny": "assets/bunny.obj",
     "spot": "assets/spot.obj",

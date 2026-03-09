@@ -40,7 +40,7 @@ base_mesh = create_basemesh(obj_path=obj_path, select_faces=select)
 tet_name = "spike"
 tet_path = MSH_PATHS[tet_name]
 pinned_vertices = PINNED_VERTICES[tet_name]
-base_instance = create_base_instance(file_path=tet_path, n_modes=20, pinned_vertices=pinned_vertices, scale=0.1)
+base_instance = create_base_instance(file_path=tet_path, n_modes=N_MODES, pinned_vertices=pinned_vertices, scale=0.1)
 instances_object = create_instances_object(base_mesh, base_instance)
 
 time_step = 0
@@ -87,10 +87,9 @@ def callback():
             [0.0, 1.0, 0.0],
             [-s, 0.0,  c]
         ], dtype=np.float32)
-        displace_base = np.array([0,0,0.5*np.sin(5*t)])
 
         new = base_mesh.resting_v @ R_y.T
-        # displace_base = np.array([0, 0, 0])
+        displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
 
         bm_update_v(base_mesh, new)
         ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v_cur, base_mesh.all_f)
@@ -104,7 +103,8 @@ def callback():
         for i in range(instances_object.num_instances):
             vertices = v_curs[i]
             if time_step == 1:
-                m = ps.register_volume_mesh("tet mesh" + str(i), vertices, tets=tets)
+                # m = ps.register_volume_mesh("tet mesh" + str(i), vertices, tets=tets)
+                m = ps.register_surface_mesh("instance mesh" + str(i), vertices, base_instance.boundary_f)
                 ps_meshes[i] = m
             else:
                 ps_meshes[i].update_vertex_positions(vertices)
@@ -135,9 +135,9 @@ else:
         w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v_cur.shape[0])
 
         for i in range(instances_object.num_instances):
-            counts = np.full(base_instance.f.shape[0], 3)
-            indices = base_instance.f.flatten()
-            w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.v.shape[0])
+            counts = np.full(base_instance.boundary_f.shape[0], 3)
+            indices = base_instance.boundary_f.flatten()
+            w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.boundary_v.shape[0])
 
     start = time.time()
     # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)

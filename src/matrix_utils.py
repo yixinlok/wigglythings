@@ -93,7 +93,6 @@ def create_selection_matrix(num_vertices, pinned_vertices):
         
     indices_to_remove = []
     for i in pinned_vertices:
-        # indices_to_remove.extend([3 * i, 3 * i + 1, 3 * i + 2])
         indices_to_remove.extend([i, num_vertices + i, 2 * num_vertices + i])
 
     total_dofs = 3 * num_vertices
@@ -104,6 +103,43 @@ def create_selection_matrix(num_vertices, pinned_vertices):
     selection_matrix = zero_out_rows(selection_matrix, indices_to_remove)
     selection_matrix = sp.sparse.csr_matrix(selection_matrix)
     return selection_matrix
+
+def remove_nonboundary_vertices_from_eigenvectors(eigenvectors, boundary_vertex_indices):
+    """
+    Remove rows corresponding to non-boundary vertices from the eigenvectors matrix.
+    eigenvectors: np.ndarray, shape (3*num_vertices, n_modes)
+    boundary_vertex_indices: list or array of vertex indices that are on the boundary
+    Returns: np.ndarray with rows corresponding to non-boundary vertices removed
+    """
+    num_vertices = eigenvectors.shape[0] // 3
+    all_vertex_indices = set(range(num_vertices))
+    non_boundary_indices = list(all_vertex_indices - set(boundary_vertex_indices))
+
+    # Each vertex corresponds to 3 rows in the eigenvectors matrix (x, y, z)
+    rows_to_remove = []
+    for idx in non_boundary_indices:
+        rows_to_remove.extend([idx, num_vertices + idx, 2 * num_vertices + idx])
+
+    return remove_rows(eigenvectors, rows_to_remove)
+
+def adjust_face_matrix_vertex_indices_for_boundary(faces, boundary_vertex_indices):
+    """
+    Adjust face indices to account for the fact that non-boundary vertices have been removed from the eigenvectors matrix.
+    faces: np.ndarray, shape (num_faces, vertices_per_face)
+    boundary_vertex_indices: list or array of vertex indices that are on the boundary
+    Returns: np.ndarray with adjusted face vertex indices
+    """
+    vertex_index_mapping = {old_idx: new_idx for new_idx, old_idx in enumerate(boundary_vertex_indices)}
+    adjusted_faces = np.copy(faces)
+    for i in range(faces.shape[0]):
+        for j in range(faces.shape[1]):
+            old_vertex_index = faces[i, j]
+            if old_vertex_index in vertex_index_mapping:
+                adjusted_faces[i, j] = vertex_index_mapping[old_vertex_index]
+            else:
+                raise ValueError(f"Vertex index {old_vertex_index} in faces is not a boundary vertex.")
+
+    return adjusted_faces
 
 def rotate_to_align_with_z(b):
     assert b.shape == (3,)
