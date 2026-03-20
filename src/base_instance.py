@@ -10,9 +10,9 @@ from simkit.arap_hessian import arap_hessian
 from simkit.neo_hookian_hessian import neo_hookean_hessian
 from simkit.mass_matrix import mass_matrix
 from matrix_utils import *
-from dyrt_utils import *
+from dyrt_params import *
 from globals import *
-from dyrt_utils import *
+from dyrt_params import *
 
 
 class InstanceBase:
@@ -42,8 +42,10 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     v, f, tets, *rest = igl.readMSH(file_path)
     bi.f, *rest = igl.boundary_facets(tets)
     v = gp.normalize_points(v)
-    v = scale*v + np.array([0,0.5*scale,0])
-    
+    min_y = np.min(v[:, 1])
+    v = v + np.array([0,-min_y,0])
+    v = scale*v
+
     # Get torch device
     bi.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
 
@@ -118,10 +120,11 @@ def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
 
     eigenvalues = eigenvalues[0:n_modes]
     eigenvectors = eigenvectors[:, 0:n_modes]
-
     # assert all eigenvalues are positive
     assert np.all(eigenvalues > 0), "all eigenvalues must be positive"
     print("done solving eigenvalue problem.")
+
+    # eigenvalues = eigenvalues / np.linalg.norm(eigenvalues) 
     assert n_modes == eigenvectors.shape[1]
     
     # add back zero rows for pinned vertices
@@ -230,7 +233,7 @@ if __name__ == "__main__":
     # instance = Instance(mesh_path="assets/single_leaf.msh", n_modes=6, pinned_vertices=[151])
     # instance.visualise_single_instance()
 
-    bi = create_base_instance(file_path="assets/teardrop.msh", n_modes=20, scale=0.3)
+    bi = create_base_instance(file_path="assets/coil.msh", n_modes=20, scale=0.3)
     visualise_single_instance(bi)
     # visualise_single_instance(bi, pinned_vertices=PINNED_VERTICES["spring"])
 

@@ -48,3 +48,24 @@ sbatch run.sh
   "Warning: Failed to configure kernel dynamic shared memory for this device, tried to configure wp_update_all_instances__locals__wp_get_modal_displacement_f8ec3375_cuda_kernel_backward kernel for 134240 bytes, but maximum available is 101376"
 
 this is dependent on the number of vertices in the instance * number of modes
+
+
+parameters for each mesh
+
+pangolin
+alpha: 12
+beta: 0.03
+instance scale: 0.07
+instances per face: 1
+
+hedgehog
+alpha: 0.4
+beta: 0.06
+instance scale: 0.1
+instances per face: 10
+
+alpaca
+alpha:
+beta: yet to figure out but xi is perfect around 0.7-0.8 range
+instance scale: 0.07
+instances per face: 10

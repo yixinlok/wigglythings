@@ -1,5 +1,5 @@
 import numpy as np
-from dyrt_utils import *
+from dyrt_params import *
 from base_mesh import *
 import warp as wp
 from rodrigues_rotation import *
@@ -40,7 +40,6 @@ def wp_update_all_instances(
                     outputs=[displaces], 
                     block_dim=64, 
                     device=DEVICE)
-
     face_indices = ix.face_indices
     bm_normals = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
     rot_matrices_T_array3d = wp.zeros((ix.num_instances,3,3), dtype=wp.float32, device=DEVICE)

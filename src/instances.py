@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from dyrt_utils import *
+from dyrt_params import *
 import warp as wp
 from base_instance import *
 from base_mesh import *

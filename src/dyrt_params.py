@@ -53,11 +53,20 @@ def compute_IIR_params(w_vec, xi_vec=None):
     # if xi_vec is None:
     #     xi_vec = np.array([0.05,0.05,0.05,0.05,0.05,0.05])
     w_vec = np.where(w_vec == 0, 1e-6, w_vec)
-    alpha = 0.1
-    beta = 0.9
+    alpha = 0.4
+    beta = 0.06
     xi_vec = 0.5*(alpha/w_vec + beta*w_vec)  # damping ratio
-    xi_max = np.max(xi_vec)
-    xi_vec = xi_vec/(xi_max + 0.03)  # normalize to max xi
+    # print("1/w_vec:", 1/w_vec)
+    # print("1*w_vec:", 1*w_vec)
+    # print("xi_vec:", xi_vec)
+    # xi_vec = np.ones_like(w_vec)*0.8
+
+    # alpha = 0.1
+    # beta = 0.9
+    # xi_vec = 0.5*(alpha/w_vec + beta*w_vec)  # damping ratio
+    # xi_max = np.max(xi_vec)
+    # xi_vec = xi_vec/(xi_max + 0.03)  # normalize to max xi
+    # assert np.all((xi_vec > 0) & (xi_vec < 1)), "change alpha and beta to ensure xi_vec is in (0, 1)"
 
     w_di_vec = w_vec * np.sqrt(1 - xi_vec**2)  
     theta_vec = w_di_vec * globals.TIME_STEP_SIZE                   
@@ -71,9 +80,12 @@ def compute_IIR_params(w_vec, xi_vec=None):
     third_term_coeff_denom = 3*w_vec*w_di_vec
     third_term = third_term_coeff_num / third_term_coeff_denom
 
+    # print("first", first_term)
+    # print("second", second_term)
+    # print("third", third_term)
     return first_term, second_term, third_term  
 
 
 if __name__ == "__main__":
     # test different xi vec values
-    compute_IIR_params(np.array([0.01, 0.05, 0.1, 0.2]))
+    print(compute_IIR_params(np.array([0.01, 0.05, 0.1, 0.2])))

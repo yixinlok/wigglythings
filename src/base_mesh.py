@@ -1,10 +1,9 @@
 import numpy as np
 import gpytoolbox as gp
 import polyscope as ps
-import scipy as sp
 from base_instance import *
 import globals 
-from dyrt_utils import *
+from dyrt_params import *
 from matrix_utils import *
 from read_obj import read_obj
 import warp as wp
@@ -54,8 +53,8 @@ def create_basemesh(
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
     
     
-    bm.faces_display = 5
-    # bm.faces_display = bm.f.shape[0]
+    bm.faces_display = 20
+    bm.faces_display = bm.f.shape[0]
     bm.num_instance_per_face = 1
 
     return bm
@@ -105,7 +104,8 @@ def bm_fd_acceleration(bm):
 testing stuff
 '''
 def face_picker(
-        bm: BaseMesh
+        bm: BaseMesh,
+        picked_faces 
     ):
     '''
     Visualise a single instance, and pick pinned vertices if not provided
@@ -117,7 +117,7 @@ def face_picker(
     ps.init()
 
     colours = np.array([[0, 0, 0] for _ in range(bm.all_f.shape[0])])
-    picked = []
+    picked = picked_faces.copy()
     def callback():
         nonlocal colours, picked
 
@@ -125,6 +125,7 @@ def face_picker(
         mesh = ps.register_surface_mesh("mesh", bm.v_cur, bm.all_f)
 
         mesh.set_selection_mode('faces_only')
+        mesh.add_color_quantity("pinned", colours, enabled=True, defined_on='faces')
 
         io = psim.GetIO()
         if io.MouseClicked[0]: # if clicked
@@ -137,10 +138,11 @@ def face_picker(
                 # add to pinned vertices
                 if i not in picked:
                     picked.append(i)
+                else:
+                    picked.remove(i)
                 print(f"picked faces: {picked}")
                 colours = np.array([[0, 0, 0] for _ in range(bm.all_f.shape[0])])
                 colours[picked] = np.array([1, 0, 0])
-        mesh.add_color_quantity("pinned", colours, enabled=True, defined_on='faces')
 
     ps.set_user_callback(callback)
     ps.set_autocenter_structures(False)
@@ -148,5 +150,5 @@ def face_picker(
     ps.show()
 
 if __name__ == "__main__":
-    bm = create_basemesh(obj_path = globals.OBJ_PATHS["hedgehog"])
-    face_picker(bm)
+    bm = create_basemesh(obj_path = globals.OBJ_PATHS["pangolin"])
+    face_picker(bm, picked_faces=globals.OBJ_SELECT_FACES["pangolin"])

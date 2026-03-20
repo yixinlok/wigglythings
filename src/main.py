@@ -1,8 +1,6 @@
 import polyscope as ps
 import polyscope.imgui as psim
-import gpytoolbox as gp
 import numpy as np
-import scipy as sp
 from globals import *
 from base_mesh import *
 from instances import *
@@ -88,10 +86,13 @@ def callback():
             [-s, 0.0,  c]
         ], dtype=np.float32)
 
-        new = base_mesh.resting_v @ R_y.T
+        spin_base = base_mesh.resting_v @ R_y.T
         displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
-
-        bm_update_v(base_mesh, new)
+        if globals.MOVE == "spin":
+            bm_update_v(base_mesh, spin_base)
+        elif globals.MOVE == "slam":
+            bm_update_v(base_mesh, displace_base)
+        
         ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v_cur, base_mesh.all_f)
 
         '''then update the instances'''
