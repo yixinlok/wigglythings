@@ -53,8 +53,8 @@ def create_basemesh(
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
     
     
-    bm.faces_display = 20
-    # bm.f.shape[0]
+    # bm.faces_display = 20
+    bm.faces_display = bm.f.shape[0]
     bm.num_instance_per_face = globals.NUM_INSTANCE_PER_FACE
 
     return bm

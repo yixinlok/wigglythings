@@ -11,7 +11,8 @@ import torch
 def wp_update_all_instances(
         bm: BaseMesh,
         bi: InstanceBase,
-        ix: Instances
+        ix: Instances,
+        R_y
     ):
 
     EV_LENGTH = wp.constant(bi.boundary_v.shape[0]*3)
@@ -98,10 +99,12 @@ def wp_update_all_instances(
               outputs=[face_points], 
               device=DEVICE)
     
-    # change it to wp torch in base instance
+    # reason im going from numpy to torch is because it converts it into a 3d array instead of a matric
     base_v = wp.from_torch(torch.from_numpy(bi.boundary_v).to(dtype=torch.float32).to(DEVICE))
     vs = wp.zeros((ix.num_instances, bi.boundary_v.shape[0],3), dtype=wp.float32, device=DEVICE)
     BI_NUM_V = wp.constant(bi.boundary_v.shape[0])
+
+    base_rotate = wp.from_torch(torch.from_numpy(R_y.astype(np.float32)).to(DEVICE))
 
     @wp.kernel
     def wp_compute_new_spikes(
@@ -109,24 +112,33 @@ def wp_update_all_instances(
         base_v: wp.array2d(dtype=float), # bi.v.shape[0],3
         rot_matrices_T: wp.array3d(dtype=float),# ix.num_instances,3,3
         face_points: wp.array2d(dtype=float), # ix.num_instances,3
-        vs: wp.array3d(dtype=float) # ix.num_instances,bi.v.shape[0],3
+        base_rotate: wp.array2d(dtype=float), # 3,3
+        vs: wp.array3d(dtype=float), # ix.num_instances,bi.v.shape[0],3
         ):
         i = wp.tid()
-
+        
         # displace = wp.tile_load(displaces[i], shape=(1, 3), offset=(j,0))
         # base = wp.tile_load(base_v, shape=(1, 3), offset=(j,0))
         displace = wp.tile_load(displaces[i], shape=(BI_NUM_V, 3), offset=(0,0))
         base = wp.tile_load(base_v, shape=(BI_NUM_V, 3), offset=(0,0))
         displaced_base_v = base + displace
+        
+        # base_rotate 
+        new_v_1 = wp.tile_zeros(shape=(BI_NUM_V, 3), dtype=float)
+        rot_mat = wp.tile_load(base_rotate, shape=(3, 3), offset=(0, 0))
+        wp.tile_matmul(displaced_base_v, rot_mat, new_v_1)
 
+        # face rotate
         # new_v = wp.tile_zeros(shape=(1, 3), dtype=float)
         new_v = wp.tile_zeros(shape=(BI_NUM_V, 3), dtype=float)
         rot_mat = wp.tile_load(rot_matrices_T[i], shape=(3, 3), offset=(0, 0))
-        wp.tile_matmul(displaced_base_v, rot_mat, new_v)
+        wp.tile_matmul(new_v_1, rot_mat, new_v)
 
+ 
         face_point = wp.tile_load(face_points, shape=(1,3), offset=(i,0))
         face_point = wp.tile_broadcast(face_point, shape=(BI_NUM_V, 3))
         new_v = new_v + face_point
+
         wp.tile_store(vs[i], new_v)
     wp.launch_tiled(wp_compute_new_spikes, 
                     # dim=(ix.num_instances, bi.v.shape[0]),
@@ -134,7 +146,8 @@ def wp_update_all_instances(
                     inputs=[displaces, 
                             base_v, 
                             rot_matrices_T_array3d, 
-                            face_points],
+                            face_points,
+                            base_rotate],
                     outputs=[vs],
                     block_dim=128,
                     device=DEVICE)

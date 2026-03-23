@@ -4,7 +4,7 @@ NUM_FRAMES = 2
 N_MODES = 6
 DEVICE = "cpu" #"cpu", "cuda:0" 
 POLYSCOPE_OR_USD = "polyscope" # "polyscope" or "usd" or "none"
-MOVE = "slam" # "spin" or "slam"
+MOVE = "spin" # "spin" or "slam"
 
 # pangolin
 # BASE_MESH_NAME = "pangolin"
@@ -27,7 +27,7 @@ BASE_MESH_NAME = "alpaca"
 TET_NAME = "coil"
 ALPHA = 0.9
 BETA = 0.01
-INSTANCE_SCALE = 0.03
+INSTANCE_SCALE = 0.05
 NUM_INSTANCE_PER_FACE = 5
 
 MSH_PATHS = {

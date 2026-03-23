@@ -68,8 +68,8 @@ def callback():
         time_step += 1
 
         ''' update the base first'''
-        if time_step > 10:
-            t = 10*time_step_size
+        if time_step > 20:
+            t = 20*time_step_size
         else: 
             t = time_step*time_step_size
             
@@ -86,13 +86,19 @@ def callback():
 
             bm_update_v(base_mesh, spin_base)
         elif globals.MOVE == "slam":
+            R_y = np.array([
+                [1.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0],
+                [0.0, 0.0, 1.0]
+            ], dtype=np.float32)
+
             displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
             bm_update_v(base_mesh, displace_base)
         
         ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v_cur, base_mesh.all_f)
 
         '''then update the instances'''
-        wp_update_all_instances(base_mesh,base_instance,instances_object)
+        wp_update_all_instances(base_mesh,base_instance,instances_object, R_y.T)
         # wp_update_all_instances(base_mesh,tear_base_instance,tear_instances_object)
 
         tets = base_instance.tets
@@ -144,8 +150,8 @@ else:
 
         for time_step in range(NUM_FRAMES):
             ''' update the base first'''
-            if time_step > 10:
-                t = 10*time_step_size
+            if time_step > 20:
+                t = 20*time_step_size
             else: 
                 t = time_step*time_step_size
                 
@@ -165,7 +171,7 @@ else:
                 displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
                 bm_update_v(base_mesh, displace_base)
             
-            wp_update_all_instances(base_mesh,base_instance,instances_object)
+            wp_update_all_instances(base_mesh,base_instance,instances_object, R_y.T)
             
         
             if POLYSCOPE_OR_USD == "usd":
