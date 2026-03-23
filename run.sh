@@ -2,9 +2,9 @@
 #SBATCH --job-name=run
 #SBATCH --output=logs/wigglythings_%j.out
 #SBATCH --error=logs/wigglythings_%j.err
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=8G
+#SBATCH --mem=32G
 #SBATCH --time=04:00:00
 
 source ~/miniconda/etc/profile.d/conda.sh

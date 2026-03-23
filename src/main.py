@@ -6,6 +6,7 @@ from base_mesh import *
 from instances import *
 from step import *
 import time
+import os
 
 import cProfile, pstats
 import warp as wp
@@ -30,15 +31,15 @@ if not wp.get_cuda_device_count():
         "a CUDA-compatible device and won't run correctly without one."
     )
 
-base_mesh_name = "hedgehog"
+base_mesh_name = "pangolin"
 obj_path = OBJ_PATHS[base_mesh_name]
 select = OBJ_SELECT_FACES[base_mesh_name]
 base_mesh = create_basemesh(obj_path=obj_path, select_faces=select)
 
-tet_name = "spike"
+tet_name = "scales"
 tet_path = MSH_PATHS[tet_name]
 pinned_vertices = PINNED_VERTICES[tet_name]
-base_instance = create_base_instance(file_path=tet_path, n_modes=N_MODES, pinned_vertices=pinned_vertices, scale=0.1)
+base_instance = create_base_instance(file_path=tet_path, n_modes=globals.N_MODES, pinned_vertices=pinned_vertices, scale=globals.INSTANCE_SCALE)
 instances_object = create_instances_object(base_mesh, base_instance)
 
 time_step = 0
@@ -127,8 +128,10 @@ if POLYSCOPE_OR_USD == "polyscope":
     
 else:
     if POLYSCOPE_OR_USD == "usd":
-        filetime = time.strftime("%Y%m%d-%H%M%S")
-        w = USDMultiMeshWriter("out/"+filetime+".usdc", fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
+        filetime = time.strftime("%Y%m%d-%H%M")
+        job_id = os.getenv("SLURM_JOB_ID", "nojobid")
+        fname = "out/" + base_mesh_name + "_" + str(NUM_FRAMES) + "_" + job_id + "_"+ filetime + ".usda"
+        w = USDMultiMeshWriter(fname, fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
         w.open()
 
         counts = np.full(base_mesh.all_f.shape[0], 3)

@@ -1,10 +1,15 @@
 
 TIME_STEP_SIZE = 0.05
-NUM_FRAMES = 5
+NUM_FRAMES = 2
 N_MODES = 6
 DEVICE = "cpu" #"cpu", "cuda:0" 
-POLYSCOPE_OR_USD = "polyscope" # "polyscope" or "usd" or "none"
+POLYSCOPE_OR_USD = "usd" # "polyscope" or "usd" or "none"
 MOVE = "slam" # "spin" or "slam"
+
+ALPHA = 12
+BETA = 0.03
+INSTANCE_SCALE = 0.07
+NUM_INSTANCE_PER_FACE = 1
 
 MSH_PATHS = {
     "elephant": "assets/elephant.msh",

@@ -52,9 +52,9 @@ def compute_IIR_params(w_vec, xi_vec=None):
     """
     # if xi_vec is None:
     #     xi_vec = np.array([0.05,0.05,0.05,0.05,0.05,0.05])
-    w_vec = np.where(w_vec == 0, 1e-6, w_vec)
-    alpha = 0.4
-    beta = 0.06
+    # w_vec = np.where(w_vec == 0, 1e-6, w_vec)
+    alpha = globals.ALPHA
+    beta = globals.BETA
     xi_vec = 0.5*(alpha/w_vec + beta*w_vec)  # damping ratio
     # print("1/w_vec:", 1/w_vec)
     # print("1*w_vec:", 1*w_vec)
@@ -66,7 +66,7 @@ def compute_IIR_params(w_vec, xi_vec=None):
     # xi_vec = 0.5*(alpha/w_vec + beta*w_vec)  # damping ratio
     # xi_max = np.max(xi_vec)
     # xi_vec = xi_vec/(xi_max + 0.03)  # normalize to max xi
-    # assert np.all((xi_vec > 0) & (xi_vec < 1)), "change alpha and beta to ensure xi_vec is in (0, 1)"
+    assert np.all((xi_vec > 0) & (xi_vec < 1)), "change alpha and beta to ensure xi_vec is in (0, 1)"
 
     w_di_vec = w_vec * np.sqrt(1 - xi_vec**2)  
     theta_vec = w_di_vec * globals.TIME_STEP_SIZE                   

@@ -69,3 +69,16 @@ alpha:
 beta: yet to figure out but xi is perfect around 0.7-0.8 range
 instance scale: 0.07
 instances per face: 10
+
+scp yixinlok@zeus.dgp.toronto.edu:~/wigglythings/out/pangolin_240_20260323-005458.usda ./Desktop
+
+19023 - 10 frames only, checking whats wrong with hedgehog
+19036 - pangolin 240 frames
+
+
+19101 - 
+19102 - pangolin 240 frames
+
+incorrect pangolin - 005125 usda
+19144 - hedgehog
+19145 - correct pangolin
