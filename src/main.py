@@ -31,19 +31,19 @@ if not wp.get_cuda_device_count():
         "a CUDA-compatible device and won't run correctly without one."
     )
 
-base_mesh_name = "pangolin"
+base_mesh_name = globals.BASE_MESH_NAME
 obj_path = OBJ_PATHS[base_mesh_name]
 select = OBJ_SELECT_FACES[base_mesh_name]
 base_mesh = create_basemesh(obj_path=obj_path, select_faces=select)
 
-tet_name = "scales"
+tet_name = globals.TET_NAME
 tet_path = MSH_PATHS[tet_name]
 pinned_vertices = PINNED_VERTICES[tet_name]
 base_instance = create_base_instance(file_path=tet_path, n_modes=globals.N_MODES, pinned_vertices=pinned_vertices, scale=globals.INSTANCE_SCALE)
 instances_object = create_instances_object(base_mesh, base_instance)
 
 time_step = 0
-time_step_size = 0.1
+time_step_size = globals.TIME_STEP_SIZE
 run = False
 step = False
 mode = 0
@@ -69,29 +69,24 @@ def callback():
 
         ''' update the base first'''
         if time_step > 10:
-        #    displace_base = np.array([0.5*np.sin(5*10*time_step_size), 0, 0])
             t = 10*time_step_size
-            displace_base = np.array([0,0,0.5*np.sin(5*10*time_step_size)])
-
         else: 
-            # displace_base = np.array([0.5*np.sin(5*time_step*time_step_size), 0, 0])
             t = time_step*time_step_size
             
-
-        c = np.cos(5*t)
-        s = np.sin(5*t)
-
-        R_y = np.array([
-            [ c, 0.0,  s],
-            [0.0, 1.0, 0.0],
-            [-s, 0.0,  c]
-        ], dtype=np.float32)
-
-        spin_base = base_mesh.resting_v @ R_y.T
-        displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
         if globals.MOVE == "spin":
+            c = np.cos(8*t)
+            s = np.sin(8*t)
+
+            R_y = np.array([
+                [ c, 0.0,  s],
+                [0.0, 1.0, 0.0],
+                [-s, 0.0,  c]
+            ], dtype=np.float32)
+            spin_base = base_mesh.resting_v @ R_y.T
+
             bm_update_v(base_mesh, spin_base)
         elif globals.MOVE == "slam":
+            displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
             bm_update_v(base_mesh, displace_base)
         
         ps_base_mesh = ps.register_surface_mesh("base mesh", base_mesh.v_cur, base_mesh.all_f)
@@ -150,26 +145,26 @@ else:
         for time_step in range(NUM_FRAMES):
             ''' update the base first'''
             if time_step > 10:
-            #    displace_base = np.array([0.5*np.sin(5*10*time_step_size), 0, 0])
                 t = 10*time_step_size
-                displace_base = np.array([0,0,0.5*np.sin(5*10*time_step_size)])
-
             else: 
-                # displace_base = np.array([0.5*np.sin(5*time_step*time_step_size), 0, 0])
                 t = time_step*time_step_size
+                
+            if globals.MOVE == "spin":
+                c = np.cos(8*t)
+                s = np.sin(8*t)
 
-            c = np.cos(5*t)
-            s = np.sin(5*t)
+                R_y = np.array([
+                    [ c, 0.0,  s],
+                    [0.0, 1.0, 0.0],
+                    [-s, 0.0,  c]
+                ], dtype=np.float32)
+                spin_base = base_mesh.resting_v @ R_y.T
 
-            R_y = np.array([
-                [ c, 0.0,  s],
-                [0.0, 1.0, 0.0],
-                [-s, 0.0,  c]
-            ], dtype=np.float32)
-
-            displace_base = np.array([0,0,0.5*np.sin(5*t)])
-            new = base_mesh.resting_v @ R_y.T
-            bm_update_v(base_mesh, new)
+                bm_update_v(base_mesh, spin_base)
+            elif globals.MOVE == "slam":
+                displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
+                bm_update_v(base_mesh, displace_base)
+            
             wp_update_all_instances(base_mesh,base_instance,instances_object)
             
         

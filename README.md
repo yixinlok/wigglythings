@@ -59,7 +59,7 @@ instance scale: 0.07
 instances per face: 1
 
 hedgehog
-alpha: 0.4
+alpha: 1.5
 beta: 0.06
 instance scale: 0.1
 instances per face: 10
@@ -82,3 +82,29 @@ scp yixinlok@zeus.dgp.toronto.edu:~/wigglythings/out/pangolin_240_20260323-00545
 incorrect pangolin - 005125 usda
 19144 - hedgehog
 19145 - correct pangolin
+
+
+
+# pangolin
+BASE_MESH_NAME = "pangolin"
+TET_NAME = "scales"
+ALPHA = 12
+BETA = 0.03
+INSTANCE_SCALE = 0.07
+NUM_INSTANCE_PER_FACE = 1
+
+# hedgehog
+# BASE_MESH_NAME = "hedgehog"
+# TET_NAME = "spike"
+# ALPHA = 1.5
+# BETA = 0.06
+# INSTANCE_SCALE = 0.1
+# NUM_INSTANCE_PER_FACE = 10
+
+# alpaca
+# BASE_MESH_NAME = "alpaca"
+# TET_NAME = "coil"
+# ALPHA = 0.03
+# BETA = 0.01
+# INSTANCE_SCALE = 0.07
+# NUM_INSTANCE_PER_FACE = 1

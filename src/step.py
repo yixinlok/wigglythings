@@ -204,12 +204,19 @@ def wp_dyrt(bm, bi, ix):
         third_terms: wp.array2d(dtype=float)  # ix.num_instances, num_modes
     ):
         i = wp.tid()
+        force_clamp = 10.0
         forcing_term = wp.tile_zeros(shape=(BI_NUM_V, 3), dtype=float)
         # for each pinned vertex, add estimate_acceleration as a tile
         for j in range(pinned_vertices.shape[0]):
             vertex_idx = pinned_vertices[j]
             est_acc = estimate_accelerations[i]
-            # update forcing_term at vertex_idx
+            # if est_acc[0] > force_clamp:
+            #     est_acc[0] = force_clamp
+            # if est_acc[1] > force_clamp:
+            #     est_acc[1] = force_clamp
+            # if est_acc[2] > force_clamp:
+            #     est_acc[2] = force_clamp
+
             forcing_term[vertex_idx][0] = est_acc[0]
             forcing_term[vertex_idx][1] = est_acc[1]
             forcing_term[vertex_idx][2] = est_acc[2]
@@ -247,7 +254,6 @@ def wp_dyrt(bm, bi, ix):
         q_cur: wp.array2d(dtype=float),
         q_prev: wp.array2d(dtype=float),
         third_term: wp.array2d(dtype=float),
-        # third_term: wp.array(dtype=wp.vec(length=num_modes, dtype=float)),
         q: wp.array2d(dtype=float)
         ):
         

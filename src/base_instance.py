@@ -91,7 +91,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
 
 def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
     # H and M both store it as [x1, x2, ..., y1, y2, ..., z1, z2, ...]
-    H = arap_hessian(v, tets) 
+    H = linear_elasticity_hessian(v, tets) 
     M = mass_matrix(v, tets)
     M_one = 0 #TODO: modify this to give a single mass value
     M = sp.sparse.kron(M, sp.sparse.eye(3)).tocsr()
@@ -111,7 +111,7 @@ def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
 
     # normalize each column of eigenvectors
     for i in range(eigenvectors.shape[1]):
-        eigenvectors[:, i] = eigenvectors[:, i] / np.linalg.norm(eigenvectors[:, i]) 
+        eigenvectors[:, i] = scale * eigenvectors[:, i] / np.linalg.norm(eigenvectors[:, i]) 
 
     # filter out negative eigenvalues and corresponding eigenvectors
     positive_idx = eigenvalues > 0
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     # instance = Instance(mesh_path="assets/single_leaf.msh", n_modes=6, pinned_vertices=[151])
     # instance.visualise_single_instance()
 
-    bi = create_base_instance(file_path="assets/coil.msh", n_modes=20, scale=0.3)
+    bi = create_base_instance(file_path="assets/scales.msh", n_modes=globals.N_MODES, scale=globals.INSTANCE_SCALE)
     visualise_single_instance(bi)
     # visualise_single_instance(bi, pinned_vertices=PINNED_VERTICES["spring"])
 
