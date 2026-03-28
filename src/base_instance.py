@@ -13,7 +13,7 @@ from matrix_utils import *
 from dyrt_params import *
 from globals import *
 from dyrt_params import *
-
+import time
 
 class InstanceBase:
     n_modes: int
@@ -53,8 +53,8 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     bi.v = v.astype(np.float32)
     bi.boundary_v_indices = np.unique(bi.f)
     bi.boundary_v = bi.v[bi.boundary_v_indices]
+    bi.boundary_v_wp = wp.from_torch(torch.from_numpy(bi.boundary_v).to(dtype=torch.float32).to(DEVICE))
     bi.boundary_f = adjust_face_matrix_vertex_indices_for_boundary(bi.f, bi.boundary_v_indices).astype(np.int32)
-
 
     print("num outer vertices: ", bi.boundary_v_indices.shape[0])
     print("total # vertices: ", bi.v.shape[0])
@@ -68,9 +68,11 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
         print("picked pinned vertices:", pinned_vertices)
     bi.pinned_vertices = pinned_vertices
     bi.pinned_vertices_wp = wp.array(np.array(bi.pinned_vertices, dtype=np.int32), device=DEVICE)
-
+    
+    T1 = time.time()
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
-
+    T2 = time.time()
+    print(f"Precomputation took {T2-T1} seconds")
     bi.eigenvalues = eigenvalues.astype(np.float32)
     bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(bi.torch_device)
 

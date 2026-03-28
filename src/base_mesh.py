@@ -48,6 +48,8 @@ def create_basemesh(
         bm.f = bm.all_f[select_faces]
     else:
         bm.f = bm.all_f
+    
+    bm.f_wp = wp.from_numpy(bm.f.astype(np.int32), dtype=wp.vec3l, device=DEVICE)
 
     bm.resting_v = v.copy()
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)

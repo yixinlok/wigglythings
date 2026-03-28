@@ -7,20 +7,11 @@ from instances import *
 from step import *
 import time
 import os
+from read_obj import create_compiled_f
 
 import cProfile, pstats
 import warp as wp
 from usdmultimeshwriter import USDMultiMeshWriter
-
-# parser = argparse.ArgumentParser(description='Run simulation')
-# parser.add_argument('--base-mesh', type=str, default='hedgehog', 
-#                     choices=list(OBJ_PATHS.keys()),
-#                     help='Base mesh to use (default: hedgehog)')
-# parser.add_argument('--tet-mesh', type=str, default='spike',
-#                     choices=list(MSH_PATHS.keys()),
-#                     help='Tetrahedral mesh for instances (default: spike)')
-
-# args = parser.parse_args()
 
 wp.config.quiet = False
 wp.init()
@@ -114,7 +105,7 @@ def callback():
 
     step = False
 
-if POLYSCOPE_OR_USD == "polyscope":
+if OUTPUT_TYPE == "polyscope":
     with cProfile.Profile() as pr:
         # === polyscope and UI === #
         ps.init()
@@ -126,12 +117,12 @@ if POLYSCOPE_OR_USD == "polyscope":
 
     stats = pstats.Stats(pr)
     stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
-    
-else:
-    if POLYSCOPE_OR_USD == "usd":
+
+else:  
+    if OUTPUT_TYPE == "usd":
         filetime = time.strftime("%Y%m%d-%H%M")
         job_id = os.getenv("SLURM_JOB_ID", "nojobid")
-        fname = "out/" + base_mesh_name + "_" + str(NUM_FRAMES) + "_" + job_id + "_"+ filetime + ".usda"
+        fname = "out/" + base_mesh_name + "_" + str(NUM_FRAMES) + "_" + job_id + "_"+ filetime + ".usdc"
         w = USDMultiMeshWriter(fname, fps=24, stage_up="Z", mesh_up="Y", write_velocities=True)
         w.open()
 
@@ -139,10 +130,43 @@ else:
         indices = base_mesh.all_f.flatten()
         w.add_mesh("basemesh",  counts, indices, num_points=base_mesh.v_cur.shape[0])
 
+        counts = np.full(base_instance.boundary_f.shape[0] * instances_object.num_instances, 3)
+        compiled_f = create_compiled_f(base_instance.boundary_f, base_instance.boundary_v.shape[0], instances_object.num_instances)
+        indices = compiled_f.flatten()
+        w.add_mesh("instances", counts, indices, num_points=base_instance.boundary_v.shape[0]*instances_object.num_instances)
+
+    elif OUTPUT_TYPE == "sequence":
+        print("creating folders...")
+        filetime = time.strftime("%Y%m%d-%H%M")
+        job_id = os.getenv("SLURM_JOB_ID", "nojobid")
+        #create enclosing folder
+        enclosing_folder_name = "/scratch/thirty/yixinlok/" + base_mesh_name + "_" + job_id + "_"+ filetime 
+        os.makedirs(enclosing_folder_name, exist_ok=True)
+        # create hedgehog folder
+        hedgehog_folder_name = enclosing_folder_name + "/" + base_mesh_name
+        os.makedirs(hedgehog_folder_name, exist_ok=True)
+        # create instance folders
+        instance_folder_name = enclosing_folder_name + "/" + tet_name
         for i in range(instances_object.num_instances):
-            counts = np.full(base_instance.boundary_f.shape[0], 3)
-            indices = base_instance.boundary_f.flatten()
-            w.add_mesh("instance_" + str(i),  counts, indices, num_points=base_instance.boundary_v.shape[0])
+            folder_name = instance_folder_name + "_" + str(i)
+            os.makedirs(folder_name, exist_ok=True)
+        print("folders created")
+
+    elif OUTPUT_TYPE == "sequence2":
+        print("creating folders...")
+        filetime = time.strftime("%Y%m%d-%H%M")
+        job_id = os.getenv("SLURM_JOB_ID", "nojobid")
+                #create enclosing folder
+        enclosing_folder_name = "/scratch/thirty/yixinlok/" + base_mesh_name + "_" + job_id + "_"+ filetime 
+        os.makedirs(enclosing_folder_name, exist_ok=True)
+        # create hedgehog folder
+        hedgehog_folder_name = enclosing_folder_name + "/" + base_mesh_name
+        os.makedirs(hedgehog_folder_name, exist_ok=True)
+        # create instance folders
+        instance_folder_name = enclosing_folder_name + "/" + tet_name
+        os.makedirs(instance_folder_name, exist_ok=True)
+        print("folders created")
+
 
     start = time.time()
     # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)
@@ -168,32 +192,52 @@ else:
 
                 bm_update_v(base_mesh, spin_base)
             elif globals.MOVE == "slam":
+                R_y = np.array([
+                    [1.0, 0.0, 0.0],
+                    [0.0, 1.0, 0.0],
+                    [0.0, 0.0, 1.0]
+                ], dtype=np.float32)
+                
                 displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
                 bm_update_v(base_mesh, displace_base)
             
             wp_update_all_instances(base_mesh,base_instance,instances_object, R_y.T)
             
-        
-            if POLYSCOPE_OR_USD == "usd":
-                print(f"writing frame {time_step}...")
+            print(f"writing frame {time_step}...")
+            if OUTPUT_TYPE == "usd":
                 w.write_points("basemesh", base_mesh.v_cur,  timecode=time_step)
+                reshaped_vs = instances_object.v_cur.numpy().reshape(-1,3)
+                w.write_points("instances", reshaped_vs, timecode=time_step)
+
+            elif OUTPUT_TYPE == "sequence":
+                igl.writeOBJ(hedgehog_folder_name + "/frame_" + str(time_step) + ".obj", base_mesh.v_cur, base_mesh.all_f) 
                 v_curs = instances_object.v_cur.numpy()
                 for i in range(instances_object.num_instances):
                     vertices = v_curs[i]
-                    w.write_points("instance_" + str(i), vertices, timecode=time_step)
+                    instance_folder_name_i = instance_folder_name + "_" + str(i)
+                    igl.writeOBJ(instance_folder_name_i + "/frame_" + str(time_step) + ".obj", vertices, base_instance.boundary_f)
+            
+            elif OUTPUT_TYPE == "sequence2":
+                igl.writeOBJ(hedgehog_folder_name + "/frame_" + str(time_step) + ".obj", base_mesh.v_cur, base_mesh.all_f) 
+                compiled_f = create_compiled_f(base_instance.boundary_f, base_instance.boundary_v.shape[0], instances_object.num_instances)
+                reshaped_vs = instances_object.v_cur.numpy().reshape(-1,3)
+                igl.writeOBJ(instance_folder_name + "/frame_" + str(time_step) + ".obj", reshaped_vs, compiled_f)
     end = time.time()
     elapsed = end - start
     # results = wp.timing_end()
     # wp.timing_print(results)
+    
     print("---------------------------------------------------------")
     print("->" + base_mesh_name + " with " + tet_name + " instances")
+    print("Number of modes:", N_MODES)
+    print("Move type:", globals.MOVE)
     print("Number of instances:", instances_object.num_instances)
     print("Number of vertices per instance:", base_instance.v.shape[0])
     print("Total number of vertices:", base_instance.v.shape[0]*instances_object.num_instances)
     print("Number of frames:", NUM_FRAMES)
     print(f"Elapsed time: {elapsed:.3f} seconds")
     print("---------------------------------------------------------")
-    if POLYSCOPE_OR_USD == "usd":
+    if OUTPUT_TYPE == "usd":
         w.close()
     
 

@@ -6,8 +6,8 @@ running:
 bash run.sh
 
 todo:
-- get rid of hashmap for base mesh vertices
-- move numpy reshaping snippets to warp
+- check why tiled on the gpu is showing up different from cpu
+- move output files to different location for large storage
 
 updates:
 
