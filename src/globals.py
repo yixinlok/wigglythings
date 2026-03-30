@@ -3,7 +3,7 @@ TIME_STEP_SIZE = 0.0416
 NUM_FRAMES = 48
 N_MODES = 6
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
-OUTPUT_TYPE = "sequence2" # "polyscope" or "usd" or "sequence"
+OUTPUT_TYPE = "time" # "polyscope" or "usd" or "sequence"
 MOVE = "spin" # "spin" or "slam"
 
 # pangolin

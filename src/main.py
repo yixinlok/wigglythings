@@ -170,7 +170,7 @@ else:
 
     start = time.time()
     # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)
-    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL):
+    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL) and cProfile.Profile() as pr:
 
         for time_step in range(NUM_FRAMES):
             ''' update the base first'''
@@ -224,6 +224,8 @@ else:
                 igl.writeOBJ(instance_folder_name + "/frame_" + str(time_step) + ".obj", reshaped_vs, compiled_f)
     end = time.time()
     elapsed = end - start
+    stats = pstats.Stats(pr)
+    stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
     # results = wp.timing_end()
     # wp.timing_print(results)
     

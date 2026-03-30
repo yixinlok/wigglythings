@@ -15,4 +15,4 @@ export LANG=C
 export PYTHONUNBUFFERED=1
 
 conda activate gpuenv
-python examples/test_pyglet.py
+python examples/test_wp_tile.py

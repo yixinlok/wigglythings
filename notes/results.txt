@@ -1,0 +1,235 @@
+number of instances: 399
+number of vertices per instance: 266
+total number of vertices: 106134
+Module step c29572f load on device 'cuda:0' took 43.14 ms  (cached)
+Module step 577fbef load on device 'cuda:0' took 66.73 ms  (cached)
+Module instances fa4505b load on device 'cuda:0' took 71.05 ms  (cached)
+Module step b14bf16 load on device 'cuda:0' took 124.44 ms  (cached)
+Module step bcd9cb0 load on device 'cuda:0' took 190.33 ms  (cached)
+Module instances b1ac449 load on device 'cuda:0' took 60.05 ms  (cached)
+Elapsed time: 4.867 seconds
+---------------------------------------------------------
+->hedgehog with spike instances
+"NVIDIA RTX A6000" (48 GiB, sm_86, mempool enabled)
+Number of instances: 399
+Number of vertices per instance: 266
+Total number of vertices: 106134
+Number of frames: 100
+Elapsed time: 6.783 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+"NVIDIA RTX A6000" (48 GiB, sm_86, mempool enabled)
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 28.747 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+"NVIDIA RTX A6000" (48 GiB, sm_86, mempool enabled)
+Number of instances: 3990
+Number of vertices per instance: 266
+Total number of vertices: 1061340
+Number of frames: 100
+Elapsed time: 54.028 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+"NVIDIA TITAN RTX" (24 GiB, sm_75, mempool enabled)
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 37.624 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+CPU
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 13.754 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+CPU
+Number of instances: 3990
+Number of vertices per instance: 266
+Total number of vertices: 1061340
+Number of frames: 100
+Elapsed time: 21.597 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1197
+Number of vertices per instance: 266
+Total number of vertices: 318402
+Number of frames: 100
+Elapsed time: 16.654 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1197
+Number of vertices per instance: 266
+Total number of vertices: 318402
+Number of frames: 100
+Elapsed time: 6.040 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+"NVIDIA RTX A6000" (48 GiB, sm_86, mempool enabled)
+Number of instances: 3990
+Number of vertices per instance: 266
+Total number of vertices: 1061340
+Number of frames: 100
+Elapsed time: 10.213 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+(without q_cur shifted to numpy)
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 6.123 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 9.874 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with matmul for displacements on gpu
+Number of instances: 5
+Number of vertices per instance: 266
+Total number of vertices: 1330
+Number of frames: 100
+Elapsed time: 2.245 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with matmul for displacements on gpu
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 10.377 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with pytorch and tiled. need to reduce HtoD though
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 18.502 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with pytorch and tiled. still need to reduce HtoD 
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 1
+Elapsed time: 0.788 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with pytorch and tiled
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 7.352 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with pytorch and tiled. one more part left to tile
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530670
+Number of frames: 100
+Elapsed time: 7.291 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+GPU, with pytorch and tiled. one more part left to tile
+Number of instances: 3990
+Number of vertices per instance: 266
+Total number of vertices: 1061340
+Number of frames: 100
+Elapsed time: 9.773 seconds
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 7980
+Number of vertices per instance: 266
+Total number of vertices: 2122680
+Number of frames: 100
+Elapsed time: 15.024 seconds
+---------------------------------------------------------
+
+AFTER GETTING THIRD TERMS WITH TILES
+
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530,670
+Number of frames: 100
+Elapsed time: 3.944 seconds
+(25.6 FPS)
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 1995
+Number of vertices per instance: 266
+Total number of vertices: 530,670
+Number of frames: 10000
+Elapsed time: 282.705 seconds
+(35.37 FPS)
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 3990
+Number of vertices per instance: 266
+Total number of vertices: 1,061,340
+Number of frames: 100
+Elapsed time: 4.411 seconds
+(22.7 FPS)
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 7980
+Number of vertices per instance: 266
+Total number of vertices: 2,122,680
+Number of frames: 100
+Elapsed time: 4.636 seconds
+(21.6 FPS)
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 39900
+Number of vertices per instance: 266
+Total number of vertices: 10,613,400
+Number of frames: 100
+Elapsed time: 5.238 seconds
+(19.2 FPS)
+---------------------------------------------------------
+---------------------------------------------------------
+->hedgehog with spike instances
+Number of instances: 39900
+Number of vertices per instance: 266
+Total number of vertices: 10,613,400
+Number of frames: 1000
+Elapsed time: 41.604 seconds
+(24.0 FPS)
+---------------------------------------------------------
+

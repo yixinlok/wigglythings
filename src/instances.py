@@ -41,10 +41,10 @@ class Instances:
     def instances_update_v(self, new_vs):
         @wp.kernel
         def wp_update_v(
-            new_v: wp.array3d(dtype=float),
-            v_cur: wp.array3d(dtype=float),
-            v_prev: wp.array3d(dtype=float),
-            v_prev2: wp.array3d(dtype=float)):
+            new_v: wp.array3d(dtype=wp.float32),
+            v_cur: wp.array3d(dtype=wp.float32),
+            v_prev: wp.array3d(dtype=wp.float32),
+            v_prev2: wp.array3d(dtype=wp.float32)):
 
             i,j,k = wp.tid()
             v_prev2[i][j][k] = v_prev[i][j][k]
@@ -60,10 +60,10 @@ class Instances:
 
         @wp.kernel
         def wp_update_q(
-            new_q: wp.array2d(dtype=float),
-            q_cur: wp.array2d(dtype=float), 
-            q_prev: wp.array2d(dtype=float), 
-            q_prev2: wp.array2d(dtype=float)):
+            new_q: wp.array2d(dtype=wp.float32),
+            q_cur: wp.array2d(dtype=wp.float32), 
+            q_prev: wp.array2d(dtype=wp.float32), 
+            q_prev2: wp.array2d(dtype=wp.float32)):
             
             i,j = wp.tid()
             q_prev2[i][j] = q_prev[i][j]

@@ -1,0 +1,11 @@
+Submitted batch job 19160 - hedgehog headless, 100 frames just to time FPS
+Submitted batch job 19161 - pangolin headless, 100 frame just to time it
+Submitted batch job 19162 - alpaca headless, 100 frames just to time it
+
+
+19222 - hedgehog 100 sanity check
+19223 - hedgehog 240 usd
+19224 - alpaca 100 sanity check
+conclusion: base_v not converted to wp properly
+
+19225 - alpaca 100 sanity check
