@@ -16,6 +16,7 @@ from usdmultimeshwriter import USDMultiMeshWriter
 wp.config.quiet = False
 wp.init()
 
+
 if not wp.get_cuda_device_count():
     print(
         "Some snippets in this notebook assume the presence of "
@@ -139,23 +140,6 @@ else:
         print("creating folders...")
         filetime = time.strftime("%Y%m%d-%H%M")
         job_id = os.getenv("SLURM_JOB_ID", "nojobid")
-        #create enclosing folder
-        enclosing_folder_name = "/scratch/thirty/yixinlok/" + base_mesh_name + "_" + job_id + "_"+ filetime 
-        os.makedirs(enclosing_folder_name, exist_ok=True)
-        # create hedgehog folder
-        hedgehog_folder_name = enclosing_folder_name + "/" + base_mesh_name
-        os.makedirs(hedgehog_folder_name, exist_ok=True)
-        # create instance folders
-        instance_folder_name = enclosing_folder_name + "/" + tet_name
-        for i in range(instances_object.num_instances):
-            folder_name = instance_folder_name + "_" + str(i)
-            os.makedirs(folder_name, exist_ok=True)
-        print("folders created")
-
-    elif OUTPUT_TYPE == "sequence2":
-        print("creating folders...")
-        filetime = time.strftime("%Y%m%d-%H%M")
-        job_id = os.getenv("SLURM_JOB_ID", "nojobid")
                 #create enclosing folder
         enclosing_folder_name = "/scratch/thirty/yixinlok/" + base_mesh_name + "_" + job_id + "_"+ filetime 
         os.makedirs(enclosing_folder_name, exist_ok=True)
@@ -170,8 +154,7 @@ else:
 
     start = time.time()
     # wp.timing_begin(cuda_filter=wp.TIMING_MEMCPY)
-    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL) and cProfile.Profile() as pr:
-
+    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL):
         for time_step in range(NUM_FRAMES):
             ''' update the base first'''
             if time_step > 20:
@@ -203,29 +186,22 @@ else:
             
             wp_update_all_instances(base_mesh,base_instance,instances_object, R_y.T)
             
-            print(f"writing frame {time_step}...")
+            
             if OUTPUT_TYPE == "usd":
                 w.write_points("basemesh", base_mesh.v_cur,  timecode=time_step)
                 reshaped_vs = instances_object.v_cur.numpy().reshape(-1,3)
                 w.write_points("instances", reshaped_vs, timecode=time_step)
 
             elif OUTPUT_TYPE == "sequence":
-                igl.writeOBJ(hedgehog_folder_name + "/frame_" + str(time_step) + ".obj", base_mesh.v_cur, base_mesh.all_f) 
-                v_curs = instances_object.v_cur.numpy()
-                for i in range(instances_object.num_instances):
-                    vertices = v_curs[i]
-                    instance_folder_name_i = instance_folder_name + "_" + str(i)
-                    igl.writeOBJ(instance_folder_name_i + "/frame_" + str(time_step) + ".obj", vertices, base_instance.boundary_f)
-            
-            elif OUTPUT_TYPE == "sequence2":
+                print(f"writing frame {time_step}...")
                 igl.writeOBJ(hedgehog_folder_name + "/frame_" + str(time_step) + ".obj", base_mesh.v_cur, base_mesh.all_f) 
                 compiled_f = create_compiled_f(base_instance.boundary_f, base_instance.boundary_v.shape[0], instances_object.num_instances)
                 reshaped_vs = instances_object.v_cur.numpy().reshape(-1,3)
                 igl.writeOBJ(instance_folder_name + "/frame_" + str(time_step) + ".obj", reshaped_vs, compiled_f)
     end = time.time()
     elapsed = end - start
-    stats = pstats.Stats(pr)
-    stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
+    # stats = pstats.Stats(pr)
+    # stats.sort_stats(pstats.SortKey.TIME).print_stats(30)
     # results = wp.timing_end()
     # wp.timing_print(results)
     

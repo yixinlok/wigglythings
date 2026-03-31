@@ -53,7 +53,8 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     bi.v = v.astype(np.float32)
     bi.boundary_v_indices = np.unique(bi.f)
     bi.boundary_v = bi.v[bi.boundary_v_indices]
-    bi.boundary_v_wp = wp.from_torch(torch.from_numpy(bi.boundary_v).to(dtype=torch.float32).to(DEVICE))
+    bi.boundary_v_wp = torch.from_numpy(bi.boundary_v.astype(np.float32)).to(device=bi.torch_device)
+    # bi.boundary_v_wp = wp.from_torch(torch.from_numpy(bi.boundary_v).to(dtype=torch.float32).to(DEVICE))
     bi.boundary_f = adjust_face_matrix_vertex_indices_for_boundary(bi.f, bi.boundary_v_indices).astype(np.int32)
 
     print("num outer vertices: ", bi.boundary_v_indices.shape[0])
@@ -81,13 +82,13 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
 
     # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
     phi_inv = phi_inv.astype(np.float32)
-    phi_inv = torch.from_numpy(phi_inv).to(bi.torch_device)
-    bi.phi_inv = wp.from_torch(phi_inv)
+    bi.phi_inv = torch.from_numpy(phi_inv).to(bi.torch_device)
 
     bi.M = M
 
-    c1, c2, c3 = compute_IIR_params(bi.eigenvalues**0.5)
+    c1, c2, c3  = compute_IIR_params(bi.eigenvalues**0.5)
     bi.IIR_params = (c1, c2, c3)
+
     return bi
 
 

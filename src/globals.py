@@ -1,28 +1,28 @@
 
 TIME_STEP_SIZE = 0.0416
-NUM_FRAMES = 48
-N_MODES = 6
+NUM_FRAMES = 100
+N_MODES = 12
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
 OUTPUT_TYPE = "time" # "polyscope" or "usd" or "sequence"
 MOVE = "spin" # "spin" or "slam"
 
 # pangolin
-BASE_MESH_NAME = "pangolin"
-TET_NAME = "scales"
-ALPHA = 8
-BETA = 0.04
-INSTANCE_SCALE = 0.07
-NUM_INSTANCE_PER_FACE = 1
-
-# hedgehog
-# BASE_MESH_NAME = "hedgehog"
-# TET_NAME = "spike"
-# # ALPHA = 0.8
-# # BETA = 0.02
-# ALPHA = 1.5
+# BASE_MESH_NAME = "pangolin"
+# TET_NAME = "scales"
+# ALPHA = 8
 # BETA = 0.04
 # INSTANCE_SCALE = 0.07
-# NUM_INSTANCE_PER_FACE = 10
+# NUM_INSTANCE_PER_FACE = 1
+
+# hedgehog
+BASE_MESH_NAME = "hedgehog"
+TET_NAME = "spike"
+ALPHA = 0.8
+BETA = 0.02
+# ALPHA = 1.5
+# BETA = 0.04
+INSTANCE_SCALE = 0.07
+NUM_INSTANCE_PER_FACE = 10
 
 # alpaca
 # BASE_MESH_NAME = "alpaca"

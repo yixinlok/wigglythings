@@ -75,7 +75,7 @@ def compute_IIR_params(w_vec, xi_vec=None):
     # print("first", first_term)
     # print("second", second_term)
     # print("third", third_term)
-    return first_term, second_term, third_term  
+    return first_term, second_term, third_term
 
 
 if __name__ == "__main__":

@@ -1,25 +1,18 @@
-    # eigenvectors = wp.from_numpy(np.array([bi.eigenvectors.astype(np.float32)]), device=DEVICE)
-    # d = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0]*3), dtype=np.float32), device=DEVICE)
-    # displaces = wp.from_numpy(np.zeros((ix.num_instances, bi.v.shape[0], 3), dtype=np.float32), device=DEVICE)
 
-    # @wp.kernel
+    # @wp.kernel()
     # def wp_get_modal_displacement(
-    #     eigenvectors: wp.array(dtype=wp.mat((bi.v.shape[0]*3,bi.n_modes), dtype=float)),
-    #     q_cur: wp.array(dtype=wp.vec(length=bi.n_modes, dtype=float)),
-    #     num_v_per_instance: int,
-    #     displaces: wp.array(dtype=wp.mat(shape=(bi.v.shape[0],3), dtype=float)),
-    #     d: wp.array(dtype=wp.vec(length=bi.v.shape[0]*3, dtype=float))):
-        
+    #     eigenvectors: wp.types.matrix((num_boundary_v*3,bi.n_modes), dtype=wp.float32),
+    #     q_cur: wp.array(dtype = wp.types.vector(length=bi.n_modes, dtype=wp.float32)),
+    #     out: wp.array(dtype = wp.types.vector(length=num_boundary_v*3, dtype=wp.float32))):
+
     #     tid = wp.tid()
-    #     d[tid] = eigenvectors[0]@q_cur[tid]
+    #     out[tid]= eigenvectors@q_cur[tid]
 
-    #     displaces[tid] = wp.matrix(d[tid], shape=(num_v_per_instance,3))
+    # wp.launch(wp_get_modal_displacement, 
+    #                 dim=ix.num_instances, 
+    #                 inputs=[bi.boundary_eigenvectors, ix.q_cur], 
+    #                 outputs=[displaces],  
+    #                 device=DEVICE)
 
-    #     # equivalent to reshape by vertex, then transpose
-    #     for i in range(num_v_per_instance*3):
-    #         displaces[tid][i//num_v_per_instance][i%3] = d[tid][i]
-
-
-    # wp.launch(wp_get_modal_displacement, dim=ix.num_instances, inputs=[eigenvectors, ix.q_cur, bi.v.shape[0]], outputs=[displaces,d], device="cuda:0")
-    # print("displaces shape:", d.shape)
-
+    # displaces = torch.reshape(displaces, (ix.num_instances, 3, -1))
+    # displaces = displaces.transpose(1,2).contiguous()

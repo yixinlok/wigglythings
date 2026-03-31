@@ -53,7 +53,8 @@ def create_basemesh(
 
     bm.resting_v = v.copy()
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
-    
+    bm.n_wp = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
+
     
     # bm.faces_display = 20
     bm.faces_display = bm.f.shape[0]
@@ -70,6 +71,7 @@ def bm_update_v(
     bm.v_prev = bm.v_cur
     bm.v_cur = new_v.astype(np.float32)
     bm.n = gp.per_face_normals(bm.v_cur,bm.f,unit_norm=True)
+    bm.n_wp = wp.from_numpy(bm.n.astype(np.float32), dtype=wp.vec3, device=DEVICE)
 
     return
 

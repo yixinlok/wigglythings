@@ -10,8 +10,8 @@
 source ~/miniconda/etc/profile.d/conda.sh
 
 # export LIBMATHDX_LOG_LEVEL=5
-export LC_ALL=C
-export LANG=C
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
 export PYTHONUNBUFFERED=1
 
 conda activate gpuenv
