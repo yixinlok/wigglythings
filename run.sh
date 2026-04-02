@@ -3,8 +3,8 @@
 #SBATCH --output=logs/wigglythings_%j.out
 #SBATCH --error=logs/wigglythings_%j.err
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=32G
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=64G
 #SBATCH --time=2-00:00:00
 
 source ~/miniconda/etc/profile.d/conda.sh

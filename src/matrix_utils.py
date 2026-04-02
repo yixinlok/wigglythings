@@ -3,50 +3,6 @@ import scipy as sp
 from scipy.spatial.transform import Rotation as R
 import warp as wp
 
-def normalize_by_row(arr):
-    row_norms = np.linalg.norm(arr, axis=1, keepdims=True)
-    row_norms[row_norms == 0] = 1  # avoid division by zero
-    return arr / row_norms
-
-
-def remove_rows(matrix, indices):
-    """
-    Remove rows at the specified indices from the matrix.
-    matrix: np.ndarray, shape (n, m)
-    indices: list or array of row indices to remove
-    Returns: np.ndarray with specified rows removed
-    """
-    return np.delete(matrix, indices, axis=0)
-
-def remove_columns(matrix, indices):
-    """
-    Remove columns at the specified indices from the matrix.
-    matrix: np.ndarray, shape (n, m)
-    indices: list or array of column indices to remove
-    Returns: np.ndarray with specified columns removed
-    """
-    return np.delete(matrix, indices, axis=1)
-
-def add_zeros_columns(matrix, indices):
-    """
-    Add zero columns back at the specified indices in the matrix.
-    matrix: np.ndarray, shape (n, m)
-    indices: list or array of column indices to add zeros
-    Returns: np.ndarray with zero columns added at specified indices
-    """
-    total_cols = matrix.shape[1] + len(indices)
-    new_matrix = np.zeros((matrix.shape[0], total_cols))
-    current_col = 0
-    indices_set = set(indices)
-    
-    for i in range(total_cols):
-        if i in indices_set:
-            new_matrix[:, i] = np.zeros(matrix.shape[0])
-        else:
-            new_matrix[:, i] = matrix[:, current_col]
-            current_col += 1
-            
-    return new_matrix
 
 def add_zeros_rows(matrix, indices):
     """
@@ -81,7 +37,6 @@ def zero_out_rows(matrix, indices):
         new_matrix[i, :] = np.zeros(matrix.shape[1])
     return new_matrix
 
-
 def create_selection_matrix(num_vertices, pinned_vertices):
     if pinned_vertices is None or len(pinned_vertices) == 0:
         return np.eye(3 * num_vertices)
@@ -99,7 +54,7 @@ def create_selection_matrix(num_vertices, pinned_vertices):
     all_indices = np.arange(total_dofs)
 
     selection_matrix = np.eye(total_dofs)
-    selection_matrix = remove_columns(selection_matrix, indices_to_remove)
+    selection_matrix = np.delete(selection_matrix, indices_to_remove, axis=1)
     selection_matrix = zero_out_rows(selection_matrix, indices_to_remove)
     selection_matrix = sp.sparse.csr_matrix(selection_matrix)
     return selection_matrix
@@ -120,7 +75,8 @@ def remove_nonboundary_vertices_from_eigenvectors(eigenvectors, boundary_vertex_
     for idx in non_boundary_indices:
         rows_to_remove.extend([idx, num_vertices + idx, 2 * num_vertices + idx])
 
-    return remove_rows(eigenvectors, rows_to_remove)
+    ret = np.delete(eigenvectors, rows_to_remove, axis=0)
+    return ret
 
 def adjust_face_matrix_vertex_indices_for_boundary(faces, boundary_vertex_indices):
     """
@@ -164,23 +120,13 @@ def test_rotate_to_align_with_z():
 
     print("All tests passed!")
 
-def test_remove_columns():
-    mat = np.random.randint(0, 10, size=(2, 5))
-    print("original matrix",mat)
-    new_mat = remove_columns(mat, [1, 3, 1])
-    print("remove rows 1,3", new_mat)
-
 def test_create_selection_matrix():
     print("test create selection matrix")
     print("2 vertices, pin vertex 1")
     mat = create_selection_matrix(2, [1])
     print(mat)
 
-def test_add_zeros_columns():
-    mat = np.random.randint(0, 10, size=(2, 3))
-    print("original matrix",mat)
-    new_mat = add_zeros_columns(mat, [1, 3])
-    print("add zero columns at 1,3", new_mat)
+
 
 def test_add_zeros_rows():
     mat = np.random.randint(0, 10, size=(3, 2))
@@ -206,10 +152,27 @@ def get_barycentric():
         v = 1 - v
     w = 1 - u - v
     return u,v,w
-    
+
+def create_projection_matrix(num_vertices, pinned_vertices):
+    """
+    Create a matrix to pre multiply with the eigenvectors, to assign accelerations to only the pinned vertices
+    """
+    s = np.zeros((num_vertices, 3, 3))
+    for i in range(len(pinned_vertices)):
+        idx = pinned_vertices[i]
+        s[idx] = np.eye(3)
+    s = s.reshape((3*num_vertices, 3))
+    return s
+
+def test_create_projection_matrix():
+    print("test create projection matrix")
+    print("2 vertices, pin vertex 1")
+    mat = create_projection_matrix(5, [1, 3])
+    print(mat) 
 
 if __name__ == "__main__":
     # test_add_zeros_rows()
-    test_create_selection_matrix()
+    # test_create_selection_matrix()
+    test_create_projection_matrix()
     
 

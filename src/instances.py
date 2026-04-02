@@ -8,7 +8,7 @@ from globals import *
 
 class Instances:
     # storing all data related to placing instances on the base mesh
-    def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes):
+    def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, num_boundary_v):
         # instances = Instances()
 
         self.n_modes = n_modes
@@ -16,13 +16,14 @@ class Instances:
 
         self.face_indices = wp.from_numpy(np.array(face_indices).astype(np.int32), device=DEVICE)
         self.barycentric = wp.from_numpy(np.array(barycentric).astype(np.float32), device=DEVICE)
-        
+        self.face_points = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=DEVICE)
         # Get torch device
         self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
 
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = torch.from_numpy(np.array(vertices_by_instance).astype(np.float32)).to(device=self.torch_device)        
 
+        self.v_next = torch.zeros_like(vertices_by_instance)
         self.v_cur = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
         self.v_prev = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
         self.v_prev2 = wp.from_torch(vertices_by_instance.clone().to(device=self.torch_device))
@@ -91,5 +92,5 @@ def create_instances_object(
             new_instance_v = bi.boundary_v @ rot_matrix.T + face_point
             new_instances_v.append(new_instance_v)
     
-    instances = Instances(new_instances_v, face_indices, barycentrics, bi.n_modes)
+    instances = Instances(new_instances_v, face_indices, barycentrics, bi.n_modes, bi.boundary_v.shape[0])
     return instances

@@ -83,6 +83,9 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     # bi.big_gamma = wp.from_numpy(big_gamma.astype(np.float32), device=DEVICE)
     phi_inv = phi_inv.astype(np.float32)
     bi.phi_inv = torch.from_numpy(phi_inv).to(bi.torch_device)
+    # motion transfer matrix
+    mtm = phi_inv @ create_projection_matrix(v.shape[0], pinned_vertices) 
+    bi.mtm = torch.from_numpy(mtm.astype(np.float32)).to(bi.torch_device)
 
     bi.M = M
 

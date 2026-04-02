@@ -1,10 +1,10 @@
 
-TIME_STEP_SIZE = 0.0416
+TIME_STEP_SIZE = 0.04167
 NUM_FRAMES = 100
-N_MODES = 12
+N_MODES = 6
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
 OUTPUT_TYPE = "time" # "polyscope" or "usd" or "sequence"
-MOVE = "spin" # "spin" or "slam"
+MOVE = "slam" # "spin" or "slam"
 
 # pangolin
 # BASE_MESH_NAME = "pangolin"
@@ -17,10 +17,10 @@ MOVE = "spin" # "spin" or "slam"
 # hedgehog
 BASE_MESH_NAME = "hedgehog"
 TET_NAME = "spike"
-ALPHA = 0.8
-BETA = 0.02
-# ALPHA = 1.5
-# BETA = 0.04
+# ALPHA = 0.8
+# BETA = 0.02
+ALPHA = 1.5
+BETA = 0.04
 INSTANCE_SCALE = 0.07
 NUM_INSTANCE_PER_FACE = 10
 
@@ -30,7 +30,7 @@ NUM_INSTANCE_PER_FACE = 10
 # ALPHA = 0.9
 # BETA = 0.01
 # INSTANCE_SCALE = 0.05
-# NUM_INSTANCE_PER_FACE = 5
+# NUM_INSTANCE_PER_FACE = 10
 
 MSH_PATHS = {
     "elephant": "assets/elephant.msh",
