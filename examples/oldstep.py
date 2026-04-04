@@ -15,4 +15,4 @@
     #                 device=DEVICE)
 
     # displaces = torch.reshape(displaces, (ix.num_instances, 3, -1))
-    # displaces = displaces.transpose(1,2).contiguous()
+    # displaces = displaces.transpose(1,2).contiguous() 

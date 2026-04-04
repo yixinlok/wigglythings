@@ -19,6 +19,7 @@ def wp_update_all_instances(
     num_boundary_v = bi.boundary_v.shape[0]
     EV_LENGTH = wp.constant(bi.boundary_v.shape[0]*3)
     NUM_MODES = wp.constant(bi.n_modes)
+    # displaces can be migrated
     displaces = torch.zeros((ix.num_instances, num_boundary_v,3), dtype=torch.float32, device=DEVICE)
     @wp.kernel
     def wp_get_modal_displacement(
@@ -43,10 +44,10 @@ def wp_update_all_instances(
                     block_dim=64, 
                     device=DEVICE)
 
-    # T2 = time.time()
     # print("Uq time", T2-T1)
     face_indices = ix.face_indices
     bm_normals = torch.from_numpy(bm.n.astype(np.float32)).to(device=DEVICE)
+    # can be migrated
     rot_matrices_T_array3d = torch.zeros((ix.num_instances,3,3), dtype=torch.float32, device=DEVICE)
     
     @wp.kernel
@@ -105,26 +106,27 @@ def wp_update_all_instances(
     # T4 = time.time()
     @wp.kernel
     def wp_compute_new_spikes(
-        modal_d: wp.array(dtype = wp.types.matrix((num_boundary_v, 3), dtype=wp.float32)), # ix.num_instances,bi.v.shape[0],3
-        base_v: wp.types.matrix((num_boundary_v, 3), dtype=wp.float32), # bi.v.shape[0],3
+        modal_d: wp.array2d(dtype=wp.vec3), # ix.num_instances,bi.v.shape[0],3
+        base_v: wp.array(dtype=wp.vec3), # bi.v.shape[0],3
         rot_matrices_T: wp.array(dtype = wp.types.matrix((3, 3), dtype=wp.float32)),
-        face_points: wp.array(dtype = wp.types.matrix((num_boundary_v, 3), dtype=wp.float32)), # ix.num_instances,3
+        face_points: wp.array2d(dtype=wp.vec3), # ix.num_instances,bi.v.shape[0],3
         base_rotate: wp.types.matrix((3, 3), dtype=wp.float32), # 3,3
-        vs: wp.array(dtype = wp.types.matrix((num_boundary_v,3), dtype=wp.float32)) # ix.num_instances,bi.v.shape[0],3
+        vs: wp.array2d(dtype=wp.vec3) # ix.num_instances,bi.v.shape[0],3
         ):
         
-        i = wp.tid()
-        new_v = base_v + modal_d[i] # modal displace
+        i,j = wp.tid()
+        new_v = base_v[j] + modal_d[i][j] # modal displace
         new_v = new_v @ base_rotate # base_rotate
         new_v = new_v @ rot_matrices_T[i] # face rotate
-        new_v = new_v + face_points[i] # attach to triangle
-        vs[i] = new_v
+        new_v = new_v + face_points[i][j] # attach to triangle
+        vs[i][j] = new_v
 
     wp.launch(wp_compute_new_spikes,
-            dim=ix.num_instances,
+            dim=(ix.num_instances, num_boundary_v),
             inputs=[displaces, bi.boundary_v_wp, rot_matrices_T_array3d, ix.face_points, base_rotate],
             outputs=[ix.v_next],
             device=DEVICE)
+
     # T5 = time.time()
     # print("instances update time", T5-T4)
 
@@ -133,7 +135,6 @@ def wp_update_all_instances(
     wp_dyrt(bm, bi, ix)
 
     return ix
-
 
 
 def wp_dyrt(bm, bi, ix):
@@ -169,30 +170,6 @@ def wp_dyrt(bm, bi, ix):
             device=DEVICE)
 
 
-    # @wp.kernel
-    # def wp_get_forcing_terms(
-    #     pinned_vertices: wp.array(dtype=wp.int32), # len(bi.pinned_vertices)
-    #     estimate_accelerations: wp.array(dtype=wp.vec3), # ix.num_instances
-    #     forcing_term: wp.array3d(dtype=wp.float32) # ix.num_instances, bi.v.shape[0], 3
-    # ):
-    #     i,j = wp.tid()
-        
-    #     est_acc = estimate_accelerations[i]
-    #     vertex_idx = pinned_vertices[j]
-        
-    #     forcing_term[i][vertex_idx][0] = est_acc[0]
-    #     forcing_term[i][vertex_idx][1] = est_acc[1]
-    #     forcing_term[i][vertex_idx][2] = est_acc[2]
-
-    # forcing_term = torch.zeros((ix.num_instances, bi.v.shape[0], 3), dtype=torch.float32, device=DEVICE)
-    # wp.launch(wp_get_forcing_terms,
-    #         dim=(ix.num_instances, len(bi.pinned_vertices)),
-    #         inputs=[bi.pinned_vertices_wp, estimate_accelerations], 
-    #         outputs=[forcing_term], 
-    #         device=DEVICE)
-
-    # forcing_term = torch.reshape(forcing_term, (ix.num_instances, bi.v.shape[0]*3)) # ix.num_instances, bi.v.shape[0]*3
-
     # T6 = time.time()
     @wp.kernel
     def wp_get_third_terms(
@@ -209,21 +186,6 @@ def wp_dyrt(bm, bi, ix):
             outputs=[third_terms_2],
             device=DEVICE)
 
-    # @wp.kernel
-    # def wp_get_third_terms(
-    #     forcing_term: wp.array(dtype=wp.types.vector(length=bi.v.shape[0]*3, dtype=wp.float32)), # ix.num_instances, bi.v.shape[0]*3
-    #     p_inv: wp.types.matrix((bi.n_modes, bi.v.shape[0]*3), dtype=wp.float32), # bi.n_modes, bi.v.shape[0]*3
-    #     third_terms: wp.array(dtype=wp.types.vector(length=bi.n_modes, dtype=wp.float32))  # ix.num_instances, num_modes
-    # ):
-    #     i = wp.tid()
-    #     third_terms[i] = p_inv @ forcing_term[i]
-        
-    # third_terms_2 = torch.zeros((ix.num_instances, bi.n_modes), dtype=torch.float32, device=DEVICE)
-    # wp.launch(wp_get_third_terms,
-    #         dim=ix.num_instances,
-    #         inputs=[forcing_term, bi.phi_inv],
-    #         outputs=[third_terms_2],
-    #         device=DEVICE)
 
     c1,c2,c3 = bi.IIR_params
     q = torch.zeros((ix.num_instances, bi.n_modes), dtype=torch.float32, device=DEVICE)

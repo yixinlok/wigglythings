@@ -172,7 +172,6 @@ else:
                     [-s, 0.0,  c]
                 ], dtype=np.float32)
                 spin_base = base_mesh.resting_v @ R_y.T
-
                 bm_update_v(base_mesh, spin_base)
             elif globals.MOVE == "slam":
                 R_y = np.array([
@@ -180,7 +179,8 @@ else:
                     [0.0, 1.0, 0.0],
                     [0.0, 0.0, 1.0]
                 ], dtype=np.float32)
-                
+                displace = np.array([0,0,0.5*np.sin(5*t)])
+
                 displace_base = base_mesh.resting_v + np.array([0,0,0.5*np.sin(5*t)])
                 bm_update_v(base_mesh, displace_base)
             
