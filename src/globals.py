@@ -1,11 +1,15 @@
 
 TIME_STEP_SIZE = 0.04167
-NUM_FRAMES = 20
-N_MODES = 6
+NUM_FRAMES = 1000
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
-OUTPUT_TYPE = "sequence" # "polyscope" or "usd" or "sequence"
-MOVE = "slam" # "spin" or "slam"
+OUTPUT_TYPE = "time" # "polyscope" or "time" or "sequence"
 
+MOVE = "spin" # "spin" or "slam"
+MOVE_FRAMES = 20
+
+'''
+DYRT parameters
+'''
 # pangolin
 BASE_MESH_NAME = "pangolin"
 TET_NAME = "scales"
@@ -13,24 +17,33 @@ ALPHA = 8
 BETA = 0.04
 INSTANCE_SCALE = 0.07
 NUM_INSTANCE_PER_FACE = 1
+N_MODES = 6
 
-# hedgehog
+
+# BASE_MESH_NAME = "hedgehog"
+# TET_NAME = "spike"
+# ALPHA = 1.5
+# BETA = 0.04
+# INSTANCE_SCALE = 0.07
+# NUM_INSTANCE_PER_FACE = 1000
+# N_MODES = 6
+
 # BASE_MESH_NAME = "hedgehog"
 # TET_NAME = "spike"
 # ALPHA = 0.8
 # BETA = 0.02
-# # ALPHA = 1.5
-# # BETA = 0.04
 # INSTANCE_SCALE = 0.07
 # NUM_INSTANCE_PER_FACE = 1000
+# N_MODES = 12
 
-# alpaca
 # BASE_MESH_NAME = "alpaca"
 # TET_NAME = "wool"
 # ALPHA = 1.5
 # BETA = 0.04
 # INSTANCE_SCALE = 0.05
 # NUM_INSTANCE_PER_FACE = 10
+# N_MODES = 6
+
 
 MSH_PATHS = {
     "spike": "assets/spike.msh",
@@ -60,8 +73,7 @@ PINNED_VERTICES = {
     "elephant": [],
     "teardrop": [202, 694, 719, 763,],
     "coil": [797, 819, 841, 863, 935, 893, 957, 1146, 1085, 1523, 1303, 971, 1476],
-    # "teardrop": [202, 694, 719, 763, 831, 829, 781, 715, 693, 704, 783, 832, 677, 710, 723, 676, 705, 775, 725, 713, 674, 834, 716, 726, 671, 828, 827],
-    # "teardrop": [202, 694, 719, 763, 831, 829, 781, 715, 693, 704, 783, 832,677, 710, 723, 676, 705, 775, 725],
+    
     "lollipop": [214, 503, 504, 215],
     "spheres": [1292, 1291, 1366, 1479, 1506, 1642, 1643, 1405, 1612, 1508, 1354, 1406, 1293, 1176, 1066, 1065, 1025, 1140, 1175, 1173, 1174, 1504, 1645, 1769, 1767, 1766, 1768, 1644, 1507, 1367, 1282, 1395],
 }

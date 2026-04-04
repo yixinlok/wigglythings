@@ -26,7 +26,7 @@ class InstanceBase:
     eigenvalues: np.array
     eigenvectors: np.array
     phi_inv: np.array
-    big_gamma: np.array
+    mtm: np.array
 
     IIR_params: tuple
     pinned_vertices: list
@@ -87,8 +87,6 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     mtm = phi_inv @ create_projection_matrix(v.shape[0], pinned_vertices) 
     bi.mtm = torch.from_numpy(mtm.astype(np.float32)).to(bi.torch_device)
 
-    bi.M = M
-
     c1, c2, c3  = compute_IIR_params(bi.eigenvalues**0.5)
     bi.IIR_params = (c1, c2, c3)
 
@@ -128,7 +126,7 @@ def precompute(v,tets,n_modes,scale,pinned_vertices=[]):
     eigenvectors = eigenvectors[:, 0:n_modes]
     # assert all eigenvalues are positive
     assert np.all(eigenvalues > 0), "all eigenvalues must be positive"
-    print("done solving eigenvalue problem.")
+    print("done solving eigenvalue problem!")
 
     # eigenvalues = eigenvalues / np.linalg.norm(eigenvalues) 
     assert n_modes == eigenvectors.shape[1]

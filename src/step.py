@@ -1,20 +1,19 @@
 import numpy as np
-from dyrt_params import *
-from base_mesh import *
+import torch 
 import warp as wp
+import time
+
+from dyrt_params import *
 from rodrigues_rotation import *
+from base_mesh import *
 from instances import *
 from globals import *
-import time
-import torch 
 
     
-def wp_update_all_instances(
-        bm: BaseMesh,
-        bi: InstanceBase,
-        ix: Instances,
-        R_y
-    ):
+def wp_update_all_instances(bm, bi, ix, frame_i):
+    
+    if frame_i >= globals.MOVE_FRAMES:
+        frame_i = globals.MOVE_FRAMES - 1
 
     num_boundary_v = bi.boundary_v.shape[0]
     EV_LENGTH = wp.constant(bi.boundary_v.shape[0]*3)
@@ -41,13 +40,12 @@ def wp_update_all_instances(
                     dim=ix.num_instances, 
                     inputs=[bi.boundary_eigenvectors, ix.q_cur], 
                     outputs=[displaces], 
-                    block_dim=64, 
+                    block_dim=128, 
                     device=DEVICE)
 
     # print("Uq time", T2-T1)
     face_indices = ix.face_indices
-    bm_normals = torch.from_numpy(bm.n.astype(np.float32)).to(device=DEVICE)
-    # can be migrated
+    # can be migrated into instances
     rot_matrices_T_array3d = torch.zeros((ix.num_instances,3,3), dtype=torch.float32, device=DEVICE)
     
     @wp.kernel
@@ -75,11 +73,10 @@ def wp_update_all_instances(
 
     wp.launch(wp_get_rot_transpose, 
               dim=ix.num_instances, 
-              inputs=[ix.face_indices, bm_normals], 
+              inputs=[ix.face_indices, bm.n_frames[frame_i]], 
               outputs=[rot_matrices_T_array3d], 
               device=DEVICE)
      
-    v_cur = wp.from_numpy(bm.v_cur, device=DEVICE)
 
     @wp.kernel
     def wp_get_face_points(
@@ -90,19 +87,19 @@ def wp_update_all_instances(
         face_points: wp.array3d(dtype=wp.float32)
         ):
         i, j = wp.tid()
-        face_point = get_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
+        face_point = wp_get_single_face_point(barycentrics[i], face_indices[i], bm_v_cur, bm_f)
         # face_point is a vec3
         face_points[i][j][0] = face_point[0]
         face_points[i][j][1] = face_point[1]
         face_points[i][j][2] = face_point[2]
     wp.launch(wp_get_face_points, 
               dim=(ix.num_instances, num_boundary_v), 
-              inputs=[ix.face_indices, ix.barycentric, v_cur, bm.f_wp], 
+              inputs=[ix.face_indices, ix.barycentric, bm.v_frames[frame_i], bm.f_wp], 
               outputs=[ix.face_points], 
               device=DEVICE)
     
-    base_rotate = torch.from_numpy(R_y.astype(np.float32)).to(DEVICE)
-    
+
+
     # T4 = time.time()
     @wp.kernel
     def wp_compute_new_spikes(
@@ -123,7 +120,7 @@ def wp_update_all_instances(
 
     wp.launch(wp_compute_new_spikes,
             dim=(ix.num_instances, num_boundary_v),
-            inputs=[displaces, bi.boundary_v_wp, rot_matrices_T_array3d, ix.face_points, base_rotate],
+            inputs=[displaces, bi.boundary_v_wp, rot_matrices_T_array3d, ix.face_points, bm.R_frames[frame_i]],
             outputs=[ix.v_next],
             device=DEVICE)
 
@@ -132,23 +129,24 @@ def wp_update_all_instances(
 
     ix.instances_update_v(ix.v_next)
     # call dyrt AFTER, compute next q based on current force
-    wp_dyrt(bm, bi, ix)
+    # wp_dyrt(bm, bi, ix, frame_i)
 
     return ix
 
 
-def wp_dyrt(bm, bi, ix):
-    fd_acceleration = wp.from_numpy(bm_fd_acceleration(bm), device=DEVICE)
+def wp_dyrt(bm, bi, ix, frame_i):
+    if frame_i >= globals.MOVE_FRAMES + 2:
+        frame_i = globals.MOVE_FRAMES + 1
 
     # directly create zero matrix
-    estimate_accelerations = wp.zeros((ix.num_instances), dtype=wp.vec3, device=DEVICE)
+    instance_accelerations = wp.zeros((ix.num_instances), dtype=wp.vec3, device=DEVICE)
     @wp.kernel
-    def wp_estimate_accelerations(
+    def wp_interpolate_acceleration(
         face_indices: wp.array(dtype=wp.int32),
         barycentric: wp.array(dtype=wp.vec3),
         faces: wp.array(dtype=wp.vec3l),
         fd_acceleration: wp.array(dtype=wp.vec3),
-        estimate_accelerations: wp.array(dtype=wp.vec3) # num_instances
+        instance_accelerations: wp.array(dtype=wp.vec3) # num_instances
         ):
 
         i = wp.tid()
@@ -162,27 +160,27 @@ def wp_dyrt(bm, bi, ix):
         b2 = barycentric[i][1]
         b3 = barycentric[i][2]
 
-        estimate_accelerations[i] = b1*fd_acceleration[v1] + b2*fd_acceleration[v2] + b3*fd_acceleration[v3]
-    wp.launch(wp_estimate_accelerations, 
+        instance_accelerations[i] = b1*fd_acceleration[v1] + b2*fd_acceleration[v2] + b3*fd_acceleration[v3]
+    wp.launch(wp_interpolate_acceleration, 
             dim=ix.num_instances, 
-            inputs=[ix.face_indices, ix.barycentric, bm.f_wp, fd_acceleration], 
-            outputs=[estimate_accelerations], 
+            inputs=[ix.face_indices, ix.barycentric, bm.f_wp, bm.acceleration_frames[frame_i]], 
+            outputs=[instance_accelerations], 
             device=DEVICE)
 
 
     # T6 = time.time()
     @wp.kernel
     def wp_get_third_terms(
-        estimate_accelerations: wp.array(dtype=wp.vec3), # ix.num_instances
+        instance_accelerations: wp.array(dtype=wp.vec3), # ix.num_instances
         mtm: wp.types.matrix((bi.n_modes, 3), dtype=wp.float32), # bi.n_modes, 3
         third_terms: wp.array(dtype=wp.types.vector(length=bi.n_modes, dtype=wp.float32))  # ix.num_instances, num_modes
     ):
         i = wp.tid()
-        third_terms[i] = mtm @ estimate_accelerations[i]
+        third_terms[i] = mtm @ instance_accelerations[i]
     third_terms_2 = torch.zeros((ix.num_instances, bi.n_modes), dtype=torch.float32, device=DEVICE)
     wp.launch(wp_get_third_terms,
             dim=ix.num_instances,
-            inputs=[estimate_accelerations, bi.mtm],
+            inputs=[instance_accelerations, bi.mtm],
             outputs=[third_terms_2],
             device=DEVICE)
 

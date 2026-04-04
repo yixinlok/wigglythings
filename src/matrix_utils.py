@@ -3,7 +3,17 @@ import scipy as sp
 from scipy.spatial.transform import Rotation as R
 import warp as wp
 
-
+def create_compiled_f(original_f, num_vertices, num_instances):
+    # create compiled_f for later use in writing obj files
+    compiled_f = []
+    for i in range(num_instances):
+        instance_i_f = []
+        for face in original_f:
+            instance_i_f.append([face[0]+i*num_vertices, face[1]+i*num_vertices, face[2]+i*num_vertices])
+        compiled_f.extend(instance_i_f)
+        
+    return np.array(compiled_f)
+    
 def add_zeros_rows(matrix, indices):
     """
     Add zero rows back at the specified indices in the matrix.

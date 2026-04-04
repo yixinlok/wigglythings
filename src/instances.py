@@ -9,16 +9,16 @@ from globals import *
 class Instances:
     # storing all data related to placing instances on the base mesh
     def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, num_boundary_v):
-        # instances = Instances()
-
+        
+        # Get torch device
+        self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
         self.n_modes = n_modes
         self.num_instances = len(face_indices)
 
         self.face_indices = wp.from_numpy(np.array(face_indices).astype(np.int32), device=DEVICE)
         self.barycentric = wp.from_numpy(np.array(barycentric).astype(np.float32), device=DEVICE)
-        self.face_points = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=DEVICE)
-        # Get torch device
-        self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
+        self.face_points = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=self.torch_device)
+        
 
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = torch.from_numpy(np.array(vertices_by_instance).astype(np.float32)).to(device=self.torch_device)        
@@ -80,7 +80,7 @@ def create_instances_object(
     new_instances_v = []
     for i in range(bm.faces_display):
         
-        normal = bm.n[i] 
+        normal = bm.resting_n[i] 
         rot_matrix = rotate_to_align_with_z(normal)
         # get face vertices
         for j in range(bm.num_instance_per_face):
@@ -88,7 +88,7 @@ def create_instances_object(
             b1, b2, b3 = get_barycentric()
             barycentrics.append(np.array([b1, b2, b3]))
 
-            face_point = bm_get_face_point(bm, i, (b1, b2, b3))
+            face_point = bm.get_face_point(i, (b1, b2, b3))
             new_instance_v = bi.boundary_v @ rot_matrix.T + face_point
             new_instances_v.append(new_instance_v)
     
