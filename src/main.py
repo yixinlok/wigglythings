@@ -5,13 +5,13 @@ import warp as wp
 import time, os, sys
 import cProfile, pstats
 
-from globals import *
+import globals
 from base_mesh import *
 from base_instance import *
 from instances import *
 from step import *
 from matrix_utils import *
-
+from csv_utils import *
 
 wp.config.quiet = False
 wp.init()
@@ -27,7 +27,7 @@ bm = create_basemesh(obj_path=obj_path, select_faces=select)
 tet_name = globals.TET_NAME
 tet_path = MSH_PATHS[tet_name]
 pinned_vertices = PINNED_VERTICES[tet_name]
-bi = create_base_instance(file_path=tet_path, n_modes=globals.N_MODES, pinned_vertices=pinned_vertices, scale=globals.INSTANCE_SCALE)
+bi, precompute_time = create_base_instance(file_path=tet_path, n_modes=globals.N_MODES, pinned_vertices=pinned_vertices, scale=globals.INSTANCE_SCALE)
 ix = create_instances_object(bm, bi)
 
 '''
@@ -39,25 +39,16 @@ def advance_frame(frame_i):
     wp_dyrt(bm, bi, ix, frame_i)
     
 
-print("---------------------------------------------------------")
-print("->" + base_mesh_name + " with " + tet_name + " instances")
-print("Number of modes:", globals.N_MODES)
-print("Move type:", globals.MOVE)
-print("Number of instances:", ix.num_instances)
-print("Number of vertices per instance:", bi.v.shape[0])
-print("Total number of vertices:", bi.v.shape[0]*ix.num_instances)
-print("Number of frames:", globals.NUM_FRAMES)
-print("---------------------------------------------------------")
-
 if OUTPUT_TYPE == "time":
     start = time.time()
-    with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL):
-        for frame_i in range(NUM_FRAMES):
-            advance_frame(frame_i)
+    wp.timing_begin(cuda_filter=wp.TIMING_ALL)
+    # with wp.ScopedTimer("update all", cuda_filter=wp.TIMING_ALL, report_func=wp_profile_func):
+    for frame_i in range(NUM_FRAMES):
+        advance_frame(frame_i)
+    results = wp.timing_end()
     end = time.time()
-    elapsed = end - start
-    print(f"Total time for {NUM_FRAMES} frames: {elapsed:.4f} seconds")
-    sys.exit()
+    total_elapsed = end - start
+    save_results_to_csv(results, total_elapsed, precompute_time, bi, ix)
 
 elif OUTPUT_TYPE == "sequence":
     print("creating folders...")
@@ -82,7 +73,17 @@ elif OUTPUT_TYPE == "sequence":
         igl.writeOBJ(hedgehog_folder_name + "/frame_" + str(frame_i) + ".obj", bm.get_v_cur(frame_i), bm.all_f) 
         reshaped_vs = ix.v_cur.numpy().reshape(-1,3)
         igl.writeOBJ(instance_folder_name + "/frame_" + str(frame_i) + ".obj", reshaped_vs, compiled_f)
-    sys.exit()
+
+
+print("---------------------------------------------------------")
+print("->" + base_mesh_name + " with " + tet_name + " instances")
+print("Number of modes:", globals.N_MODES)
+print("Move type:", globals.MOVE)
+print("Number of instances:", ix.num_instances)
+print("Number of vertices per instance:", bi.v.shape[0])
+print("Total number of vertices:", bi.v.shape[0]*ix.num_instances)
+print("Number of frames:", globals.NUM_FRAMES)
+print("---------------------------------------------------------")
 
 
 '''

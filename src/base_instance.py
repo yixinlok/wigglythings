@@ -73,7 +73,8 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     T1 = time.time()
     eigenvalues, eigenvectors, phi_inv, big_gamma, M = precompute(v, tets, n_modes, scale, pinned_vertices)
     T2 = time.time()
-    print(f"Precomputation took {T2-T1} seconds")
+    precompute_time = T2 - T1
+    print(f"precomputation took {T2-T1} seconds")
     bi.eigenvalues = eigenvalues.astype(np.float32)
     bi.eigenvectors = torch.from_numpy(eigenvectors.astype(np.float32)).to(bi.torch_device)
 
@@ -90,7 +91,7 @@ def create_base_instance(file_path, n_modes=6, pinned_vertices=[], scale=1.0):
     c1, c2, c3  = compute_IIR_params(bi.eigenvalues**0.5)
     bi.IIR_params = (c1, c2, c3)
 
-    return bi
+    return bi, precompute_time
 
 
 def precompute(v,tets,n_modes,scale,pinned_vertices=[]):

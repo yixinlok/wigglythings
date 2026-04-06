@@ -7,3 +7,4 @@ polyscope==2.4.0
 scipy==1.15.0
 warp-lang==1.10.1
 torch==2.9.1
+pandas==3.0.2

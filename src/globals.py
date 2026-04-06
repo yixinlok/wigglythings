@@ -1,6 +1,6 @@
 
 TIME_STEP_SIZE = 0.04167
-NUM_FRAMES = 1000
+NUM_FRAMES = 72
 DEVICE = "cuda:0" #"cpu", "cuda:0" 
 OUTPUT_TYPE = "time" # "polyscope" or "time" or "sequence"
 
@@ -10,14 +10,13 @@ MOVE_FRAMES = 20
 '''
 DYRT parameters
 '''
-# pangolin
-BASE_MESH_NAME = "pangolin"
-TET_NAME = "scales"
-ALPHA = 8
-BETA = 0.04
-INSTANCE_SCALE = 0.07
-NUM_INSTANCE_PER_FACE = 1
-N_MODES = 6
+# BASE_MESH_NAME = "pangolin"
+# TET_NAME = "scales"
+# ALPHA = 8
+# BETA = 0.04
+# INSTANCE_SCALE = 0.07
+# NUM_INSTANCE_PER_FACE = 5
+# N_MODES = 6
 
 
 # BASE_MESH_NAME = "hedgehog"
@@ -25,7 +24,7 @@ N_MODES = 6
 # ALPHA = 1.5
 # BETA = 0.04
 # INSTANCE_SCALE = 0.07
-# NUM_INSTANCE_PER_FACE = 1000
+# NUM_INSTANCE_PER_FACE = 10000
 # N_MODES = 6
 
 # BASE_MESH_NAME = "hedgehog"
@@ -33,16 +32,25 @@ N_MODES = 6
 # ALPHA = 0.8
 # BETA = 0.02
 # INSTANCE_SCALE = 0.07
-# NUM_INSTANCE_PER_FACE = 1000
+# NUM_INSTANCE_PER_FACE = 10000
 # N_MODES = 12
+
+BASE_MESH_NAME = "hedgehog"
+TET_NAME = "spike"
+ALPHA = 0.08
+BETA = 0.002
+INSTANCE_SCALE = 0.07
+NUM_INSTANCE_PER_FACE = 10
+N_MODES = 24
+
 
 # BASE_MESH_NAME = "alpaca"
 # TET_NAME = "wool"
 # ALPHA = 1.5
 # BETA = 0.04
 # INSTANCE_SCALE = 0.05
-# NUM_INSTANCE_PER_FACE = 10
-# N_MODES = 6
+# NUM_INSTANCE_PER_FACE = 7
+# N_MODES = 5
 
 
 MSH_PATHS = {

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=run
+#SBATCH --job-name=ada
 #SBATCH --output=logs/wigglythings_%j.out
 #SBATCH --error=logs/wigglythings_%j.err
 #SBATCH --nodelist=calypso
@@ -16,7 +16,7 @@ export LANG=C.UTF-8
 export PYTHONUNBUFFERED=1
 
 conda activate gpuenv
-python src/new_main.py
+python src/main.py
 
 cd /scratch/thirty/yixinlok
 ls

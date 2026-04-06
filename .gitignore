@@ -1,6 +1,7 @@
 venv/
 out/
 uvvenv/
+newenv/
  **/__pycache__/
 logs/
 *.pyc

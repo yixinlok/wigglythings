@@ -10,16 +10,15 @@ class Instances:
     # storing all data related to placing instances on the base mesh
     def __init__(self, vertices_by_instance, face_indices, barycentric, n_modes, num_boundary_v):
         
-        # Get torch device
-        self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
         self.n_modes = n_modes
         self.num_instances = len(face_indices)
 
         self.face_indices = wp.from_numpy(np.array(face_indices).astype(np.int32), device=DEVICE)
         self.barycentric = wp.from_numpy(np.array(barycentric).astype(np.float32), device=DEVICE)
-        self.face_points = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=self.torch_device)
         
-
+        
+        # Get torch device
+        self.torch_device = "cpu" if DEVICE == "cpu" else "cuda"
         # instance_vertices has shape(num_instances, num_vertices, 3)
         vertices_by_instance = torch.from_numpy(np.array(vertices_by_instance).astype(np.float32)).to(device=self.torch_device)        
 
@@ -33,7 +32,13 @@ class Instances:
         self.q_prev = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         self.q_prev2 = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
         
-        return 
+        # allocate memory once, avoid runtime memset
+        self.modal_displaces = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=self.torch_device)
+        self.face_points = torch.zeros((self.num_instances, num_boundary_v, 3), dtype=torch.float32, device=self.torch_device)
+        self.rot_T = torch.zeros((self.num_instances, 3, 3), dtype=torch.float32, device=self.torch_device)
+        self.accelerations = wp.zeros((self.num_instances), dtype=wp.vec3, device=DEVICE)
+        self.third_terms = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
+        self.q_new = torch.zeros((self.num_instances, n_modes), dtype=torch.float32, device=self.torch_device)
 
     def instances_update_v(self, new_vs):
         @wp.kernel
@@ -54,7 +59,6 @@ class Instances:
                   device=DEVICE)
 
     def instances_update_q(self, new_qs):
-
         @wp.kernel
         def wp_update_q(
             new_q: wp.array2d(dtype=wp.float32),

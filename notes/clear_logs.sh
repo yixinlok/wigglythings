@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_DIR="$SCRIPT_DIR/logs"
+LOG_DIR="$SCRIPT_DIR/../logs"
 
 if [[ ! -d "$LOG_DIR" ]]; then
   echo "logs directory not found: $LOG_DIR" >&2
