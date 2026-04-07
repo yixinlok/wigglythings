@@ -23,8 +23,14 @@ class InstanceBase:
     f: np.array
     tets: np.array
 
+    boundary_v_indices: np.array
+    boundary_v: np.array
+    boundary_v_wp: torch.Tensor
+    boundary_f: np.array  
+
     eigenvalues: np.array
     eigenvectors: np.array
+    boundary_eigenvectors: torch.Tensor
     phi_inv: np.array
     mtm: np.array
 

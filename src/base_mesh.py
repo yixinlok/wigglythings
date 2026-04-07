@@ -157,8 +157,6 @@ def wp_get_single_face_point(
     return face_point
 
 
-
-
 '''
 testing stuff
 '''
